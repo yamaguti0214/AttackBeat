@@ -11,6 +11,8 @@ public class CheckNotes : MonoBehaviour
         public bool isHit;
     }
 
+    SoundPlay SoundPlay;
+
     public List<Note> notes = new List<Note>();
     public AudioSource musicSource;
 
@@ -25,6 +27,7 @@ public class CheckNotes : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Space))
         {
             Judge();
+            //SoundPlay.Soundplay();
         }
 
         CheckMiss();
