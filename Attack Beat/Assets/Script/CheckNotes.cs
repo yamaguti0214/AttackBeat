@@ -34,6 +34,7 @@ public class CheckNotes : MonoBehaviour
     [SerializeField]public Vector2 CheckPosition;
 
     SoundPlay SoundPlay;
+    EnemyHP enemyHP;
 
     public List<Note> notes = new List<Note>();
     public AudioSource musicSource;
@@ -85,6 +86,7 @@ public class CheckNotes : MonoBehaviour
             NotesEffect("Perfect");
             DestoryNotes++;
             Destroy(closestNote.Notes);
+            EnemyDamage(10);
         }
         else if (closestDiff <= greatRange)
         {
@@ -94,6 +96,7 @@ public class CheckNotes : MonoBehaviour
             NotesEffect("Great");
             DestoryNotes++;
             Destroy(closestNote.Notes);
+            EnemyDamage(5);
         }
         else if (closestDiff <= goodRange)
         {
@@ -103,6 +106,7 @@ public class CheckNotes : MonoBehaviour
             NotesEffect("Good");
             DestoryNotes++;
             Destroy(closestNote.Notes);
+            EnemyDamage(2);
         }
         else
         {
@@ -177,5 +181,10 @@ public class CheckNotes : MonoBehaviour
                 Instantiate(GoodEffect, CheckPosition, Quaternion.identity,Canvastransform);
                 break;
         }
+    }
+
+    void EnemyDamage(int Damage)
+    {
+        enemyHP.TakeDamage(Damage);
     }
 }
