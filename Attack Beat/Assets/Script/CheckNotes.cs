@@ -91,6 +91,7 @@ public class CheckNotes : MonoBehaviour
             NotesEffect("Perfect");
             DestoryNotes++;
             Destroy(closestNote.Notes);
+            notes.Remove(closestNote);
             EnemyDamage(10);
         }
         else if (closestDiff <= greatRange)
@@ -101,6 +102,7 @@ public class CheckNotes : MonoBehaviour
             NotesEffect("Great");
             DestoryNotes++;
             Destroy(closestNote.Notes);
+            notes.Remove(closestNote);
             EnemyDamage(5);
         }
         else if (closestDiff <= goodRange)
@@ -111,6 +113,7 @@ public class CheckNotes : MonoBehaviour
             NotesEffect("Good");
             DestoryNotes++;
             Destroy(closestNote.Notes);
+            notes.Remove(closestNote);
             EnemyDamage(2);
         }
         else
@@ -118,6 +121,7 @@ public class CheckNotes : MonoBehaviour
             ShowResult("Miss");
             DestoryNotes++;
             Destroy(closestNote.Notes);
+            notes.Remove(closestNote);
         }
     }
 

@@ -215,8 +215,8 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 8300000, guid: 2be55d00b2f96c64da2e0cbf01140dc2, type: 3}
-  m_Resource: {fileID: 8300000, guid: 2be55d00b2f96c64da2e0cbf01140dc2, type: 3}
+  m_audioClip: {fileID: 8300000, guid: 1afc243dd75080e40a6a6764a51fd85f, type: 3}
+  m_Resource: {fileID: 8300000, guid: 1afc243dd75080e40a6a6764a51fd85f, type: 3}
   m_PlayOnAwake: 1
   m_Volume: 0
   m_Pitch: 1
@@ -535,8 +535,8 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 8300000, guid: e0039b7d3a5bac541ac8750fe2bcfd7b, type: 3}
-  m_Resource: {fileID: 8300000, guid: e0039b7d3a5bac541ac8750fe2bcfd7b, type: 3}
+  m_audioClip: {fileID: 8300000, guid: aa28c9fec9afa454d851cbf626ab5569, type: 3}
+  m_Resource: {fileID: 8300000, guid: aa28c9fec9afa454d851cbf626ab5569, type: 3}
   m_PlayOnAwake: 1
   m_Volume: 1
   m_Pitch: 1
@@ -1615,54 +1615,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3654f7c006fb6804983456e557ab3def, type: 3}
---- !u!1 &1146173174
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1146173176}
-  - component: {fileID: 1146173175}
-  m_Layer: 0
-  m_Name: NoteSpawner
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &1146173175
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1146173174}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bbf7e323265b0fe4a88149d147c2e0c9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  notePrefab: {fileID: 6647331566183042780, guid: 3f686d2971c32084d95d095057e6ec12, type: 3}
-  spawnX: 10
-  spawnY: -3.5
-  interval: 1
---- !u!4 &1146173176
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1146173174}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 9.26, y: -3.01, z: 0.036899365}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1175384515
 GameObject:
   m_ObjectHideFlags: 0
@@ -2459,6 +2411,120 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1698260878}
   m_CullTransparentMesh: 1
+--- !u!1 &1715974400
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1715974402}
+  - component: {fileID: 1715974401}
+  m_Layer: 0
+  m_Name: NotesSpwaner
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1715974401
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1715974400}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 652007049d7536546a2e6cf4c6b43cf9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  notesData:
+  - timing: 10
+    lane: 0
+    speed: 4
+    prefab: {fileID: 1942516470}
+  - timing: 11
+    lane: 0
+    speed: 4
+    prefab: {fileID: 1942516470}
+  - timing: 12
+    lane: 0
+    speed: 2
+    prefab: {fileID: 1942516470}
+  - timing: 13
+    lane: 0
+    speed: 1
+    prefab: {fileID: 1942516470}
+  - timing: 14
+    lane: 0
+    speed: 4
+    prefab: {fileID: 1942516470}
+  - timing: 15
+    lane: 0
+    speed: 4
+    prefab: {fileID: 1942516470}
+  - timing: 16
+    lane: 0
+    speed: 4
+    prefab: {fileID: 1942516470}
+  - timing: 17
+    lane: 0
+    speed: 4
+    prefab: {fileID: 1942516470}
+  - timing: 18
+    lane: 0
+    speed: 4
+    prefab: {fileID: 1942516470}
+  - timing: 19
+    lane: 0
+    speed: 4
+    prefab: {fileID: 1942516470}
+  - timing: 20
+    lane: 0
+    speed: 4
+    prefab: {fileID: 1942516470}
+  - timing: 21
+    lane: 0
+    speed: 4
+    prefab: {fileID: 1942516470}
+  - timing: 22
+    lane: 0
+    speed: 2
+    prefab: {fileID: 1942516470}
+  lanePoints:
+  - {fileID: 1715974402}
+  - {fileID: 1715974402}
+  - {fileID: 1715974402}
+  - {fileID: 1715974402}
+  - {fileID: 1715974402}
+  - {fileID: 1715974402}
+  - {fileID: 1715974402}
+  - {fileID: 1715974402}
+  - {fileID: 1715974402}
+  - {fileID: 1715974402}
+  - {fileID: 1715974402}
+  - {fileID: 1715974402}
+  - {fileID: 1715974402}
+  judgePoint: {fileID: 1288742003}
+  checkNotes: {fileID: 2023669}
+  musicSource: {fileID: 2023670}
+--- !u!4 &1715974402
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1715974400}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 2.883771, y: 2.2056603, z: -0.033763442}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1851556951
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2682,7 +2748,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 2
+  m_SortingOrder: 1
   m_Sprite: {fileID: 2703798812312188694, guid: 10040ed41cc799246a040f104f46d3c3, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -2793,7 +2859,6 @@ SceneRoots:
   - {fileID: 1624427389}
   - {fileID: 1198198826}
   - {fileID: 388842546}
-  - {fileID: 1146173176}
   - {fileID: 2023668}
   - {fileID: 341864670}
   - {fileID: 6917351898681836422}
@@ -2810,3 +2875,4 @@ SceneRoots:
   - {fileID: 1175384519}
   - {fileID: 1669283014}
   - {fileID: 2061684702}
+  - {fileID: 1715974402}
