@@ -29,6 +29,8 @@ public class CheckNotes : MonoBehaviour
     [SerializeField] public GameObject GreatEffect;
     [SerializeField] public GameObject GoodEffect;
 
+    [SerializeField] public Transform Canvastransform;
+
     [SerializeField]public Vector2 CheckPosition;
 
     SoundPlay SoundPlay;
@@ -82,7 +84,7 @@ public class CheckNotes : MonoBehaviour
             ShowResult("Perfect");
             NotesEffect("Perfect");
             DestoryNotes++;
-            //Destory(notes);
+            Destroy(closestNote.Notes);
         }
         else if (closestDiff <= greatRange)
         {
@@ -90,6 +92,8 @@ public class CheckNotes : MonoBehaviour
             Great++;
             ShowResult("Great");
             NotesEffect("Great");
+            DestoryNotes++;
+            Destroy(closestNote.Notes);
         }
         else if (closestDiff <= goodRange)
         {
@@ -97,10 +101,14 @@ public class CheckNotes : MonoBehaviour
             Good++;
             ShowResult("Good");
             NotesEffect("Good");
+            DestoryNotes++;
+            Destroy(closestNote.Notes);
         }
         else
         {
             ShowResult("Miss");
+            DestoryNotes++;
+            Destroy(closestNote.Notes);
         }
     }
 
@@ -125,6 +133,18 @@ public class CheckNotes : MonoBehaviour
         if (resultText != null)
         {
             resultText.text = result;
+            switch(result)
+            {
+                case "Perfect":
+                    resultText.color = new Color(16, 0, 0);
+                    break;
+                case "Great":
+                    resultText.color = new Color(0, 0, 16);
+                    break;
+                case "Good":
+                    resultText.color = new Color(0, 16, 0);
+                    break;
+            }
         }
 
         switch (result)
@@ -148,13 +168,13 @@ public class CheckNotes : MonoBehaviour
         switch(Note_Check)
         {
             case "Perfect":
-                Instantiate(PerfectEffect, CheckPosition, Quaternion.identity);
+                Instantiate(PerfectEffect, CheckPosition, Quaternion.identity,Canvastransform);
                 break;
             case "Great":
-                Instantiate(GreatEffect, CheckPosition, Quaternion.identity);
+                Instantiate(GreatEffect, CheckPosition, Quaternion.identity,Canvastransform);
                 break;
             case "Good":
-                Instantiate(GoodEffect, CheckPosition, Quaternion.identity);
+                Instantiate(GoodEffect, CheckPosition, Quaternion.identity,Canvastransform);
                 break;
         }
     }
