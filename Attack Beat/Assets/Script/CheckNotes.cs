@@ -45,6 +45,11 @@ public class CheckNotes : MonoBehaviour
     public float greatRange = 0.15f;
     public float goodRange = 0.2f;
 
+    void Start()
+    {
+        enemyHP = FindObjectOfType<EnemyHP>();
+    }
+
     void Update()
     {
         if (Input.GetKeyDown(KeyCode.Space))
