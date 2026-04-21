@@ -18,14 +18,6 @@ public class EnemyHP : MonoBehaviour
         UpdateHPBar();
     }
 
-    void Update()
-    {
-        // スペースキーでダメージ（テスト用）
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            TakeDamage(10);
-        }
-    }
 
     public void TakeDamage(int damage)
     {
