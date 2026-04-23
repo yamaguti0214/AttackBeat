@@ -32,12 +32,30 @@ public class NoteRecorder : MonoBehaviour
 
     void Awake()
     {
-        path = Application.persistentDataPath + "/notes.json";
-        Load(); // 起動時に自動読み込み
+        string desktopPath = System.Environment.GetFolderPath(System.Environment.SpecialFolder.Desktop);
+        path = Path.Combine(desktopPath, "notes_song1.json");
+
+        Debug.Log("保存先: " + path);
+
+        Load();
     }
 
     void Update()
     {
+        //Rキーでモードの切り替え
+        if(Input.GetKeyDown(KeyCode.R))
+        {
+            if (mode == Mode.Record)
+            {
+                mode = Mode.Play;
+            }
+            else if (mode == Mode.Play)
+            {
+                mode = Mode.Record;
+            }
+;
+        }
+
         if (mode == Mode.Record)
         {
             if (Input.GetKeyDown(KeyCode.Space))

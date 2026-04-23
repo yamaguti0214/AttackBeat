@@ -47,7 +47,7 @@ public class CheckNotes : MonoBehaviour
 
     void Start()
     {
-        enemyHP = FindObjectOfType<EnemyHP>();
+        enemyHP = FindFirstObjectByType<EnemyHP>();
     }
 
     void Update()
@@ -129,14 +129,25 @@ public class CheckNotes : MonoBehaviour
     {
         float currentTime = musicSource.time;
 
-        foreach (var note in notes)
+        for (int i = notes.Count - 1; i >= 0; i--)
         {
+            var note = notes[i];
+
+            if (note == null || note.Notes == null)
+            {
+                notes.RemoveAt(i);
+                continue;
+            }
+
             if (note.isHit) continue;
 
             if (currentTime - note.timing > goodRange)
             {
                 note.isHit = true;
                 ShowResult("Miss");
+
+                Destroy(note.Notes);
+                notes.RemoveAt(i);
             }
         }
     }
