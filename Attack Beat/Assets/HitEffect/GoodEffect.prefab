@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 3305828838489286940}
   - component: {fileID: 8884371268655795233}
   - component: {fileID: 6407731412827142733}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: GoodEffect
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4902,7 +4902,7 @@ GameObject:
   - component: {fileID: 1121456887086729909}
   - component: {fileID: 6979558874660809121}
   - component: {fileID: 4266018169002784989}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Simbol
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -9799,7 +9799,7 @@ GameObject:
   - component: {fileID: 1887368501786400556}
   - component: {fileID: 2277958679936950585}
   - component: {fileID: 4194126363462939625}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Shockwave
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -14705,7 +14705,7 @@ GameObject:
   - component: {fileID: 5659425032160867159}
   - component: {fileID: 4635601699776400356}
   - component: {fileID: 7440077884300545182}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Flash
   m_TagString: Untagged
   m_Icon: {fileID: 0}

@@ -29,9 +29,12 @@ public class CheckNotes : MonoBehaviour
     [SerializeField] public GameObject GreatEffect;
     [SerializeField] public GameObject GoodEffect;
 
+    [SerializeField] public Transform Canvastransform;
+
     [SerializeField]public Vector2 CheckPosition;
 
     SoundPlay SoundPlay;
+    EnemyHP enemyHP;
 
     public List<Note> notes = new List<Note>();
     public AudioSource musicSource;
@@ -41,6 +44,11 @@ public class CheckNotes : MonoBehaviour
     public float perfectRange = 0.1f;
     public float greatRange = 0.15f;
     public float goodRange = 0.2f;
+
+    void Start()
+    {
+        enemyHP = FindFirstObjectByType<EnemyHP>();
+    }
 
     void Update()
     {
@@ -82,7 +90,9 @@ public class CheckNotes : MonoBehaviour
             ShowResult("Perfect");
             NotesEffect("Perfect");
             DestoryNotes++;
-            //Destory(notes);
+            Destroy(closestNote.Notes);
+            notes.Remove(closestNote);
+            EnemyDamage(10);
         }
         else if (closestDiff <= greatRange)
         {
@@ -90,6 +100,10 @@ public class CheckNotes : MonoBehaviour
             Great++;
             ShowResult("Great");
             NotesEffect("Great");
+            DestoryNotes++;
+            Destroy(closestNote.Notes);
+            notes.Remove(closestNote);
+            EnemyDamage(5);
         }
         else if (closestDiff <= goodRange)
         {
@@ -97,10 +111,17 @@ public class CheckNotes : MonoBehaviour
             Good++;
             ShowResult("Good");
             NotesEffect("Good");
+            DestoryNotes++;
+            Destroy(closestNote.Notes);
+            notes.Remove(closestNote);
+            EnemyDamage(2);
         }
         else
         {
             ShowResult("Miss");
+            DestoryNotes++;
+            Destroy(closestNote.Notes);
+            notes.Remove(closestNote);
         }
     }
 
@@ -108,14 +129,25 @@ public class CheckNotes : MonoBehaviour
     {
         float currentTime = musicSource.time;
 
-        foreach (var note in notes)
+        for (int i = notes.Count - 1; i >= 0; i--)
         {
+            var note = notes[i];
+
+            if (note == null || note.Notes == null)
+            {
+                notes.RemoveAt(i);
+                continue;
+            }
+
             if (note.isHit) continue;
 
             if (currentTime - note.timing > goodRange)
             {
                 note.isHit = true;
                 ShowResult("Miss");
+
+                Destroy(note.Notes);
+                notes.RemoveAt(i);
             }
         }
     }
@@ -125,6 +157,18 @@ public class CheckNotes : MonoBehaviour
         if (resultText != null)
         {
             resultText.text = result;
+            switch(result)
+            {
+                case "Perfect":
+                    resultText.color = new Color(16, 0, 0);
+                    break;
+                case "Great":
+                    resultText.color = new Color(0, 0, 16);
+                    break;
+                case "Good":
+                    resultText.color = new Color(0, 16, 0);
+                    break;
+            }
         }
 
         switch (result)
@@ -148,14 +192,19 @@ public class CheckNotes : MonoBehaviour
         switch(Note_Check)
         {
             case "Perfect":
-                Instantiate(PerfectEffect, CheckPosition, Quaternion.identity);
+                Instantiate(PerfectEffect, CheckPosition, Quaternion.identity,Canvastransform);
                 break;
             case "Great":
-                Instantiate(GreatEffect, CheckPosition, Quaternion.identity);
+                Instantiate(GreatEffect, CheckPosition, Quaternion.identity,Canvastransform);
                 break;
             case "Good":
-                Instantiate(GoodEffect, CheckPosition, Quaternion.identity);
+                Instantiate(GoodEffect, CheckPosition, Quaternion.identity,Canvastransform);
                 break;
         }
+    }
+
+    void EnemyDamage(int Damage)
+    {
+        enemyHP.TakeDamage(Damage);
     }
 }
