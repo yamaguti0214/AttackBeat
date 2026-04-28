@@ -29,22 +29,22 @@ public class SoundPlay : MonoBehaviour
             }
             else if(CurrentTimer <= 2f)
             {
-                CountDownText.text = ("----- 4 -----");
+                CountDownText.text = ("---- 4 ----");
                 CountDownText.color = new Color(0f, 1f, 0f);
             }
             else if (CurrentTimer <= 3f)
             {
-                CountDownText.text = ("----- 3 -----");
+                CountDownText.text = ("--- 3 ---");
                 CountDownText.color = new Color(1f, 1f, 0f);
             }
             else if (CurrentTimer <= 4f)
             {
-                CountDownText.text = ("----- 2 -----");
+                CountDownText.text = ("-- 2 --");
                 CountDownText.color = new Color(1f, 0.5f, 0f);
             }
             else if (CurrentTimer < 5f)
             {
-                CountDownText.text = ("----- 1 -----");
+                CountDownText.text = ("- 1 -");
                 CountDownText.color = new Color(1f, 0f, 0f);
             }
             else if(CurrentTimer <= 6f)
