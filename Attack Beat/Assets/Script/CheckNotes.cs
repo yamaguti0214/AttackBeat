@@ -34,7 +34,6 @@ public class CheckNotes : MonoBehaviour
     [SerializeField]public Vector2 CheckPosition;
 
     SoundPlay SoundPlay;
-    EnemyHP enemyHP;
 
     public List<Note> notes = new List<Note>();
     public AudioSource musicSource;
@@ -45,9 +44,11 @@ public class CheckNotes : MonoBehaviour
     public float greatRange = 0.15f;
     public float goodRange = 0.2f;
 
+    //çáåvÇ≈çUåÇ
+    public static int FullAttack = 0;
+
     void Start()
     {
-        enemyHP = FindFirstObjectByType<EnemyHP>();
     }
 
     void Update()
@@ -55,7 +56,6 @@ public class CheckNotes : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Space))
         {
             Judge();
-            //SoundPlay.Soundplay();
         }
 
         CheckMiss();
@@ -92,7 +92,7 @@ public class CheckNotes : MonoBehaviour
             DestoryNotes++;
             Destroy(closestNote.Notes);
             notes.Remove(closestNote);
-            EnemyDamage(10);
+            FullAttack += 5; 
         }
         else if (closestDiff <= greatRange)
         {
@@ -103,7 +103,7 @@ public class CheckNotes : MonoBehaviour
             DestoryNotes++;
             Destroy(closestNote.Notes);
             notes.Remove(closestNote);
-            EnemyDamage(5);
+            FullAttack += 3;
         }
         else if (closestDiff <= goodRange)
         {
@@ -114,7 +114,7 @@ public class CheckNotes : MonoBehaviour
             DestoryNotes++;
             Destroy(closestNote.Notes);
             notes.Remove(closestNote);
-            EnemyDamage(2);
+            FullAttack += 1;
         }
         else
         {
@@ -201,10 +201,5 @@ public class CheckNotes : MonoBehaviour
                 Instantiate(GoodEffect, CheckPosition, Quaternion.identity,Canvastransform);
                 break;
         }
-    }
-
-    void EnemyDamage(int Damage)
-    {
-        enemyHP.TakeDamage(Damage);
     }
 }
