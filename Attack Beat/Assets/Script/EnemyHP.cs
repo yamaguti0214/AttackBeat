@@ -11,24 +11,63 @@ public class EnemyHP : MonoBehaviour
     public Image hpBarFill;
     Animator animator;
 
+    public float attackInterval = 2f;
+    bool isDead = false;
+
+    public int attackDamage = 10;
+
+    //  SE用
+    public AudioSource audioSource;
+    public AudioClip attack1SE;
+    public AudioClip attack2SE;
+    public AudioClip attack3SE;
+
     void Start()
     {
         currentHP = maxHP;
         animator = GetComponent<Animator>();
         UpdateHPBar();
+
+        StartCoroutine(AttackLoop());
     }
 
-    void Update()
+    //  Animation Eventから呼ばれる
+    public void PlayAttack1SE()
     {
-        // スペースキーでダメージ（テスト用）
-        if (Input.GetKeyDown(KeyCode.Space))
+        audioSource.PlayOneShot(attack1SE);
+    }
+
+    public void PlayAttack2SE()
+    {
+        audioSource.PlayOneShot(attack2SE);
+    }
+
+    public void PlayAttack3SE()
+    {
+        audioSource.PlayOneShot(attack3SE);
+    }
+
+    IEnumerator AttackLoop()
+    {
+        while (!isDead)
         {
-            TakeDamage(10);
+            yield return new WaitForSeconds(attackInterval);
+
+            int rand = Random.Range(0, 3);
+
+            if (rand == 0)
+                animator.SetTrigger("Attack1");
+            else if (rand == 1)
+                animator.SetTrigger("Attack2");
+            else
+                animator.SetTrigger("Attack3");
         }
     }
 
     public void TakeDamage(int damage)
     {
+        if (isDead) return;
+
         currentHP -= damage;
         currentHP = Mathf.Clamp(currentHP, 0, maxHP);
 
@@ -36,19 +75,32 @@ public class EnemyHP : MonoBehaviour
 
         if (currentHP > 0)
         {
-            // ダメージアニメ
             animator.SetTrigger("Damage");
         }
         else
         {
-            // 死亡アニメ
+            isDead = true;
             animator.SetTrigger("Die");
-
         }
     }
 
     void UpdateHPBar()
     {
         hpBarFill.fillAmount = (float)currentHP / maxHP;
+    }
+
+    public void DealDamage()
+    {
+        GameObject player = GameObject.FindWithTag("Player");
+
+        if (player != null)
+        {
+            PlayerHP hp = player.GetComponent<PlayerHP>();
+
+            if (hp != null)
+            {
+                hp.TakeDamage(attackDamage);
+            }
+        }
     }
 }

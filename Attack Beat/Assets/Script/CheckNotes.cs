@@ -44,12 +44,18 @@ public class CheckNotes : MonoBehaviour
     public float greatRange = 0.15f;
     public float goodRange = 0.2f;
 
+    //çáåvÇ≈çUåÇ
+    public static int FullAttack = 0;
+
+    void Start()
+    {
+    }
+
     void Update()
     {
         if (Input.GetKeyDown(KeyCode.Space))
         {
             Judge();
-            //SoundPlay.Soundplay();
         }
 
         CheckMiss();
@@ -85,6 +91,8 @@ public class CheckNotes : MonoBehaviour
             NotesEffect("Perfect");
             DestoryNotes++;
             Destroy(closestNote.Notes);
+            notes.Remove(closestNote);
+            FullAttack += 5; 
         }
         else if (closestDiff <= greatRange)
         {
@@ -94,6 +102,8 @@ public class CheckNotes : MonoBehaviour
             NotesEffect("Great");
             DestoryNotes++;
             Destroy(closestNote.Notes);
+            notes.Remove(closestNote);
+            FullAttack += 3;
         }
         else if (closestDiff <= goodRange)
         {
@@ -103,12 +113,15 @@ public class CheckNotes : MonoBehaviour
             NotesEffect("Good");
             DestoryNotes++;
             Destroy(closestNote.Notes);
+            notes.Remove(closestNote);
+            FullAttack += 1;
         }
         else
         {
             ShowResult("Miss");
             DestoryNotes++;
             Destroy(closestNote.Notes);
+            notes.Remove(closestNote);
         }
     }
 
@@ -116,14 +129,25 @@ public class CheckNotes : MonoBehaviour
     {
         float currentTime = musicSource.time;
 
-        foreach (var note in notes)
+        for (int i = notes.Count - 1; i >= 0; i--)
         {
+            var note = notes[i];
+
+            if (note == null || note.Notes == null)
+            {
+                notes.RemoveAt(i);
+                continue;
+            }
+
             if (note.isHit) continue;
 
             if (currentTime - note.timing > goodRange)
             {
                 note.isHit = true;
                 ShowResult("Miss");
+
+                Destroy(note.Notes);
+                notes.RemoveAt(i);
             }
         }
     }
