@@ -11,6 +11,8 @@ public class SoundPlay : MonoBehaviour
 
     private bool firstCountDown = false;
     private float CurrentTimer;
+
+    public static bool SoundEnd = false;
     // Start is called before the first frame update
     void Start()
     {
@@ -54,6 +56,13 @@ public class SoundPlay : MonoBehaviour
                 CurrentTimer = 0f;
                 firstCountDown = true;
             }
+        }
+
+        if (!Sound.isPlaying && !SoundEnd && firstCountDown)
+        {
+            SoundEnd = true;
+
+            Debug.Log("ã»èIóπÅI");
         }
     }
 

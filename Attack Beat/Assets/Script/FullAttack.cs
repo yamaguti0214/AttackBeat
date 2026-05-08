@@ -17,6 +17,17 @@ public class FullAttack : MonoBehaviour
     private float GergeTimer = 0f;
     private int CurrentMoveColor = 0;
     private int CurrentColor = 0;
+
+    private bool Attack = false;
+
+    //攻撃時の威力の判定
+    private int MinimumAttack = 0;
+    private int SmallAttack = 99999;
+    private int MediumAttack = 99999;
+    private int BigAttack = 99999;
+    private int MaxAttack = 99999;
+    private int OverAttack = 999999;
+    [SerializeField] private GameObject AttackEffect;
     // Start is called before the first frame update
     void Start()
     {
@@ -45,6 +56,12 @@ public class FullAttack : MonoBehaviour
             new Color32(128,0,255,255),
             new Color32(255,0,255,255)
         };
+
+        SmallAttack = Mathf.FloorToInt(enemyHP.maxHP * 0.3f); 
+        MediumAttack = Mathf.FloorToInt(enemyHP.maxHP * 0.5f);
+        BigAttack = Mathf.FloorToInt(enemyHP.maxHP * 0.7f);
+        MaxAttack = enemyHP.maxHP;
+        OverAttack = Mathf.FloorToInt(enemyHP.maxHP * 1.2f);
     }
 
     // Update is called once per frame
@@ -111,11 +128,59 @@ public class FullAttack : MonoBehaviour
                 }
             }
         }
+
+        if(SoundPlay.SoundEnd && !Attack)
+        {
+            Attack = true;
+
+            switch (CheckNotes.FullAttack)
+            {
+                case int n when n >= OverAttack:
+                    CreateEffect(Color.blue);
+                    break;
+                case int n when n >= MaxAttack:
+                    Attack = true;
+                    break;
+                case int n when n >= BigAttack:
+                    Attack = false;
+                    break;
+                case int n when n >= MediumAttack:
+                    Attack = true;
+                    break;
+                case int n when n >= SmallAttack:
+                    Attack = true;
+                    break;
+                default:
+                    Debug.Log("REEEEED");
+                    CreateEffect(Color.green);
+                    break;
+            }
+
+            //Instantiate(AttackEffect);
+            EnemyDamage(CheckNotes.FullAttack);
+        }
     }
 
 
     void EnemyDamage(int Damage)
     {
         enemyHP.TakeDamage(Damage);
+    }
+
+    //攻撃時の威力によって色が変わるエフェクト
+    void CreateEffect(Color color)
+    {
+        GameObject obj =
+            Instantiate(AttackEffect);
+
+        ParticleSystem[] psList =
+            obj.GetComponentsInChildren<ParticleSystem>();
+
+        foreach (ParticleSystem ps in psList)
+        {
+            var main = ps.main;
+
+            main.startColor = color;
+        }
     }
 }
