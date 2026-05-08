@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -8,15 +9,22 @@ public class FullAttack : MonoBehaviour
     EnemyHP enemyHP;
     [SerializeField] private Image[] AttackgergeImage;
 
-    
+    [SerializeField] private TextMeshProUGUI MAXText;
+    [SerializeField] private GameObject MAXTextObject;
     Color[] rainbow;            //ゲージマックスの虹色の配列
     private bool GergeMAX = false;
 
     private float GergeTimer = 0f;
-    private int CurrenMoveColor = 0;
+    private int CurrentMoveColor = 0;
+    private int CurrentColor = 0;
     // Start is called before the first frame update
     void Start()
     {
+        if (MAXText == null && MAXTextObject != null)
+        {
+            MAXText = MAXTextObject.GetComponent<TextMeshProUGUI>();
+        }
+
         enemyHP = FindFirstObjectByType<EnemyHP>();
 
         rainbow = new Color[15]
@@ -47,41 +55,59 @@ public class FullAttack : MonoBehaviour
             EnemyDamage(CheckNotes.FullAttack);
         }
 
-        if (CheckNotes.FullAttack >= 5 && AttackgergeImage[0].color.a < 1)
+        if(!GergeMAX)
         {
-            Color gergeImageColor = AttackgergeImage[0].color;
-            gergeImageColor.a = 1f;
-            gergeImageColor = new Color(0f, 1f, 0f);
-            AttackgergeImage[0].color = gergeImageColor;
-        } 
-        else if (CheckNotes.FullAttack >= 10 && AttackgergeImage[1].color.a < 1)
-        {
-            Color gergeImageColor = AttackgergeImage[1].color;
-            gergeImageColor.a = 1f;
-            gergeImageColor = new Color(0f, 1f, 0f);
-            AttackgergeImage[1].color = gergeImageColor;
-        }
-        else if (CheckNotes.FullAttack >= 15 && AttackgergeImage[2].color.a < 1)
-        {
-            Color gergeImageColor = AttackgergeImage[2].color;
-            gergeImageColor.a = 1f;
-            gergeImageColor = new Color(0f, 1f, 0f);
-            AttackgergeImage[2].color = gergeImageColor;
-        }
+            if (CheckNotes.FullAttack >= 5 && AttackgergeImage[0].color.a < 1)
+            {
+                Color gergeImageColor = AttackgergeImage[0].color;
+                gergeImageColor.a = 1f;
+                gergeImageColor = new Color(0f, 1f, 0f);
+                AttackgergeImage[0].color = gergeImageColor;
+            }
+            else if (CheckNotes.FullAttack >= 10 && AttackgergeImage[1].color.a < 1)
+            {
+                Color gergeImageColor = AttackgergeImage[1].color;
+                gergeImageColor.a = 1f;
+                gergeImageColor = new Color(0f, 1f, 0f);
+                AttackgergeImage[1].color = gergeImageColor;
+            }
+            else if (CheckNotes.FullAttack >= 15 && AttackgergeImage[2].color.a < 1)
+            {
+                Color gergeImageColor = AttackgergeImage[2].color;
+                gergeImageColor.a = 1f;
+                gergeImageColor = new Color(0f, 1f, 0f);
+                AttackgergeImage[2].color = gergeImageColor;
+            }
 
-        if(GergeMAX)
+            if(CheckNotes.FullAttack >= 20)
+            {
+                GergeMAX = true;
+                MAXTextObject.SetActive(true);
+            }
+        }
+        else if (GergeMAX)
         {
             GergeTimer += Time.deltaTime;
-            if(GergeTimer >= 0.5f)
+            if(GergeTimer >= 0.04f)
             {
                 GergeTimer = 0;
-                for(int i = 0;i < 15;i++)
+                CurrentMoveColor++;
+                if(CurrentMoveColor >= 14)
                 {
-                    CurrenMoveColor++;
-                    if (i + CurrenMoveColor >= 15)
+                    CurrentMoveColor = 0;
+                }
+                for (int i = 0;i < 15;i++)
+                {
+                    if (i + CurrentMoveColor >= 15)
                     {
-                        
+                        CurrentColor = i + CurrentMoveColor - 15;
                     }
+                    else
+                    {
+                        CurrentColor = i + CurrentMoveColor;
+                    }
+                    AttackgergeImage[i].color = rainbow[CurrentColor];
+                    MAXText.color = rainbow[CurrentColor];
                 }
             }
         }

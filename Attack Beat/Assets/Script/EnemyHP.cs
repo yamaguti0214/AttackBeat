@@ -14,6 +14,8 @@ public class EnemyHP : MonoBehaviour
     public float attackInterval = 2f;
     bool isDead = false;
 
+    public int attackDamage = 10;
+
     //  SE—p
     public AudioSource audioSource;
     public AudioClip attack1SE;
@@ -85,5 +87,20 @@ public class EnemyHP : MonoBehaviour
     void UpdateHPBar()
     {
         hpBarFill.fillAmount = (float)currentHP / maxHP;
+    }
+
+    public void DealDamage()
+    {
+        GameObject player = GameObject.FindWithTag("Player");
+
+        if (player != null)
+        {
+            PlayerHP hp = player.GetComponent<PlayerHP>();
+
+            if (hp != null)
+            {
+                hp.TakeDamage(attackDamage);
+            }
+        }
     }
 }
