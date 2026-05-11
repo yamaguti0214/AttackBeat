@@ -218,6 +218,7 @@ public class FullAttack : MonoBehaviour
             {
                 case int n when n >= OverAttack:
                     CreateEffect(new Color(1f, 0f, 1f));
+                    CreateEffect(Color.yellow);
                     CreateEffect(Color.red);
                     CreateEffect(Color.blue);
                     CreateEffect(Color.green);
@@ -225,32 +226,33 @@ public class FullAttack : MonoBehaviour
                     Attack = true;
                     break;
                 case int n when n >= MaxAttack:
+                    CreateEffect(Color.yellow);
                     CreateEffect(Color.red);
                     CreateEffect(Color.blue);
                     CreateEffect(Color.green);
-                    CreateEffect(Color.white);
+                    CreateEffect(Color.gray);
                     Attack = true;
                     break;
                 case int n when n >= BigAttack:
                     CreateEffect(Color.red);
                     CreateEffect(Color.blue);
                     CreateEffect(Color.green);
-                    CreateEffect(Color.white);
+                    CreateEffect(Color.gray);
                     Attack = false;
                     break;
                 case int n when n >= MediumAttack:
                     CreateEffect(Color.blue);
                     CreateEffect(Color.green);
-                    CreateEffect(Color.white);
+                    CreateEffect(Color.gray);
                     Attack = true;
                     break;
                 case int n when n >= SmallAttack:
                     CreateEffect(Color.green);
-                    CreateEffect(Color.white);
+                    CreateEffect(Color.gray);
                     Attack = true;
                     break;
                 default:
-                    CreateEffect(Color.white);
+                    CreateEffect(Color.gray);
                     Attack = true;
                     break;
             }

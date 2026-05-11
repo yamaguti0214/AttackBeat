@@ -33,7 +33,7 @@ public class CheckNotes : MonoBehaviour
 
     [SerializeField]public Vector2 CheckPosition;
 
-    SoundPlay SoundPlay;
+    [SerializeField]private SoundPlay soundPlay;
 
     public List<Note> notes = new List<Note>();
     public AudioSource musicSource;
@@ -55,6 +55,7 @@ public class CheckNotes : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Space))
         {
+            soundPlay.SEPlay();
             Judge();
         }
 
