@@ -592,6 +592,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Sound: {fileID: 341864671}
+  CountDownText: {fileID: 0}
 --- !u!4 &341864670
 Transform:
   m_ObjectHideFlags: 0
@@ -1615,7 +1616,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 1
+  m_SortingOrder: 3
   m_Sprite: {fileID: 21300000, guid: 4faa6a26a46682142b7cc5a6125e9daf, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -1636,7 +1637,7 @@ Transform:
   m_GameObject: {fileID: 1288742001}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -6, y: -3, z: 0}
+  m_LocalPosition: {x: -9.77, y: -3, z: 0}
   m_LocalScale: {x: 0.34797, y: 0.34797, z: 0.34797}
   m_ConstrainProportionsScale: 0
   m_Children: []
