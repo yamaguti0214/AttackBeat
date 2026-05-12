@@ -18,7 +18,7 @@ public class FadeManager : MonoBehaviour
     {
         if(Input.GetKeyDown(KeyCode.A))
         {
-            LoadScene("CreateNotes_Yama");
+            LoadScene("Check_Yamaguchi");
         }
     }
 
