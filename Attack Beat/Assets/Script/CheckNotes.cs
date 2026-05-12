@@ -36,7 +36,6 @@ public class CheckNotes : MonoBehaviour
     [SerializeField]private SoundPlay soundPlay;
 
     public List<Note> notes = new List<Note>();
-    public AudioSource musicSource;
 
     public TextMeshProUGUI resultText; // © ‚±‚±‚ÉƒZƒbƒg
 
@@ -53,18 +52,22 @@ public class CheckNotes : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Space))
+        if (!ESCButton.Pause)
         {
-            soundPlay.SEPlay();
-            Judge();
-        }
+            if (Input.GetKeyDown(KeyCode.Space))
+            {
+                soundPlay.SEPlay();
+                Judge();
+            }
 
-        CheckMiss();
+            CheckMiss();
+
+        }
     }
 
     void Judge()
     {
-        float currentTime = musicSource.time;
+        float currentTime = SoundPlay.BGMSound_public.time;
 
         Note closestNote = null;
         float closestDiff = float.MaxValue;
@@ -128,7 +131,7 @@ public class CheckNotes : MonoBehaviour
 
     void CheckMiss()
     {
-        float currentTime = musicSource.time;
+        float currentTime = SoundPlay.BGMSound_public.time;
 
         for (int i = notes.Count - 1; i >= 0; i--)
         {

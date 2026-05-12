@@ -11,6 +11,9 @@ public class SoundPlay : MonoBehaviour
     [SerializeField] AudioSource SESound;
     [SerializeField] TextMeshProUGUI CountDownText;
 
+    public static AudioSource BGMSound_public;
+    public static AudioSource SESound_public;
+
     private bool firstCountDown = true;
     private float CurrentTimer;
 
@@ -18,7 +21,8 @@ public class SoundPlay : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+        BGMSound_public = BGMSound;
+        SESound_public = SESound;
     }
 
     // Update is called once per frame
@@ -42,7 +46,8 @@ public class SoundPlay : MonoBehaviour
 
         if(ESCButton.Pause)
         {
-            BGMSound.Stop();
+            BGMSound.Pause();
+            Debug.Log("hhhhhhhhhhh");
         }
     }
 

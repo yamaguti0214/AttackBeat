@@ -5,7 +5,7 @@ using UnityEngine;
 public class ESCButton : MonoBehaviour
 {
     [SerializeField]
-    private GameObject BGMSlider, SESlider, BGMText, SEText;
+    private GameObject BGMSlider, SESlider, BGMText, SEText,PauseImage;
 
     [SerializeField] private SoundPlay soundPlay;
     public static bool Pause = false;
@@ -27,16 +27,16 @@ public class ESCButton : MonoBehaviour
             OnEscbutton();
         }
 
-        if(!Pause && UnPause != 0 && UnPause % 2 == 0 && !CountDownEnd)
-        {
-            CurrentTimer += Time.deltaTime;
-            soundPlay.CountDown(CurrentTimer);
-            if (CurrentTimer >= 6f)
-            {
-                CurrentTimer = 0;
-                CountDownEnd = true;
-            }
-        }
+        //if (!Pause && UnPause != 0 && UnPause % 2 == 0 && !CountDownEnd)
+        //{
+        //    CurrentTimer += Time.unscaledDeltaTime;
+        //    soundPlay.CountDown(CurrentTimer);
+        //    if (CurrentTimer >= 6f)
+        //    {
+        //        CurrentTimer = 0;
+        //        CountDownEnd = true;
+        //    }
+        //}
     }
 
     public void OnEscbutton()
@@ -46,9 +46,14 @@ public class ESCButton : MonoBehaviour
         UnPause++;
         CountDownEnd = false;
 
+        Time.timeScale = 0f;
+
+        Debug.Log("XXXXXXXXXXXXX");
+
         BGMSlider.SetActive(!BGMSlider.activeSelf);
         SESlider.SetActive(!SESlider.activeSelf);
         BGMText.SetActive(!BGMText.activeSelf);
         SEText.SetActive(!SEText.activeSelf);
+        PauseImage.SetActive(!PauseImage.activeSelf);
     }
 }
