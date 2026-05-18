@@ -74,6 +74,7 @@ public class ESCButton : MonoBehaviour
         soundPlay.CountDown(CurrentTimer);
         if (CurrentTimer >= 6f)
         {
+
             CurrentTimer = 0;
             PauseCancel = false;
             Pause = false;
