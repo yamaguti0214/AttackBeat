@@ -3,6 +3,7 @@ using UnityEngine;
 using TMPro;
 using UnityEngine.UIElements;
 using System.Collections;
+using static CheckNotes;
 
 public class CheckNotes : MonoBehaviour
 {
@@ -33,10 +34,9 @@ public class CheckNotes : MonoBehaviour
 
     [SerializeField]public Vector2 CheckPosition;
 
-    SoundPlay SoundPlay;
+    [SerializeField]private SoundPlay soundPlay;
 
     public List<Note> notes = new List<Note>();
-    public AudioSource musicSource;
 
     public TextMeshProUGUI resultText; // Å© Ç±Ç±Ç…ÉZÉbÉg
 
@@ -49,24 +49,42 @@ public class CheckNotes : MonoBehaviour
 
     void Start()
     {
+        foreach (var note in notes)
+        {
+            
+        }
     }
 
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Space))
+        if (!ESCButton.Pause)
         {
-            Judge();
+            if (Input.GetKeyDown(KeyCode.Space))
+            {
+                soundPlay.SEPlay();
+                Judge();
+            }
+
+            CheckMiss();
+
         }
 
-        CheckMiss();
+        if(!ESCButton.Pause) Debug.Log("SoundPlay" + SoundPlay.BGMSound_public.time);
     }
 
     void Judge()
     {
-        float currentTime = musicSource.time;
+        float currentTime = SoundPlay.BGMSound_public.time;
 
         Note closestNote = null;
         float closestDiff = float.MaxValue;
+
+        Debug.Log(soundPlay);
+        Debug.Log(SoundPlay.BGMSound_public);
+
+        //Debug.Log("current:" + currentTime);
+        //Debug.Log("note:" + closestNote.timing);
+        //Debug.Log("diff:" + closestDiff);
 
         foreach (var note in notes)
         {
@@ -81,7 +99,7 @@ public class CheckNotes : MonoBehaviour
             }
         }
 
-        if (closestNote == null) return;
+        //Debug.Log("closestDiff :"+closestDiff);
 
         if (closestDiff <= perfectRange)
         {
@@ -92,7 +110,7 @@ public class CheckNotes : MonoBehaviour
             DestoryNotes++;
             Destroy(closestNote.Notes);
             notes.Remove(closestNote);
-            FullAttack += 5; 
+            FullAttack += 5;
         }
         else if (closestDiff <= greatRange)
         {
@@ -122,12 +140,14 @@ public class CheckNotes : MonoBehaviour
             DestoryNotes++;
             Destroy(closestNote.Notes);
             notes.Remove(closestNote);
+
+            Debug.Log("?????????");
         }
     }
 
     void CheckMiss()
     {
-        float currentTime = musicSource.time;
+        float currentTime = SoundPlay.BGMSound_public.time;
 
         for (int i = notes.Count - 1; i >= 0; i--)
         {

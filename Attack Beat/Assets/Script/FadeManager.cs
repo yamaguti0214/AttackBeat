@@ -1,4 +1,4 @@
-using System.Collections;
+Ôªøusing System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
@@ -10,15 +10,14 @@ public class FadeManager : MonoBehaviour
 
     void Start()
     {
-        // ÉVÅ[ÉìäJénéûÇ…ÉtÉFÅ[ÉhÉCÉì
         StartCoroutine(FadeIn());
     }
 
     private void Update()
     {
-        if(Input.GetKeyDown(KeyCode.A))
+        if (Input.GetKeyDown(KeyCode.A))
         {
-            LoadScene("Check_Yamaguchi");
+            LoadScene("CreateNotes_Yama");
         }
     }
 
@@ -32,8 +31,6 @@ public class FadeManager : MonoBehaviour
         yield return StartCoroutine(FadeOut());
 
         SceneManager.LoadScene(sceneName);
-
-        // éüÇÃÉVÅ[ÉìÇ≈FadeInÇ≥ÇπÇÈÇΩÇﬂ
     }
 
     IEnumerator FadeOut()
@@ -45,7 +42,7 @@ public class FadeManager : MonoBehaviour
             float alpha = time / fadeDuration;
             fadeImage.color = new Color(0, 0, 0, alpha);
 
-            time += Time.deltaTime;
+            time += Time.unscaledDeltaTime;
             yield return null;
         }
 
@@ -61,7 +58,7 @@ public class FadeManager : MonoBehaviour
             float alpha = time / fadeDuration;
             fadeImage.color = new Color(0, 0, 0, alpha);
 
-            time -= Time.deltaTime;
+            time -= Time.unscaledDeltaTime;
             yield return null;
         }
 

@@ -2411,6 +2411,7 @@ MonoBehaviour:
   - {fileID: 1019523187}
   MAXText: {fileID: 1479389645}
   MAXTextObject: {fileID: 1479389643}
+  AttackEffect: {fileID: 0}
 --- !u!4 &1282038534
 Transform:
   m_ObjectHideFlags: 0
@@ -3528,9 +3529,9 @@ MonoBehaviour:
   attackInterval: 2
   attackDamage: 10
   audioSource: {fileID: 1844759473}
-  attack1SE: {fileID: 0}
-  attack2SE: {fileID: 0}
-  attack3SE: {fileID: 0}
+  attack1SE: {fileID: 8300000, guid: cf78964478bf28541a2b383e18fdf482, type: 3}
+  attack2SE: {fileID: 8300000, guid: cf78964478bf28541a2b383e18fdf482, type: 3}
+  attack3SE: {fileID: 8300000, guid: cf78964478bf28541a2b383e18fdf482, type: 3}
 --- !u!95 &1844759470
 Animator:
   serializedVersion: 7
