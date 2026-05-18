@@ -3,6 +3,7 @@ using UnityEngine;
 using TMPro;
 using UnityEngine.UIElements;
 using System.Collections;
+using static CheckNotes;
 
 public class CheckNotes : MonoBehaviour
 {
@@ -48,6 +49,10 @@ public class CheckNotes : MonoBehaviour
 
     void Start()
     {
+        foreach (var note in notes)
+        {
+            
+        }
     }
 
     void Update()
@@ -63,6 +68,8 @@ public class CheckNotes : MonoBehaviour
             CheckMiss();
 
         }
+
+        if(!ESCButton.Pause) Debug.Log("SoundPlay" + SoundPlay.BGMSound_public.time);
     }
 
     void Judge()
@@ -71,6 +78,13 @@ public class CheckNotes : MonoBehaviour
 
         Note closestNote = null;
         float closestDiff = float.MaxValue;
+
+        Debug.Log(soundPlay);
+        Debug.Log(SoundPlay.BGMSound_public);
+
+        //Debug.Log("current:" + currentTime);
+        //Debug.Log("note:" + closestNote.timing);
+        //Debug.Log("diff:" + closestDiff);
 
         foreach (var note in notes)
         {
@@ -85,7 +99,7 @@ public class CheckNotes : MonoBehaviour
             }
         }
 
-        if (closestNote == null) return;
+        //Debug.Log("closestDiff :"+closestDiff);
 
         if (closestDiff <= perfectRange)
         {
@@ -96,7 +110,7 @@ public class CheckNotes : MonoBehaviour
             DestoryNotes++;
             Destroy(closestNote.Notes);
             notes.Remove(closestNote);
-            FullAttack += 5; 
+            FullAttack += 5;
         }
         else if (closestDiff <= greatRange)
         {
@@ -126,6 +140,8 @@ public class CheckNotes : MonoBehaviour
             DestoryNotes++;
             Destroy(closestNote.Notes);
             notes.Remove(closestNote);
+
+            Debug.Log("?????????");
         }
     }
 

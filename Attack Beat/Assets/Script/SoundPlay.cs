@@ -15,14 +15,19 @@ public class SoundPlay : MonoBehaviour
     public static AudioSource SESound_public;
 
     private bool firstCountDown = true;
+    public static bool CountDownEnd = false;
     private float CurrentTimer;
 
     public static bool SoundEnd = false;
     // Start is called before the first frame update
     void Start()
     {
+        ESCButton.Pause = true;
+
         BGMSound_public = BGMSound;
         SESound_public = SESound;
+
+        Time.timeScale = 0;
     }
 
     // Update is called once per frame
@@ -33,7 +38,7 @@ public class SoundPlay : MonoBehaviour
 
         if (firstCountDown)
         {
-            CurrentTimer += Time.deltaTime;
+            CurrentTimer += Time.unscaledDeltaTime;
             CountDown(CurrentTimer);
         }
 
@@ -47,8 +52,8 @@ public class SoundPlay : MonoBehaviour
         if(ESCButton.Pause)
         {
             BGMSound.Pause();
-            Debug.Log("hhhhhhhhhhh");
         }
+
     }
 
     public void BGMPlay()
@@ -66,6 +71,9 @@ public class SoundPlay : MonoBehaviour
 
     public float CountDown(float Time)
     {
+        if (CountDownEnd)
+            CountDownEnd = false;
+
         if (Time <= 1f)
         {
             CountDownText.text = ("----- 5 -----");
@@ -92,6 +100,7 @@ public class SoundPlay : MonoBehaviour
         }
         else if (Time <= 6f)
         {
+            ESCButton.Pause = false;
             CountDownText.text = ("");
             if (firstCountDown)
             {
@@ -103,6 +112,7 @@ public class SoundPlay : MonoBehaviour
             }
             CurrentTimer = 0f;
             firstCountDown = false;
+            CountDownEnd = true;
         }
         return 0;
     }

@@ -9,51 +9,78 @@ public class ESCButton : MonoBehaviour
 
     [SerializeField] private SoundPlay soundPlay;
     public static bool Pause = false;
-    private int UnPause = 0;           //ポーズを解除したとき(0を除く２の段の時)
+    private bool pauseOff = false; 
+    //private int ESCbuttonClick = 0;           //ポーズを解除したとき(0を除く２の段の時)
 
     private float CurrentTimer;
-    private bool CountDownEnd = false;
+
+    private bool PauseCancel = false;          //ポーズ中にポーズできないようにする
     // Start is called before the first frame update
     void Start()
     {
-        
     }
 
     // Update is called once per frame
     void Update()
     {
-        if(Input.GetKeyDown(KeyCode.Escape))
+        if(Input.GetKeyDown(KeyCode.Escape) && !PauseCancel)
         {
             OnEscbutton();
         }
 
-        //if (!Pause && UnPause != 0 && UnPause % 2 == 0 && !CountDownEnd)
-        //{
-        //    CurrentTimer += Time.unscaledDeltaTime;
-        //    soundPlay.CountDown(CurrentTimer);
-        //    if (CurrentTimer >= 6f)
-        //    {
-        //        CurrentTimer = 0;
-        //        CountDownEnd = true;
-        //    }
-        //}
+        //ポーズを解除したとき
+        if (Pause && pauseOff)
+        {
+            PauseOff();
+        }
     }
 
     public void OnEscbutton()
     {
-        Pause = !Pause;
+        if (!Pause)
+        {
+            //ポーズをする処理
+            PauseCancel = true;
 
-        UnPause++;
-        CountDownEnd = false;
+            Time.timeScale = 0f;
 
-        Time.timeScale = 0f;
+            Pause = true;
 
-        Debug.Log("XXXXXXXXXXXXX");
+            //ESCbuttonClick++;
 
-        BGMSlider.SetActive(!BGMSlider.activeSelf);
-        SESlider.SetActive(!SESlider.activeSelf);
-        BGMText.SetActive(!BGMText.activeSelf);
-        SEText.SetActive(!SEText.activeSelf);
-        PauseImage.SetActive(!PauseImage.activeSelf);
+            BGMSlider.SetActive(!BGMSlider.activeSelf);
+            SESlider.SetActive(!SESlider.activeSelf);
+            BGMText.SetActive(!BGMText.activeSelf);
+            SEText.SetActive(!SEText.activeSelf);
+            PauseImage.SetActive(!PauseImage.activeSelf);
+        }
+        else if(Pause && SoundPlay.CountDownEnd)　　　　　　　　　　//ポーズ中　尚且つ　カウントダウン後
+        {
+            //ポーズを解くときの処理
+            pauseOff = true;
+
+            BGMSlider.SetActive(!BGMSlider.activeSelf);
+            SESlider.SetActive(!SESlider.activeSelf);
+            BGMText.SetActive(!BGMText.activeSelf);
+            SEText.SetActive(!SEText.activeSelf);
+            PauseImage.SetActive(!PauseImage.activeSelf);
+
+        }
     }
+
+    void PauseOff()
+    {
+        CurrentTimer += Time.unscaledDeltaTime;
+        soundPlay.CountDown(CurrentTimer);
+        if (CurrentTimer >= 6f)
+        {
+            CurrentTimer = 0;
+            PauseCancel = false;
+            Pause = false;
+
+            Time.timeScale = 1f;
+            pauseOff = false;
+        }
+    }
+
 }
