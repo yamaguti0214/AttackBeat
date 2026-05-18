@@ -2978,7 +2978,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   spawnPoint: {fileID: 1207630124}
   checkNotes: {fileID: 2023669}
-  judgePoint: {fileID: 1288742003}
+  JudgePoint: {fileID: 1288742003}
   notePrefab: {fileID: 6647331566183042780, guid: 3f686d2971c32084d95d095057e6ec12, type: 3}
   speed: 5
   musicSource: {fileID: 341864671}
@@ -5307,7 +5307,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 1
+  m_SortingOrder: 2
   m_Sprite: {fileID: 2703798812312188694, guid: 10040ed41cc799246a040f104f46d3c3, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
