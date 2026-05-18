@@ -35,40 +35,29 @@ public class Notes_Create: MonoBehaviour
     {
         // デスクトップから読み込み
         string desktop = System.Environment.GetFolderPath(System.Environment.SpecialFolder.Desktop);
-        path = Path.Combine(desktop, "YAMAGUCHI.json");
+        path = Path.Combine(desktop, "notes_song2.json");
 
         Load();
     }
 
     void Update()
     {
-        if(!ESCButton.Pause)
+        float currentTime = musicSource.time;
+
+        while (spawnIndex < notes.Count &&
+               notes[spawnIndex].timing - currentTime <= GetSpawnOffset())
         {
-            float currentTime = musicSource.time;
-
-            while (spawnIndex < notes.Count &&
-                   notes[spawnIndex].timing - currentTime <= GetSpawnOffset())
-            {
-                Spawn(notes[spawnIndex]);
-                spawnIndex++;
-            }
-
+            Spawn(notes[spawnIndex]);
+            spawnIndex++;
         }
     }
 
     void Spawn(NoteInput data)
     {
-        Debug.Log("gomi");
-
         GameObject note = Instantiate(notePrefab, spawnPoint.position, Quaternion.identity);
 
         // 移動
         NoteMove move = note.GetComponent<NoteMove>();
-
-        move.timing = data.timing;
-        move.speed = speed;
-        move.judgePoint = judgePoint;
-        move.musicSource = musicSource;
         if (move != null)
         {
             move.speed = speed;
