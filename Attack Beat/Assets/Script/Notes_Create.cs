@@ -69,7 +69,7 @@ public class Notes_Create: MonoBehaviour
             Notes = note,
             timing = data.timing,
             isHit = false
-        };zy
+        };
 
         checkNotes.notes.Add(newNote);
     }
