@@ -76,6 +76,7 @@ public class EnemyHP : MonoBehaviour
         if (currentHP > 0)
         {
             animator.SetTrigger("Damage");
+            animator.SetTrigger("Attack1");
         }
         else
         {
