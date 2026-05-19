@@ -2976,7 +2976,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7d46d86c44bcb6f43b652b0b194c90af, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  spawnPoint: {fileID: 1207630124}
   checkNotes: {fileID: 2023669}
   JudgePoint: {fileID: 1288742003}
   notePrefab: {fileID: 6647331566183042780, guid: 3f686d2971c32084d95d095057e6ec12, type: 3}
@@ -4328,7 +4327,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1715974400}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 652007049d7536546a2e6cf4c6b43cf9, type: 3}
   m_Name: 

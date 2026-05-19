@@ -21,7 +21,7 @@ public class Notes_Create: MonoBehaviour
 
     public CheckNotes checkNotes;
 
-    public Transform JudgePoint;
+    public Transform judgePoint;
     public GameObject notePrefab;
     public float speed = 5f;
     public AudioSource musicSource;
@@ -69,19 +69,14 @@ public class Notes_Create: MonoBehaviour
             Notes = note,
             timing = data.timing,
             isHit = false
-        };
-
-        NoteMove noteMove = note.GetComponent<NoteMove>();
-
-        noteMove.musicSource = musicSource;
-        noteMove.judgePoint = JudgePoint;
+        };zy
 
         checkNotes.notes.Add(newNote);
     }
 
     float GetSpawnOffset()
     {
-        float distance = Vector3.Distance(spawnPoint.position, JudgePoint.position);
+        float distance = Vector3.Distance(spawnPoint.position, judgePoint.position);
         return distance / speed;
     }
 

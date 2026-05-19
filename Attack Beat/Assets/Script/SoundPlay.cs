@@ -36,7 +36,7 @@ public class SoundPlay : MonoBehaviour
     {
         if (ESCButton.Pause)
         {
-            Debug.Log("PAUSE");
+            //Debug.Log("PAUSE");
         }
 
         BGMSound.volume =
