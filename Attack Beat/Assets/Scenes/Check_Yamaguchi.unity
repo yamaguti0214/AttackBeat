@@ -2547,7 +2547,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxHP: 100
   hpBarFill: {fileID: 1588257640}
-  attackInterval: 2
+  attackInterval: 1e+17
   attackDamage: 10
   audioSource: {fileID: 0}
   attack1SE: {fileID: 0}
