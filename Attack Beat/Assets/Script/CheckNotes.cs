@@ -69,7 +69,7 @@ public class CheckNotes : MonoBehaviour
 
         }
 
-        if(!ESCButton.Pause) Debug.Log("SoundPlay" + SoundPlay.BGMSound_public.time);
+        //if(!ESCButton.Pause) Debug.Log("SoundPlay" + SoundPlay.BGMSound_public.time);
     }
 
     void Judge()
