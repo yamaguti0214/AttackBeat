@@ -156,7 +156,8 @@ TextureImporter:
     edges: []
     weights: []
     secondaryTextures: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      Attack Beat TitleImage_0: 8320366797555728498
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
