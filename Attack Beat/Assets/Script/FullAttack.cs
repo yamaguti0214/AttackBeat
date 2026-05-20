@@ -210,7 +210,7 @@ public class FullAttack : MonoBehaviour
             }
         }
 
-        if(SoundPlay.SoundEnd && !Attack)
+        if(SoundPlay.SoundEnd && !Attack && !ESCButton.Pause)
         {
             Attack = true;
 

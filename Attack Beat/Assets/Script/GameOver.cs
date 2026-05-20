@@ -21,11 +21,13 @@ public class GameOver : MonoBehaviour
     {
         if(Death)
         {
+            Debug.Log("Death");
             GAMEOVER.text = "GAME OVER";
             ResultButton.SetActive(true);
         }
         else if(Win)
         {
+            Debug.Log("Win");
             GAMEOVER.text = "GAME CLEAR";
             ResultButton.SetActive(true);
         }
