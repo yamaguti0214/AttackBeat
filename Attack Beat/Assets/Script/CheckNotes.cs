@@ -20,10 +20,10 @@ public class CheckNotes : MonoBehaviour
     [SerializeField] public TextMeshProUGUI Greatttxt;
     [SerializeField] public TextMeshProUGUI Goodtxt;
     [SerializeField] public TextMeshProUGUI MISStxt;
-    private int Perfect;
-    private int Great;
-    private int Good;
-    private int MISS;
+    public static int Perfect;
+    public static int Great;
+    public static int Good;
+    public static int MISS;
 
     private int DestoryNotes = 0;
 
@@ -51,10 +51,10 @@ public class CheckNotes : MonoBehaviour
 
     void Start()
     {
-        foreach (var note in notes)
-        {
-            
-        }
+        Perfect = 0;
+        Great = 0;
+        Good = 0;
+        MISS = 0;
     }
 
     void Update()

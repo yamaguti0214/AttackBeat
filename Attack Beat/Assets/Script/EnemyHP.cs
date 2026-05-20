@@ -77,6 +77,8 @@ public class EnemyHP : MonoBehaviour
         {
             animator.SetTrigger("Damage");
             animator.SetTrigger("Attack1");
+
+            GameOver.Death = true;
         }
         else
         {

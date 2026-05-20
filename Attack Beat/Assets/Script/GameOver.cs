@@ -2,11 +2,14 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 public class GameOver : MonoBehaviour
 {
-    [SerializeField] private TextMeshProUGUI Perfecttext, Greattext, Goodtext, Misstext,GAMEOVERtext;
+    public static bool Death = false;
+    public static bool Win = false;
+
+    [SerializeField] private TextMeshProUGUI GAMEOVER;
+    [SerializeField] private GameObject ResultButton;
     // Start is called before the first frame update
     void Start()
     {
@@ -16,11 +19,15 @@ public class GameOver : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
-    }
-
-    public void BackTitle()
-    {
-        SceneManager.LoadScene("Title Scene");
+        if(Death)
+        {
+            GAMEOVER.text = "GAME OVER";
+            ResultButton.SetActive(true);
+        }
+        else if(Win)
+        {
+            GAMEOVER.text = "GAME CLEAR";
+            ResultButton.SetActive(true);
+        }
     }
 }
