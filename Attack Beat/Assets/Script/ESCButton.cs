@@ -48,22 +48,22 @@ public class ESCButton : MonoBehaviour
 
             //ESCbuttonClick++;
 
-            BGMSlider.SetActive(!BGMSlider.activeSelf);
-            SESlider.SetActive(!SESlider.activeSelf);
-            BGMText.SetActive(!BGMText.activeSelf);
-            SEText.SetActive(!SEText.activeSelf);
-            PauseImage.SetActive(!PauseImage.activeSelf);
+            BGMSlider.SetActive(true);
+            SESlider.SetActive(true);
+            BGMText.SetActive(true);
+            SEText.SetActive(true);
+            PauseImage.SetActive(true);
         }
         else if(Pause && SoundPlay.CountDownEnd)　　　　　　　　　　//ポーズ中　尚且つ　カウントダウン後
         {
             //ポーズを解くときの処理
             pauseOff = true;
 
-            BGMSlider.SetActive(!BGMSlider.activeSelf);
-            SESlider.SetActive(!SESlider.activeSelf);
-            BGMText.SetActive(!BGMText.activeSelf);
-            SEText.SetActive(!SEText.activeSelf);
-            PauseImage.SetActive(!PauseImage.activeSelf);
+            BGMSlider.SetActive(false);
+            SESlider.SetActive(false);
+            BGMText.SetActive(false);
+            SEText.SetActive(false);
+            PauseImage.SetActive(false);
 
         }
     }

@@ -869,7 +869,7 @@ RectTransform:
   m_GameObject: {fileID: 427595229}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 2.9797, y: 2.9797, z: 2.9797}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1108114783}
@@ -1859,6 +1859,7 @@ GameObject:
   - component: {fileID: 929919242}
   - component: {fileID: 929919241}
   - component: {fileID: 929919240}
+  - component: {fileID: 929919243}
   m_Layer: 5
   m_Name: Button 2
   m_TagString: Untagged
@@ -1931,7 +1932,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 929919241}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 929919243}
+        m_TargetAssemblyTypeName: LevelScene, Assembly-CSharp
+        m_MethodName: OnLevel2
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &929919241
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1970,6 +1983,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 929919238}
   m_CullTransparentMesh: 1
+--- !u!114 &929919243
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 929919238}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 39c5eaa30b56e434db43eea75a1c197c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &946468405
 GameObject:
   m_ObjectHideFlags: 0
@@ -2168,7 +2193,7 @@ RectTransform:
   m_GameObject: {fileID: 968500375}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 6.625516, y: 3.7222, z: 3.7222}
+  m_LocalScale: {x: 19.74205, y: 11.09104, z: 11.09104}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 2124614717}
@@ -2180,7 +2205,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -0.13787842, y: 0.04499817}
+  m_AnchoredPosition: {x: -0.41083, y: 0.13405}
   m_SizeDelta: {x: 99.96002, y: 99.619995}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &978205878
@@ -2514,6 +2539,7 @@ GameObject:
   - component: {fileID: 1235797045}
   - component: {fileID: 1235797044}
   - component: {fileID: 1235797043}
+  - component: {fileID: 1235797046}
   m_Layer: 5
   m_Name: Button
   m_TagString: Untagged
@@ -2586,7 +2612,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1235797044}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1235797046}
+        m_TargetAssemblyTypeName: LevelScene, Assembly-CSharp
+        m_MethodName: OnLevel1
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1235797044
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2625,6 +2663,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1235797041}
   m_CullTransparentMesh: 1
+--- !u!114 &1235797046
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1235797041}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 39c5eaa30b56e434db43eea75a1c197c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1287439426
 GameObject:
   m_ObjectHideFlags: 0
@@ -3790,6 +3840,7 @@ GameObject:
   - component: {fileID: 1693045038}
   - component: {fileID: 1693045037}
   - component: {fileID: 1693045036}
+  - component: {fileID: 1693045039}
   m_Layer: 5
   m_Name: Button 3
   m_TagString: Untagged
@@ -3862,7 +3913,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1693045037}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1693045039}
+        m_TargetAssemblyTypeName: LevelScene, Assembly-CSharp
+        m_MethodName: OnLevel3
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1693045037
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3901,6 +3964,7 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1693045034}
   m_CullTransparentMesh: 1
+<<<<<<< HEAD
 --- !u!1 &1706611010
 GameObject:
   m_ObjectHideFlags: 0
@@ -3940,11 +4004,15 @@ RectTransform:
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1706611012
+=======
+--- !u!114 &1693045039
+>>>>>>> main
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
+<<<<<<< HEAD
   m_GameObject: {fileID: 1706611010}
   m_Enabled: 1
   m_EditorHideFlags: 0
@@ -3991,6 +4059,14 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1706611010}
   m_CullTransparentMesh: 1
+=======
+  m_GameObject: {fileID: 1693045034}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 39c5eaa30b56e434db43eea75a1c197c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+>>>>>>> main
 --- !u!1 &1724232984
 GameObject:
   m_ObjectHideFlags: 0
@@ -5351,7 +5427,7 @@ RectTransform:
   m_GameObject: {fileID: 2136628701}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 2.9797, y: 2.9797, z: 2.9797}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 26091032}

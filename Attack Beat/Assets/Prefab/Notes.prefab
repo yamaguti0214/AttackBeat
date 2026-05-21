@@ -99,5 +99,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d04de96a158561c4289f32a96e448d91, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  timing: 0
   speed: 5
-  destroyX: -10
+  judgePoint: {fileID: 0}
+  musicSource: {fileID: 0}

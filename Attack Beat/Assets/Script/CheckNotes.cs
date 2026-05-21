@@ -19,9 +19,11 @@ public class CheckNotes : MonoBehaviour
     [SerializeField] public TextMeshProUGUI Perfecttxt;
     [SerializeField] public TextMeshProUGUI Greatttxt;
     [SerializeField] public TextMeshProUGUI Goodtxt;
-    private int Perfect;
-    private int Great;
-    private int Good;
+    [SerializeField] public TextMeshProUGUI MISStxt;
+    public static int Perfect;
+    public static int Great;
+    public static int Good;
+    public static int MISS;
 
     private int DestoryNotes = 0;
 
@@ -49,10 +51,10 @@ public class CheckNotes : MonoBehaviour
 
     void Start()
     {
-        foreach (var note in notes)
-        {
-            
-        }
+        Perfect = 0;
+        Great = 0;
+        Good = 0;
+        MISS = 0;
     }
 
     void Update()
@@ -136,12 +138,14 @@ public class CheckNotes : MonoBehaviour
         }
         else
         {
+            MISS++;
             ShowResult("Miss");
             DestoryNotes++;
-            Destroy(closestNote.Notes);
-            notes.Remove(closestNote);
-
-            Debug.Log("?????????");
+            if(closestNote != null)
+            {
+                Destroy(closestNote.Notes);
+                notes.Remove(closestNote);
+            }
         }
     }
 
@@ -163,6 +167,9 @@ public class CheckNotes : MonoBehaviour
 
             if (currentTime - note.timing > goodRange)
             {
+                Debug.Log("MISSTIMING");
+
+                MISS++;
                 note.isHit = true;
                 ShowResult("Miss");
 
@@ -188,6 +195,10 @@ public class CheckNotes : MonoBehaviour
                 case "Good":
                     resultText.color = new Color(0, 16, 0);
                     break;
+                case "Miss":
+                    resultText.color = new Color(16, 0, 16);
+                    break;
+
             }
         }
 
@@ -201,6 +212,10 @@ public class CheckNotes : MonoBehaviour
                 break;
             case "Good":
                 Goodtxt.text = "Good : " + Good;
+                break;
+            case "Miss":
+                MISStxt.text = "Miss : " + MISS;
+                Debug.Log("MISS");
                 break;
 
         }

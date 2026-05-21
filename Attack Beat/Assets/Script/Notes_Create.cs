@@ -35,7 +35,7 @@ public class Notes_Create: MonoBehaviour
     {
         // デスクトップから読み込み
         string desktop = System.Environment.GetFolderPath(System.Environment.SpecialFolder.Desktop);
-        path = Path.Combine(desktop, "notes_song2.json");
+        path = Path.Combine(desktop, "notes_song3.json");
 
         Load();
     }
@@ -61,6 +61,12 @@ public class Notes_Create: MonoBehaviour
         if (move != null)
         {
             move.speed = speed;
+
+            move.judgePoint = judgePoint;
+
+            move.musicSource = musicSource;
+
+            move.timing = data.timing;
         }
 
         //判定登録（これが本体）

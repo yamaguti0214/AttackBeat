@@ -48,7 +48,7 @@ public class SoundPlay : MonoBehaviour
             CountDown(CurrentTimer);
         }
 
-        if (!BGMSound.isPlaying && !SoundEnd && !firstCountDown)
+        if (!BGMSound.isPlaying && !SoundEnd && !firstCountDown && !ESCButton.Pause)
         {
             SoundEnd = true;
 
