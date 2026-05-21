@@ -369,6 +369,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 5
   destroyX: -10
+  canMove: 0
 --- !u!1 &119437498 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 2623888561025672469, guid: 3654f7c006fb6804983456e557ab3def, type: 3}
@@ -388,6 +389,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 5
   destroyX: -10
+  canMove: 0
 --- !u!1 &239645952 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 2623888561025672469, guid: 3654f7c006fb6804983456e557ab3def, type: 3}
@@ -407,6 +409,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 5
   destroyX: -10
+  canMove: 0
 --- !u!1001 &240983993
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1279,6 +1282,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 5
   destroyX: -10
+  canMove: 0
 --- !u!1 &692105691 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 2623888561025672469, guid: 3654f7c006fb6804983456e557ab3def, type: 3}
@@ -1298,6 +1302,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 5
   destroyX: -10
+  canMove: 0
 --- !u!1001 &791715998
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1662,6 +1667,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 5
   destroyX: -10
+  canMove: 0
 --- !u!1 &1575999860 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 2623888561025672469, guid: 3654f7c006fb6804983456e557ab3def, type: 3}
@@ -1681,6 +1687,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 5
   destroyX: -10
+  canMove: 0
 --- !u!1 &1624427386
 GameObject:
   m_ObjectHideFlags: 0
@@ -2177,6 +2184,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 5
   destroyX: -10
+  canMove: 0
 --- !u!1001 &2005612592
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2273,6 +2281,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 5
   destroyX: -10
+  canMove: 0
 --- !u!1001 &6917351898681836422
 PrefabInstance:
   m_ObjectHideFlags: 0

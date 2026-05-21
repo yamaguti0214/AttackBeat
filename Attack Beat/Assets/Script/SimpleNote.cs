@@ -7,6 +7,9 @@ public class SimpleNote : MonoBehaviour
 
     private bool isHit = false;
     private float hitTimer = 0f;
+    
+    // 👇 追加：移動していいかどうかの判定用
+    private bool isMoving = false; 
 
     private Vector3 hitStartPos;
     private Vector3 hitTargetPos;
@@ -74,8 +77,11 @@ public class SimpleNote : MonoBehaviour
             return;
         }
 
-        // 通常移動
-        transform.Translate(Vector3.left * speed * Time.deltaTime);
+        // 👇 修正：isMovingがtrueになったら移動を開始する
+        if (isMoving)
+        {
+            transform.Translate(Vector3.left * speed * Time.deltaTime);
+        }
 
         // 画面外削除
         if (transform.position.x < destroyX)
@@ -114,5 +120,11 @@ public class SimpleNote : MonoBehaviour
         {
             sr.sortingOrder = 50;
         }
+    }
+
+    // 👇 追加：外部（sampleSoundPlay1）から「動け！」と命令される部分
+    public void StartMove()
+    {
+        isMoving = true;
     }
 }
