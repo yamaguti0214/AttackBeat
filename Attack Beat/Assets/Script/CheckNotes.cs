@@ -15,7 +15,7 @@ public class CheckNotes : MonoBehaviour
         public bool isHit;
     }
     
-    //ƒm[ƒc‚Ì”»’èŒ‹‰Ê
+    //ï¿½mï¿½[ï¿½cï¿½Ì”ï¿½ï¿½èŒ‹ï¿½ï¿½
     [SerializeField] public TextMeshProUGUI Perfecttxt;
     [SerializeField] public TextMeshProUGUI Greatttxt;
     [SerializeField] public TextMeshProUGUI Goodtxt;
@@ -40,13 +40,13 @@ public class CheckNotes : MonoBehaviour
 
     public List<Note> notes = new List<Note>();
 
-    public TextMeshProUGUI resultText; // © ‚±‚±‚ÉƒZƒbƒg
+    public TextMeshProUGUI resultText; // ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ÉƒZï¿½bï¿½g
 
     public float perfectRange = 0.1f;
     public float greatRange = 0.15f;
     public float goodRange = 0.2f;
 
-    //‡Œv‚ÅUŒ‚
+    //ï¿½ï¿½ï¿½vï¿½ÅUï¿½ï¿½
     public static int FullAttack = 0;
 
     void Start()
