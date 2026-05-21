@@ -1,21 +1,28 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class NoteMove : MonoBehaviour
 {
-    public float speed = 5f;          // 移動速度
-    public float destroyX = -10f;     // ここより左に行ったら削除
+    public float timing;
+
+    public float speed;
+
+    public Transform judgePoint;
+
+    public AudioSource musicSource;
 
     void Update()
     {
-        // 左に移動
-        transform.Translate(Vector3.left * speed * Time.deltaTime);
+        // 現在の曲時間
+        float currentTime = musicSource.time;
 
-        // 一定位置を超えたら削除
-        if (transform.position.x < destroyX)
-        {
-            Destroy(gameObject);
-        }
+        // 判定まで残り何秒か
+        float remainTime = timing - currentTime;
+
+        // 判定ラインからどれだけ離れるか
+        float distance = remainTime * speed;
+
+        // 座標更新
+        transform.position =
+            judgePoint.position + Vector3.right * distance;
     }
 }

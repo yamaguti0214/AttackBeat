@@ -3,6 +3,7 @@ using UnityEngine;
 using TMPro;
 using UnityEngine.UIElements;
 using System.Collections;
+using static CheckNotes;
 
 public class CheckNotes : MonoBehaviour
 {
@@ -18,9 +19,11 @@ public class CheckNotes : MonoBehaviour
     [SerializeField] public TextMeshProUGUI Perfecttxt;
     [SerializeField] public TextMeshProUGUI Greatttxt;
     [SerializeField] public TextMeshProUGUI Goodtxt;
-    private int Perfect;
-    private int Great;
-    private int Good;
+    [SerializeField] public TextMeshProUGUI MISStxt;
+    public static int Perfect;
+    public static int Great;
+    public static int Good;
+    public static int MISS;
 
     private int DestoryNotes = 0;
 
@@ -33,10 +36,9 @@ public class CheckNotes : MonoBehaviour
 
     [SerializeField]public Vector2 CheckPosition;
 
-    SoundPlay SoundPlay;
+    [SerializeField]private SoundPlay soundPlay;
 
     public List<Note> notes = new List<Note>();
-    public AudioSource musicSource;
 
     public TextMeshProUGUI resultText; // �� �����ɃZ�b�g
 
@@ -49,24 +51,42 @@ public class CheckNotes : MonoBehaviour
 
     void Start()
     {
+        Perfect = 0;
+        Great = 0;
+        Good = 0;
+        MISS = 0;
     }
 
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Space))
+        if (!ESCButton.Pause)
         {
-            Judge();
+            if (Input.GetKeyDown(KeyCode.Space))
+            {
+                soundPlay.SEPlay();
+                Judge();
+            }
+
+            CheckMiss();
+
         }
 
-        CheckMiss();
+        //if(!ESCButton.Pause) Debug.Log("SoundPlay" + SoundPlay.BGMSound_public.time);
     }
 
     void Judge()
     {
-        float currentTime = musicSource.time;
+        float currentTime = SoundPlay.BGMSound_public.time;
 
         Note closestNote = null;
         float closestDiff = float.MaxValue;
+
+        Debug.Log(soundPlay);
+        Debug.Log(SoundPlay.BGMSound_public);
+
+        //Debug.Log("current:" + currentTime);
+        //Debug.Log("note:" + closestNote.timing);
+        //Debug.Log("diff:" + closestDiff);
 
         foreach (var note in notes)
         {
@@ -81,7 +101,7 @@ public class CheckNotes : MonoBehaviour
             }
         }
 
-        if (closestNote == null) return;
+        //Debug.Log("closestDiff :"+closestDiff);
 
         if (closestDiff <= perfectRange)
         {
@@ -92,7 +112,7 @@ public class CheckNotes : MonoBehaviour
             DestoryNotes++;
             Destroy(closestNote.Notes);
             notes.Remove(closestNote);
-            FullAttack += 5; 
+            FullAttack += 5;
         }
         else if (closestDiff <= greatRange)
         {
@@ -118,16 +138,20 @@ public class CheckNotes : MonoBehaviour
         }
         else
         {
+            MISS++;
             ShowResult("Miss");
             DestoryNotes++;
-            Destroy(closestNote.Notes);
-            notes.Remove(closestNote);
+            if(closestNote != null)
+            {
+                Destroy(closestNote.Notes);
+                notes.Remove(closestNote);
+            }
         }
     }
 
     void CheckMiss()
     {
-        float currentTime = musicSource.time;
+        float currentTime = SoundPlay.BGMSound_public.time;
 
         for (int i = notes.Count - 1; i >= 0; i--)
         {
@@ -143,6 +167,9 @@ public class CheckNotes : MonoBehaviour
 
             if (currentTime - note.timing > goodRange)
             {
+                Debug.Log("MISSTIMING");
+
+                MISS++;
                 note.isHit = true;
                 ShowResult("Miss");
 
@@ -168,6 +195,10 @@ public class CheckNotes : MonoBehaviour
                 case "Good":
                     resultText.color = new Color(0, 16, 0);
                     break;
+                case "Miss":
+                    resultText.color = new Color(16, 0, 16);
+                    break;
+
             }
         }
 
@@ -181,6 +212,10 @@ public class CheckNotes : MonoBehaviour
                 break;
             case "Good":
                 Goodtxt.text = "Good : " + Good;
+                break;
+            case "Miss":
+                MISStxt.text = "Miss : " + MISS;
+                Debug.Log("MISS");
                 break;
 
         }

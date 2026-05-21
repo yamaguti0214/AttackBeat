@@ -61,6 +61,12 @@ public class Notes_Create: MonoBehaviour
         if (move != null)
         {
             move.speed = speed;
+
+            move.judgePoint = judgePoint;
+
+            move.musicSource = musicSource;
+
+            move.timing = data.timing;
         }
 
         //判定登録（これが本体）
