@@ -19,7 +19,6 @@ public class HoverAnimation : MonoBehaviour, IPointerEnterHandler, IPointerExitH
     public void OnPointerEnter(PointerEventData eventData)
     {
         animator.speed = 1;
-        Debug.Log("アニメーション");
     }
 
     public void OnPointerExit(PointerEventData eventData)
