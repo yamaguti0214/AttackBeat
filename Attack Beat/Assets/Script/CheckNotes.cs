@@ -14,8 +14,8 @@ public class CheckNotes : MonoBehaviour
         public float timing;
         public bool isHit;
     }
-    
-    //ï¿½mï¿½[ï¿½cï¿½Ì”ï¿½ï¿½èŒ‹ï¿½ï¿½
+
+    //ƒm[ƒc‚Ì”»’èŒ‹‰Ê
     [SerializeField] public TextMeshProUGUI Perfecttxt;
     [SerializeField] public TextMeshProUGUI Greatttxt;
     [SerializeField] public TextMeshProUGUI Goodtxt;
@@ -34,20 +34,30 @@ public class CheckNotes : MonoBehaviour
 
     [SerializeField] public Transform Canvastransform;
 
-    [SerializeField]public Vector2 CheckPosition;
+    [SerializeField] public Vector2 CheckPosition;
 
-    [SerializeField]private SoundPlay soundPlay;
+    [SerializeField] private SoundPlay soundPlay;
 
     public List<Note> notes = new List<Note>();
 
-    public TextMeshProUGUI resultText; // ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ÉƒZï¿½bï¿½g
+    public TextMeshProUGUI resultText; // © ‚±‚±‚ÉƒZƒbƒg
 
     public float perfectRange = 0.1f;
     public float greatRange = 0.15f;
     public float goodRange = 0.2f;
 
-    //ï¿½ï¿½ï¿½vï¿½ÅUï¿½ï¿½
+    //‡Œv‚ÅUŒ‚
     public static int FullAttack = 0;
+
+    public AudioClip PerfectSound;
+    public AudioClip GreatSound;
+    public AudioClip GoodSound;
+    public AudioClip MissSound;
+    public AudioClip GSound;
+    public AudioClip ESound;
+    public AudioClip MSound;
+
+    AudioSource audioSource;
 
     void Start()
     {
@@ -55,26 +65,35 @@ public class CheckNotes : MonoBehaviour
         Great = 0;
         Good = 0;
         MISS = 0;
+
+        audioSource = GetComponent<AudioSource>();
     }
 
     void Update()
     {
         if (!ESCButton.Pause)
         {
-            if (Input.GetKeyDown(KeyCode.Space))
+            // FƒL[‚ª‰Ÿ‚³‚ê‚½‚çÂF‚Ìƒm[ƒc‚ğ”»’è
+            if (Input.GetKeyDown(KeyCode.F))
             {
-                //soundPlay.SEPlay();
-                Judge();
+                soundPlay.SEPlay();
+                Judge(true); // true = Âƒm[ƒc‚ğ‘_‚¤
+            }
+            // HƒL[‚ª‰Ÿ‚³‚ê‚½‚ç—ÎF‚Ìƒm[ƒc‚ğ”»’è
+            else if (Input.GetKeyDown(KeyCode.H))
+            {
+                soundPlay.SEPlay();
+                Judge(false); // false = —Îƒm[ƒc‚ğ‘_‚¤
             }
 
             CheckMiss();
-
         }
 
         //if(!ESCButton.Pause) Debug.Log("SoundPlay" + SoundPlay.BGMSound_public.time);
     }
 
-    void Judge()
+
+    void Judge(bool isBlue)
     {
         float currentTime = SoundPlay.BGMSound_public.time;
 
@@ -92,6 +111,11 @@ public class CheckNotes : MonoBehaviour
         {
             if (note.isHit) continue;
 
+            bool isNoteBlue = note.Notes.name.Contains("note2_0");
+
+            // ‰Ÿ‚µ‚½ƒL[‚Æƒm[ƒc‚ÌF‚ªˆê’v‚µ‚Ä‚¢‚È‚¢ê‡‚ÍAˆê”Ô‹ß‚¢ƒm[ƒc‚ÌŒó•â‚©‚çœŠOj‚·‚é
+            if (isBlue != isNoteBlue) continue;
+
             float diff = Mathf.Abs(currentTime - note.timing);
 
             if (diff < closestDiff)
@@ -103,6 +127,16 @@ public class CheckNotes : MonoBehaviour
 
         //Debug.Log("closestDiff :"+closestDiff);
 
+        // ˆê’v‚·‚éF‚Ìƒm[ƒc‚ª‰æ–Ê“à‚Éˆê‚Â‚à‚È‚¢ê‡‚ÍAMiss”»’è‚Éi‚Ü‚¸ˆ—‚ğ”²‚¯‚éi‹ó‘Å‚¿‚ğ‹–—e‚·‚éê‡j
+        if (closestNote == null) return;
+
+        // ˆê”Ô‹ß‚¢ƒm[ƒc‚ªA‚Ü‚¾”»’èƒ][ƒ“igoodRangej‚æ‚èè‘O‚É‚ ‚é‚Æ‚«‚ÍA
+        // ”»’èˆ—‚ğ‚±‚±‚ÅI—¹iƒŠƒ^[ƒ“j‚³‚¹‚Äƒm[ƒc‚ªÁ‚¦‚È‚¢‚æ‚¤‚É‚·‚é
+        if (closestDiff > goodRange && currentTime < closestNote.timing)
+        {
+            return;
+        }
+
         if (closestDiff <= perfectRange)
         {
             closestNote.isHit = true;
@@ -113,6 +147,30 @@ public class CheckNotes : MonoBehaviour
             Destroy(closestNote.Notes);
             notes.Remove(closestNote);
             FullAttack += 5;
+            audioSource.PlayOneShot(PerfectSound);
+            if (Perfect <= 10)
+            {
+                if (Perfect % 5 == 0)
+                {
+                    audioSource.PlayOneShot(GSound);
+                }
+            }
+            else if (Perfect > 10 && Perfect <= 20)
+            {
+                if (Perfect % 5 == 0)
+                {
+                    audioSource.PlayOneShot(ESound);
+
+                }
+
+            }
+            else if (Perfect > 20)
+            {
+                if (Perfect % 5 == 0)
+                {
+                    audioSource.PlayOneShot(MSound);
+                }
+            }
         }
         else if (closestDiff <= greatRange)
         {
@@ -124,6 +182,7 @@ public class CheckNotes : MonoBehaviour
             Destroy(closestNote.Notes);
             notes.Remove(closestNote);
             FullAttack += 3;
+            audioSource.PlayOneShot(GreatSound);
         }
         else if (closestDiff <= goodRange)
         {
@@ -135,19 +194,22 @@ public class CheckNotes : MonoBehaviour
             Destroy(closestNote.Notes);
             notes.Remove(closestNote);
             FullAttack += 1;
+            audioSource.PlayOneShot(GoodSound);
         }
         else
         {
             MISS++;
             ShowResult("Miss");
             DestoryNotes++;
-            if(closestNote != null)
+            audioSource.PlayOneShot(MissSound);
+            if (closestNote != null)
             {
                 Destroy(closestNote.Notes);
                 notes.Remove(closestNote);
             }
         }
     }
+
 
     void CheckMiss()
     {
@@ -184,7 +246,7 @@ public class CheckNotes : MonoBehaviour
         if (resultText != null)
         {
             resultText.text = result;
-            switch(result)
+            switch (result)
             {
                 case "Perfect":
                     resultText.color = new Color(16, 0, 0);
@@ -224,16 +286,16 @@ public class CheckNotes : MonoBehaviour
 
     void NotesEffect(string Note_Check)
     {
-        switch(Note_Check)
+        switch (Note_Check)
         {
             case "Perfect":
-                Instantiate(PerfectEffect, CheckPosition, Quaternion.identity,Canvastransform);
+                Instantiate(PerfectEffect, CheckPosition, Quaternion.identity, Canvastransform);
                 break;
             case "Great":
-                Instantiate(GreatEffect, CheckPosition, Quaternion.identity,Canvastransform);
+                Instantiate(GreatEffect, CheckPosition, Quaternion.identity, Canvastransform);
                 break;
             case "Good":
-                Instantiate(GoodEffect, CheckPosition, Quaternion.identity,Canvastransform);
+                Instantiate(GoodEffect, CheckPosition, Quaternion.identity, Canvastransform);
                 break;
         }
     }
