@@ -46,7 +46,7 @@ public class CheckNotes : MonoBehaviour
     public float greatRange = 0.075f;
     public float goodRange = 0.108f;
 
-    // ★追加：連打ペナルティ（判定ロック）のためのタイマー変数
+    // 連打ペナルティ（判定ロック）のためのタイマー変数
     private float fKeyLockTimer = 0f;
     private float hKeyLockTimer = 0f;
     private float lockDuration = 0.9f; // ロックする時間（秒）調整可能
@@ -76,7 +76,7 @@ public class CheckNotes : MonoBehaviour
 
     void Update()
     {
-        // ★追加：タイマーを進める処理
+        // タイマーを進める処理
         if (fKeyLockTimer > 0) fKeyLockTimer -= Time.deltaTime;
         if (hKeyLockTimer > 0) hKeyLockTimer -= Time.deltaTime;
 
@@ -87,7 +87,7 @@ public class CheckNotes : MonoBehaviour
             {
                 soundPlay.SEPlay();
 
-                // ★追加：ロック中でなければ判定を行う
+                // ロック中でなければ判定を行う
                 if (fKeyLockTimer <= 0)
                 {
                     Judge(true); // true = 青ノーツを狙う
@@ -98,7 +98,7 @@ public class CheckNotes : MonoBehaviour
             {
                 soundPlay.SEPlay();
 
-                // 追加：ロック中でなければ判定を行う
+                // ロック中でなければ判定を行う
                 if (hKeyLockTimer <= 0)
                 {
                     Judge(false); // false = 緑ノーツを狙う
@@ -149,7 +149,7 @@ public class CheckNotes : MonoBehaviour
         // 一致する色のノーツが画面内に一つもない場合は、Miss判定に進まず処理を抜ける（空打ちを許容する場合）
         if (closestNote == null) return;
 
-        // ★修正：一番近いノーツが、まだ判定ゾーン（goodRange）より手前にあるときは、
+        // 一番近いノーツが、まだ判定ゾーン（goodRange）より手前にあるときは、
         // ノーツを消さずに、押したキーに「判定ロック（お仕置きタイム）」を付与する
         if (closestDiff > goodRange && currentTime < closestNote.timing)
         {
