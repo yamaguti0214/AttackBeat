@@ -43,7 +43,7 @@ public class NoteRecorder : MonoBehaviour
     void Update()
     {
         //Rキーでモードの切り替え
-        if(Input.GetKeyDown(KeyCode.R))
+        if (Input.GetKeyDown(KeyCode.R))
         {
             if (mode == Mode.Record)
             {
@@ -58,9 +58,14 @@ public class NoteRecorder : MonoBehaviour
 
         if (mode == Mode.Record)
         {
-            if (Input.GetKeyDown(KeyCode.Space))
+            // スペースキーの代わりにFキーで「0（青）」、Hキーで「1（緑）」を記録するように変更
+            if (Input.GetKeyDown(KeyCode.F))
             {
-                AddNote(0);
+                AddNote(0); // 0 = 青ノーツ
+            }
+            else if (Input.GetKeyDown(KeyCode.H))
+            {
+                AddNote(1); // 1 = 緑ノーツ
             }
         }
 
@@ -81,7 +86,7 @@ public class NoteRecorder : MonoBehaviour
             lane = lane
         });
 
-        Debug.Log("記録: " + time);
+        Debug.Log("記録: " + time + " (Lane: " + lane + ")");
     }
 
     public void Save()
