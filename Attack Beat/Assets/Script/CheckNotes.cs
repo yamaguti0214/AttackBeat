@@ -14,7 +14,7 @@ public class CheckNotes : MonoBehaviour
         public float timing;
         public bool isHit;
     }
-    
+
     //ノーツの判定結果
     [SerializeField] public TextMeshProUGUI Perfecttxt;
     [SerializeField] public TextMeshProUGUI Greatttxt;
@@ -34,9 +34,9 @@ public class CheckNotes : MonoBehaviour
 
     [SerializeField] public Transform Canvastransform;
 
-    [SerializeField]public Vector2 CheckPosition;
+    [SerializeField] public Vector2 CheckPosition;
 
-    [SerializeField]private SoundPlay soundPlay;
+    [SerializeField] private SoundPlay soundPlay;
 
     public List<Note> notes = new List<Note>();
 
@@ -49,32 +49,51 @@ public class CheckNotes : MonoBehaviour
     //合計で攻撃
     public static int FullAttack = 0;
 
+    public AudioClip PerfectSound;
+    public AudioClip GreatSound;
+    public AudioClip GoodSound;
+    public AudioClip MissSound;
+    public AudioClip GSound;
+    public AudioClip ESound;
+    public AudioClip MSound;
+
+    AudioSource audioSource;
+
     void Start()
     {
         Perfect = 0;
         Great = 0;
         Good = 0;
         MISS = 0;
+
+        audioSource = GetComponent<AudioSource>();
     }
 
     void Update()
     {
         if (!ESCButton.Pause)
         {
-            if (Input.GetKeyDown(KeyCode.Space))
+            // Fキーが押されたら青色のノーツを判定
+            if (Input.GetKeyDown(KeyCode.F))
             {
                 soundPlay.SEPlay();
-                Judge();
+                Judge(true); // true = 青ノーツを狙う
+            }
+            // Hキーが押されたら緑色のノーツを判定
+            else if (Input.GetKeyDown(KeyCode.H))
+            {
+                soundPlay.SEPlay();
+                Judge(false); // false = 緑ノーツを狙う
             }
 
             CheckMiss();
-
         }
 
         //if(!ESCButton.Pause) Debug.Log("SoundPlay" + SoundPlay.BGMSound_public.time);
     }
 
-    void Judge()
+
+    void Judge(bool isBlue)
     {
         float currentTime = SoundPlay.BGMSound_public.time;
 
@@ -92,6 +111,11 @@ public class CheckNotes : MonoBehaviour
         {
             if (note.isHit) continue;
 
+            bool isNoteBlue = note.Notes.name.Contains("note2_0");
+
+            // 押したキーとノーツの色が一致していない場合は、一番近いノーツの候補から除外）する
+            if (isBlue != isNoteBlue) continue;
+
             float diff = Mathf.Abs(currentTime - note.timing);
 
             if (diff < closestDiff)
@@ -103,6 +127,16 @@ public class CheckNotes : MonoBehaviour
 
         //Debug.Log("closestDiff :"+closestDiff);
 
+        // 一致する色のノーツが画面内に一つもない場合は、Miss判定に進まず処理を抜ける（空打ちを許容する場合）
+        if (closestNote == null) return;
+
+        // 一番近いノーツが、まだ判定ゾーン（goodRange）より手前にあるときは、
+        // 判定処理をここで終了（リターン）させてノーツが消えないようにする
+        if (closestDiff > goodRange && currentTime < closestNote.timing)
+        {
+            return;
+        }
+
         if (closestDiff <= perfectRange)
         {
             closestNote.isHit = true;
@@ -113,6 +147,30 @@ public class CheckNotes : MonoBehaviour
             Destroy(closestNote.Notes);
             notes.Remove(closestNote);
             FullAttack += 5;
+            audioSource.PlayOneShot(PerfectSound);
+            if (Perfect <= 10)
+            {
+                if (Perfect % 5 == 0)
+                {
+                    audioSource.PlayOneShot(GSound);
+                }
+            }
+            else if (Perfect > 10 && Perfect <= 20)
+            {
+                if (Perfect % 5 == 0)
+                {
+                    audioSource.PlayOneShot(ESound);
+
+                }
+
+            }
+            else if (Perfect > 20)
+            {
+                if (Perfect % 5 == 0)
+                {
+                    audioSource.PlayOneShot(MSound);
+                }
+            }
         }
         else if (closestDiff <= greatRange)
         {
@@ -124,6 +182,7 @@ public class CheckNotes : MonoBehaviour
             Destroy(closestNote.Notes);
             notes.Remove(closestNote);
             FullAttack += 3;
+            audioSource.PlayOneShot(GreatSound);
         }
         else if (closestDiff <= goodRange)
         {
@@ -135,19 +194,22 @@ public class CheckNotes : MonoBehaviour
             Destroy(closestNote.Notes);
             notes.Remove(closestNote);
             FullAttack += 1;
+            audioSource.PlayOneShot(GoodSound);
         }
         else
         {
             MISS++;
             ShowResult("Miss");
             DestoryNotes++;
-            if(closestNote != null)
+            audioSource.PlayOneShot(MissSound);
+            if (closestNote != null)
             {
                 Destroy(closestNote.Notes);
                 notes.Remove(closestNote);
             }
         }
     }
+
 
     void CheckMiss()
     {
@@ -184,7 +246,7 @@ public class CheckNotes : MonoBehaviour
         if (resultText != null)
         {
             resultText.text = result;
-            switch(result)
+            switch (result)
             {
                 case "Perfect":
                     resultText.color = new Color(16, 0, 0);
@@ -224,16 +286,16 @@ public class CheckNotes : MonoBehaviour
 
     void NotesEffect(string Note_Check)
     {
-        switch(Note_Check)
+        switch (Note_Check)
         {
             case "Perfect":
-                Instantiate(PerfectEffect, CheckPosition, Quaternion.identity,Canvastransform);
+                Instantiate(PerfectEffect, CheckPosition, Quaternion.identity, Canvastransform);
                 break;
             case "Great":
-                Instantiate(GreatEffect, CheckPosition, Quaternion.identity,Canvastransform);
+                Instantiate(GreatEffect, CheckPosition, Quaternion.identity, Canvastransform);
                 break;
             case "Good":
-                Instantiate(GoodEffect, CheckPosition, Quaternion.identity,Canvastransform);
+                Instantiate(GoodEffect, CheckPosition, Quaternion.identity, Canvastransform);
                 break;
         }
     }

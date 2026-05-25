@@ -2,7 +2,7 @@
 using UnityEngine;
 using System.IO;
 
-public class Notes_Create: MonoBehaviour
+public class Notes_Create : MonoBehaviour
 {
     [System.Serializable]
     public class NoteInput
@@ -22,7 +22,8 @@ public class Notes_Create: MonoBehaviour
     public CheckNotes checkNotes;
 
     public Transform judgePoint;
-    public GameObject notePrefab;
+    // ここを配列にして、インスペクターから2つのプレファブを設定できるように変更
+    public GameObject[] notePrefabs;
     public float speed = 5f;
     public AudioSource musicSource;
 
@@ -35,7 +36,7 @@ public class Notes_Create: MonoBehaviour
     {
         // デスクトップから読み込み
         string desktop = System.Environment.GetFolderPath(System.Environment.SpecialFolder.Desktop);
-        path = Path.Combine(desktop, "notes_song3.json");
+        path = Path.Combine(desktop, "notes_song1.json");
 
         Load();
     }
@@ -54,7 +55,11 @@ public class Notes_Create: MonoBehaviour
 
     void Spawn(NoteInput data)
     {
-        GameObject note = Instantiate(notePrefab, spawnPoint.position, Quaternion.identity);
+        // 配列が空でないか確認し、ランダムにプレファブを1つ選択
+        GameObject selectedPrefab = notePrefabs[Random.Range(0, notePrefabs.Length)];
+
+        // 選んだプレファブを生成するように変更
+        GameObject note = Instantiate(selectedPrefab, spawnPoint.position, Quaternion.identity);
 
         // 移動
         NoteMove move = note.GetComponent<NoteMove>();
