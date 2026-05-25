@@ -178,6 +178,13 @@ MonoBehaviour:
   perfectRange: 0.05
   greatRange: 0.1
   goodRange: 0.2
+  PerfectSound: {fileID: 0}
+  GreatSound: {fileID: 0}
+  GoodSound: {fileID: 0}
+  MissSound: {fileID: 0}
+  GSound: {fileID: 0}
+  ESound: {fileID: 0}
+  MSound: {fileID: 0}
 --- !u!1001 &42323201
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -396,8 +403,8 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 8300000, guid: 5f8a37a9210fbeb4a9c41ffc4abaaab0, type: 3}
-  m_Resource: {fileID: 8300000, guid: 5f8a37a9210fbeb4a9c41ffc4abaaab0, type: 3}
+  m_audioClip: {fileID: 8300000, guid: f454bccfe5d3fc742bb2aeabb269c11e, type: 3}
+  m_Resource: {fileID: 8300000, guid: f454bccfe5d3fc742bb2aeabb269c11e, type: 3}
   m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
@@ -1530,7 +1537,9 @@ MonoBehaviour:
   spawnPoint: {fileID: 933360458}
   checkNotes: {fileID: 2023669}
   judgePoint: {fileID: 1288742003}
-  notePrefab: {fileID: 6647331566183042780, guid: 3f686d2971c32084d95d095057e6ec12, type: 3}
+  notePrefabs:
+  - {fileID: 2386380312486380078, guid: 9acd83d81dd1c584a967a5a17a4ddf8f, type: 3}
+  - {fileID: 143884267765546492, guid: 0279042820ca5b842a3f8bf449ee7bd0, type: 3}
   speed: 5
   musicSource: {fileID: 341864671}
 --- !u!1001 &962140788
@@ -2648,8 +2657,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: 
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: a22d7af082848bc43bc7f10a20a69210, type: 2}
-  m_sharedMaterial: {fileID: -353403690843434715, guid: a22d7af082848bc43bc7f10a20a69210, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
