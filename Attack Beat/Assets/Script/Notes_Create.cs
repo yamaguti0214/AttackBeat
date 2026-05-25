@@ -22,7 +22,8 @@ public class Notes_Create : MonoBehaviour
     public CheckNotes checkNotes;
 
     public Transform judgePoint;
-    // ここを配列にして、インスペクターから2つのプレファブを設定できるように変更
+
+    // インスペクターの「Note Prefabs」の登録順： Element 0 に「青」、Element 1 に「緑」をセット
     public GameObject[] notePrefabs;
     public float speed = 5f;
     public AudioSource musicSource;
@@ -36,7 +37,7 @@ public class Notes_Create : MonoBehaviour
     {
         // デスクトップから読み込み
         string desktop = System.Environment.GetFolderPath(System.Environment.SpecialFolder.Desktop);
-        path = Path.Combine(desktop, "notes_song2.json");
+        path = Path.Combine(desktop, "notes_song1.json");
 
         Load();
     }
@@ -55,10 +56,11 @@ public class Notes_Create : MonoBehaviour
 
     void Spawn(NoteInput data)
     {
-        // 配列が空でないか確認し、ランダムにプレファブを1つ選択
-        GameObject selectedPrefab = notePrefabs[Random.Range(0, notePrefabs.Length)];
+        // 譜面データの「lane」の値（0 または 1）をそのままインデックスとして使用する
+        int prefabIndex = Mathf.Clamp(data.lane, 0, notePrefabs.Length - 1);
+        GameObject selectedPrefab = notePrefabs[prefabIndex];
 
-        // 選んだプレファブを生成するように変更
+        // ランダムではなく、作譜データ通りのプレファブを生成
         GameObject note = Instantiate(selectedPrefab, spawnPoint.position, Quaternion.identity);
 
         // 移動
