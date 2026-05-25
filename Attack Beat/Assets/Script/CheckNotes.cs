@@ -63,7 +63,7 @@ public class CheckNotes : MonoBehaviour
         {
             if (Input.GetKeyDown(KeyCode.Space))
             {
-                soundPlay.SEPlay();
+                //soundPlay.SEPlay();
                 Judge();
             }
 

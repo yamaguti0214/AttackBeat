@@ -166,6 +166,7 @@ MonoBehaviour:
   Perfecttxt: {fileID: 551250269}
   Greatttxt: {fileID: 508239258}
   Goodtxt: {fileID: 445600062}
+  MISStxt: {fileID: 0}
   PerfectEffect: {fileID: 362261158077530393, guid: 9062ed32ad2915d44ad727647d32284f, type: 3}
   GreatEffect: {fileID: 362261158077530393, guid: f8d6485a31c6b8c4a968779521173d03, type: 3}
   GoodEffect: {fileID: 362261158077530393, guid: 361c56e778fbe404aa5744125ff3be44, type: 3}
@@ -395,13 +396,8 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-<<<<<<< HEAD
-  m_audioClip: {fileID: 8300000, guid: 5f8a37a9210fbeb4a9c41ffc4abaaab0, type: 3}
-  m_Resource: {fileID: 8300000, guid: 5f8a37a9210fbeb4a9c41ffc4abaaab0, type: 3}
-=======
-  m_audioClip: {fileID: 8300000, guid: 3f051600d4cf82741b772344639ee5d3, type: 3}
-  m_Resource: {fileID: 8300000, guid: 3f051600d4cf82741b772344639ee5d3, type: 3}
->>>>>>> main
+  m_audioClip: {fileID: 8300000, guid: 76b304974719e3548bd1bd2e7f3284be, type: 3}
+  m_Resource: {fileID: 8300000, guid: 76b304974719e3548bd1bd2e7f3284be, type: 3}
   m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
@@ -1501,7 +1497,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: de2b19d88fc90a240b64c1d30333216a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mode: 0
+  mode: 1
   musicSource: {fileID: 341864671}
   notes: []
 --- !u!4 &933360458
@@ -2514,8 +2510,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: 
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: a22d7af082848bc43bc7f10a20a69210, type: 2}
-  m_sharedMaterial: {fileID: -353403690843434715, guid: a22d7af082848bc43bc7f10a20a69210, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
