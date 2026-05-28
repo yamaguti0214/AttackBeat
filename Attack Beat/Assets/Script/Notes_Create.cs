@@ -2,7 +2,7 @@
 using UnityEngine;
 using System.IO;
 
-public class Notes_Create: MonoBehaviour
+public class Notes_Create : MonoBehaviour
 {
     [System.Serializable]
     public class NoteInput
@@ -22,7 +22,9 @@ public class Notes_Create: MonoBehaviour
     public CheckNotes checkNotes;
 
     public Transform judgePoint;
-    public GameObject notePrefab;
+
+    // インスペクターの「Note Prefabs」の登録順： Element 0 に「青」、Element 1 に「緑」をセット
+    public GameObject[] notePrefabs;
     public float speed = 5f;
     public AudioSource musicSource;
 
@@ -35,7 +37,7 @@ public class Notes_Create: MonoBehaviour
     {
         // デスクトップから読み込み
         string desktop = System.Environment.GetFolderPath(System.Environment.SpecialFolder.Desktop);
-        path = Path.Combine(desktop, "notes_song3.json");
+        path = Path.Combine(desktop, "notes_song2.json");
 
         Load();
     }
@@ -54,7 +56,12 @@ public class Notes_Create: MonoBehaviour
 
     void Spawn(NoteInput data)
     {
-        GameObject note = Instantiate(notePrefab, spawnPoint.position, Quaternion.identity);
+        // 譜面データの「lane」の値（0 または 1）をそのままインデックスとして使用する
+        int prefabIndex = Mathf.Clamp(data.lane, 0, notePrefabs.Length - 1);
+        GameObject selectedPrefab = notePrefabs[prefabIndex];
+
+        // ランダムではなく、作譜データ通りのプレファブを生成
+        GameObject note = Instantiate(selectedPrefab, spawnPoint.position, Quaternion.identity);
 
         // 移動
         NoteMove move = note.GetComponent<NoteMove>();
