@@ -11,10 +11,14 @@ public class LevelScene : MonoBehaviour
     }
     public void OnLevel2()
     {
-        SceneManager.LoadScene("LevelTwoScene");
+        SceneManager.LoadScene("Level2");
     }
     public void OnLevel3()
     {
-        SceneManager.LoadScene("LevelThreeScene");
+        SceneManager.LoadScene("Level3");
+    }
+    public void OnTitle()
+    {
+        SceneManager.LoadScene("Title Scene");
     }
 }
