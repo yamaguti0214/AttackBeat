@@ -291,6 +291,7 @@ MonoBehaviour:
   Misstext: {fileID: 431026881}
   RankText: {fileID: 2137514191}
   RankShadowText: {fileID: 1669562329}
+  CountUPSE: {fileID: 0}
   MemeVoice: {fileID: 251990799}
   NICEMan: {fileID: 2044724639}
   NICEAnim: {fileID: 2044724641}

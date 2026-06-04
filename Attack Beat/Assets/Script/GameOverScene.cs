@@ -43,10 +43,6 @@ public class GameOverScene : MonoBehaviour
 
     private void Start()
     {
-        CheckNotes.Perfect = 20000;
-        CheckNotes.Great = 500;
-        CheckNotes.Good = 500;
-        CheckNotes.MISS = 10;
         StartCoroutine(ResultAnimation());
     }
     private void Update()

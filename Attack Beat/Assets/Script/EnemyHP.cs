@@ -84,6 +84,8 @@ public class EnemyHP : MonoBehaviour
         {
             isDead = true;
             animator.SetTrigger("Die");
+
+            GameOver.Win = true;
         }
     }
 
