@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 using System.IO;
+using UnityEngine.SceneManagement;
 
 public class Notes_Create : MonoBehaviour
 {
@@ -38,13 +39,20 @@ public class Notes_Create : MonoBehaviour
 
     void Start()
     {
-        // デスクトップから読み込み
-        string desktop = System.Environment.GetFolderPath(System.Environment.SpecialFolder.Desktop);
+        if (SaveDataManager.SaveDataInstance.MusicName != null && SceneManager.GetActiveScene().name == "MyMusicCreateNote")
+        {
+            jsonFileName = SaveDataManager.SaveDataInstance.MusicName;
+        }
+        else if(SceneManager.GetActiveScene().name != "MyMusicCreateNote")
+        {
+            // デスクトップから読み込み
+            string desktop = System.Environment.GetFolderPath(System.Environment.SpecialFolder.Desktop);
 
-        // ★修正：固定だったファイル名の部分を、変数「jsonFileName」に書き換え
-        path = Path.Combine(desktop, jsonFileName);
+            // ★修正：固定だったファイル名の部分を、変数「jsonFileName」に書き換え
+            path = Path.Combine(desktop, jsonFileName);
 
-        Load();
+            Load();
+        }
     }
 
     void Update()

@@ -6,16 +6,31 @@ using SFB;
 public class MusicLoader : MonoBehaviour
 {
     public static MusicLoader Instance;
-    [SerializeField] public AudioSource audioSource;
+
+    [Header("AudioSource")]
+    [SerializeField] private AudioSource bgmSource;
+    [SerializeField] private AudioSource seSource;
+
+    public AudioClip LoadedBGM { get; private set; }
+    public AudioClip LoadedSE { get; private set; }
 
     private void Awake()
     {
-        Instance = this;
+        if (Instance == null)
+        {
+            Instance = this;
+            DontDestroyOnLoad(gameObject);
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
     }
-    public void OpenFile()
+    // BGM選択
+    public void OpenBGMFile()
     {
         var paths = StandaloneFileBrowser.OpenFilePanel(
-            "MP3を選択",
+            "BGMを選択",
             "",
             new ExtensionFilter[]
             {
@@ -26,16 +41,35 @@ public class MusicLoader : MonoBehaviour
 
         if (paths.Length > 0)
         {
-            StartCoroutine(LoadMusic(paths[0]));
+            StartCoroutine(LoadAudio(paths[0], true));
         }
     }
 
-    private IEnumerator LoadMusic(string path)
+    // SE選択
+    public void OpenSEFile()
+    {
+        var paths = StandaloneFileBrowser.OpenFilePanel(
+            "SEを選択",
+            "",
+            new ExtensionFilter[]
+            {
+                new ExtensionFilter("Audio Files", "mp3", "wav", "ogg")
+            },
+            false
+        );
+
+        if (paths.Length > 0)
+        {
+            StartCoroutine(LoadAudio(paths[0], false));
+        }
+    }
+
+    private IEnumerator LoadAudio(string path, bool isBGM)
     {
         string url = "file://" + path;
 
         using (UnityWebRequest www =
-               UnityWebRequestMultimedia.GetAudioClip(url, AudioType.MPEG))
+               UnityWebRequestMultimedia.GetAudioClip(url, AudioType.UNKNOWN))
         {
             yield return www.SendWebRequest();
 
@@ -48,11 +82,39 @@ public class MusicLoader : MonoBehaviour
                 AudioClip clip =
                     DownloadHandlerAudioClip.GetContent(www);
 
-                audioSource.clip = clip;
-                audioSource.Play();
+                if (isBGM)
+                {
+                    LoadedBGM = clip;
+                    bgmSource.clip = clip;
 
-                Debug.Log("再生開始");
+                    Debug.Log("BGM読み込み完了");
+                }
+                else
+                {
+                    LoadedSE = clip;
+                    seSource.clip = clip;
+
+                    Debug.Log("SE読み込み完了");
+                }
             }
+        }
+    }
+
+    // BGM再生
+    public void PlayBGM()
+    {
+        if (bgmSource.clip != null)
+        {
+            bgmSource.Play();
+        }
+    }
+
+    // SE再生
+    public void PlaySE()
+    {
+        if (LoadedSE != null)
+        {
+            seSource.PlayOneShot(LoadedSE);
         }
     }
 }
