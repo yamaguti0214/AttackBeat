@@ -5,8 +5,13 @@ using SFB;
 
 public class MusicLoader : MonoBehaviour
 {
-    [SerializeField] private AudioSource audioSource;
+    public static MusicLoader Instance;
+    [SerializeField] public AudioSource audioSource;
 
+    private void Awake()
+    {
+        Instance = this;
+    }
     public void OpenFile()
     {
         var paths = StandaloneFileBrowser.OpenFilePanel(
