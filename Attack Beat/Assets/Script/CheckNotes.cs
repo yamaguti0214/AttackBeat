@@ -15,7 +15,7 @@ public class CheckNotes : MonoBehaviour
         public bool isHit;
     }
 
-    //ƒm[ƒc‚Ì”»’èŒ‹‰Ê
+    //ï¿½mï¿½[ï¿½cï¿½Ì”ï¿½ï¿½èŒ‹ï¿½ï¿½
     [SerializeField] public TextMeshProUGUI Perfecttxt;
     [SerializeField] public TextMeshProUGUI Greatttxt;
     [SerializeField] public TextMeshProUGUI Goodtxt;
@@ -40,18 +40,18 @@ public class CheckNotes : MonoBehaviour
 
     public List<Note> notes = new List<Note>();
 
-    public TextMeshProUGUI resultText; // © ‚±‚±‚ÉƒZƒbƒg
+    public TextMeshProUGUI resultText; // ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ÉƒZï¿½bï¿½g
 
     public float perfectRange = 0.025f;
     public float greatRange = 0.075f;
     public float goodRange = 0.108f;
 
-    // ˜A‘Åƒyƒiƒ‹ƒeƒBi”»’èƒƒbƒNj‚Ì‚½‚ß‚Ìƒ^ƒCƒ}[•Ï”
+    // ï¿½Aï¿½Åƒyï¿½iï¿½ï¿½ï¿½eï¿½Bï¿½iï¿½ï¿½ï¿½èƒï¿½bï¿½Nï¿½jï¿½Ì‚ï¿½ï¿½ß‚Ìƒ^ï¿½Cï¿½}ï¿½[ï¿½Ïï¿½
     private float fKeyLockTimer = 0f;
     private float hKeyLockTimer = 0f;
-    private float lockDuration = 0.9f; // ƒƒbƒN‚·‚éŠÔi•bj’²®‰Â”\
+    private float lockDuration = 0.9f; // ï¿½ï¿½ï¿½bï¿½Nï¿½ï¿½ï¿½éï¿½Ôiï¿½bï¿½jï¿½ï¿½ï¿½ï¿½ï¿½Â”\
 
-    //‡Œv‚ÅUŒ‚
+    //ï¿½ï¿½ï¿½vï¿½ÅUï¿½ï¿½
     public static int FullAttack = 0;
 
     public AudioClip PerfectSound;
@@ -76,32 +76,32 @@ public class CheckNotes : MonoBehaviour
 
     void Update()
     {
-        // ƒ^ƒCƒ}[‚ği‚ß‚éˆ—
+        // ï¿½^ï¿½Cï¿½}ï¿½[ï¿½ï¿½iï¿½ß‚éˆï¿½ï¿½
         if (fKeyLockTimer > 0) fKeyLockTimer -= Time.deltaTime;
         if (hKeyLockTimer > 0) hKeyLockTimer -= Time.deltaTime;
 
         if (!ESCButton.Pause)
         {
-            // FƒL[‚ª‰Ÿ‚³‚ê‚½‚çÂF‚Ìƒm[ƒc‚ğ”»’è
+            // Fï¿½Lï¿½[ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ê‚½ï¿½ï¿½ÂFï¿½Ìƒmï¿½[ï¿½cï¿½ğ”»’ï¿½
             if (Input.GetKeyDown(KeyCode.F))
             {
                 soundPlay.SEPlay();
 
-                // ƒƒbƒN’†‚Å‚È‚¯‚ê‚Î”»’è‚ğs‚¤
+                // ï¿½ï¿½ï¿½bï¿½Nï¿½ï¿½ï¿½Å‚È‚ï¿½ï¿½ï¿½Î”ï¿½ï¿½ï¿½ï¿½ï¿½sï¿½ï¿½
                 if (fKeyLockTimer <= 0)
                 {
-                    Judge(true); // true = Âƒm[ƒc‚ğ‘_‚¤
+                    Judge(true); // true = ï¿½Âƒmï¿½[ï¿½cï¿½ï¿½_ï¿½ï¿½
                 }
             }
-            // HƒL[‚ª‰Ÿ‚³‚ê‚½‚ç—ÎF‚Ìƒm[ƒc‚ğ”»’è
+            // Hï¿½Lï¿½[ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ê‚½ï¿½ï¿½ÎFï¿½Ìƒmï¿½[ï¿½cï¿½ğ”»’ï¿½
             else if (Input.GetKeyDown(KeyCode.H))
             {
                 soundPlay.SEPlay();
 
-                // ƒƒbƒN’†‚Å‚È‚¯‚ê‚Î”»’è‚ğs‚¤
+                // ï¿½ï¿½ï¿½bï¿½Nï¿½ï¿½ï¿½Å‚È‚ï¿½ï¿½ï¿½Î”ï¿½ï¿½ï¿½ï¿½ï¿½sï¿½ï¿½
                 if (hKeyLockTimer <= 0)
                 {
-                    Judge(false); // false = —Îƒm[ƒc‚ğ‘_‚¤
+                    Judge(false); // false = ï¿½Îƒmï¿½[ï¿½cï¿½ï¿½_ï¿½ï¿½
                 }
             }
 
@@ -122,17 +122,12 @@ public class CheckNotes : MonoBehaviour
         Debug.Log(soundPlay);
         Debug.Log(SoundPlay.BGMSound_public);
 
-        //Debug.Log("current:" + currentTime);
-        //Debug.Log("note:" + closestNote.timing);
-        //Debug.Log("diff:" + closestDiff);
-
         foreach (var note in notes)
         {
             if (note.isHit) continue;
 
             bool isNoteBlue = note.Notes.name.Contains("note2_0");
 
-            // ‰Ÿ‚µ‚½ƒL[‚Æƒm[ƒc‚ÌF‚ªˆê’v‚µ‚Ä‚¢‚È‚¢ê‡‚ÍAˆê”Ô‹ß‚¢ƒm[ƒc‚ÌŒó•â‚©‚çœŠOj‚·‚é
             if (isBlue != isNoteBlue) continue;
 
             float diff = Mathf.Abs(currentTime - note.timing);
@@ -144,18 +139,13 @@ public class CheckNotes : MonoBehaviour
             }
         }
 
-        //Debug.Log("closestDiff :"+closestDiff);
-
-        // ˆê’v‚·‚éF‚Ìƒm[ƒc‚ª‰æ–Ê“à‚Éˆê‚Â‚à‚È‚¢ê‡‚ÍAMiss”»’è‚Éi‚Ü‚¸ˆ—‚ğ”²‚¯‚éi‹ó‘Å‚¿‚ğ‹–—e‚·‚éê‡j
         if (closestNote == null) return;
 
-        // ˆê”Ô‹ß‚¢ƒm[ƒc‚ªA‚Ü‚¾”»’èƒ][ƒ“igoodRangej‚æ‚èè‘O‚É‚ ‚é‚Æ‚«‚ÍA
-        // ƒm[ƒc‚ğÁ‚³‚¸‚ÉA‰Ÿ‚µ‚½ƒL[‚Éu”»’èƒƒbƒNi‚¨d’u‚«ƒ^ƒCƒ€jv‚ğ•t—^‚·‚é
         if (closestDiff > goodRange && currentTime < closestNote.timing)
         {
-            if (isBlue) fKeyLockTimer = lockDuration; // FƒL[‚ğƒƒbƒN
-            else hKeyLockTimer = lockDuration;        // HƒL[‚ğƒƒbƒN
-            return; // ƒm[ƒc‚ÍÁ‚³‚¸‚É‚±‚±‚ÅI—¹
+            if (isBlue) fKeyLockTimer = lockDuration;
+            else hKeyLockTimer = lockDuration;
+            return;
         }
 
         if (closestDiff <= perfectRange)
@@ -165,7 +155,7 @@ public class CheckNotes : MonoBehaviour
             ShowResult("Perfect");
             NotesEffect("Perfect");
             DestoryNotes++;
-            Destroy(closestNote.Notes);
+            FlyNote(closestNote.Notes);
             notes.Remove(closestNote);
             FullAttack += 5;
             audioSource.PlayOneShot(PerfectSound);
@@ -181,9 +171,7 @@ public class CheckNotes : MonoBehaviour
                 if (Perfect % 5 == 0)
                 {
                     audioSource.PlayOneShot(ESound);
-
                 }
-
             }
             else if (Perfect > 20)
             {
@@ -200,7 +188,7 @@ public class CheckNotes : MonoBehaviour
             ShowResult("Great");
             NotesEffect("Great");
             DestoryNotes++;
-            Destroy(closestNote.Notes);
+            FlyNote(closestNote.Notes);
             notes.Remove(closestNote);
             FullAttack += 3;
             audioSource.PlayOneShot(GreatSound);
@@ -212,7 +200,7 @@ public class CheckNotes : MonoBehaviour
             ShowResult("Good");
             NotesEffect("Good");
             DestoryNotes++;
-            Destroy(closestNote.Notes);
+            FlyNote(closestNote.Notes);
             notes.Remove(closestNote);
             FullAttack += 1;
             audioSource.PlayOneShot(GoodSound);
@@ -261,6 +249,42 @@ public class CheckNotes : MonoBehaviour
             }
         }
     }
+
+    void FlyNote(GameObject noteObj)
+    {
+        if (noteObj == null) return;
+
+        StartCoroutine(FlyNoteCoroutine(noteObj));
+    }
+
+    IEnumerator FlyNoteCoroutine(GameObject noteObj)
+{
+    float time = 0f;
+    float duration = 1f;
+
+    Vector3 startPos = noteObj.transform.position;
+
+    while (time < duration)
+    {
+        if (noteObj == null) yield break;
+
+        time += Time.deltaTime;
+        float t = time / duration;
+
+        float x = Mathf.Lerp(0f, 17f, t);
+
+float y = (-4f * 6f * (t - 0.5f) * (t - 0.5f)) + 6f;
+
+        noteObj.transform.position =
+            startPos + new Vector3(x, y, 0f);
+
+        noteObj.transform.Rotate(0f, 0f, -360f * Time.deltaTime);
+
+        yield return null;
+    }
+
+    Destroy(noteObj);
+}
 
     void ShowResult(string result)
     {
