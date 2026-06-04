@@ -1154,8 +1154,8 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 8300000, guid: 3f051600d4cf82741b772344639ee5d3, type: 3}
-  m_Resource: {fileID: 8300000, guid: 3f051600d4cf82741b772344639ee5d3, type: 3}
+  m_audioClip: {fileID: 8300000, guid: e0039b7d3a5bac541ac8750fe2bcfd7b, type: 3}
+  m_Resource: {fileID: 8300000, guid: e0039b7d3a5bac541ac8750fe2bcfd7b, type: 3}
   m_PlayOnAwake: 0
   m_Volume: 0.032
   m_Pitch: 1
@@ -1378,8 +1378,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: 
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: e909b6346c8c46f42b311266da1aca9f, type: 2}
+  m_sharedMaterial: {fileID: -8893688833919168928, guid: e909b6346c8c46f42b311266da1aca9f, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -3088,6 +3088,7 @@ GameObject:
   - component: {fileID: 1175384518}
   - component: {fileID: 1175384517}
   - component: {fileID: 1175384516}
+  - component: {fileID: 1175384520}
   m_Layer: 0
   m_Name: Dark Knight
   m_TagString: Untagged
@@ -3111,10 +3112,10 @@ MonoBehaviour:
   hpBarFill: {fileID: 1588257640}
   attackInterval: 1e+17
   attackDamage: 10
-  audioSource: {fileID: 0}
-  attack1SE: {fileID: 0}
-  attack2SE: {fileID: 0}
-  attack3SE: {fileID: 0}
+  audioSource: {fileID: 1175384520}
+  attack1SE: {fileID: 8300000, guid: e97bc491454aa2f4fb8a20814599cd7b, type: 3}
+  attack2SE: {fileID: 8300000, guid: e97bc491454aa2f4fb8a20814599cd7b, type: 3}
+  attack3SE: {fileID: 8300000, guid: e97bc491454aa2f4fb8a20814599cd7b, type: 3}
 --- !u!95 &1175384517
 Animator:
   serializedVersion: 7
@@ -3206,6 +3207,103 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!82 &1175384520
+AudioSource:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1175384515}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 0}
+  m_audioClip: {fileID: 0}
+  m_Resource: {fileID: 0}
+  m_PlayOnAwake: 1
+  m_Volume: 1
+  m_Pitch: 1
+  Loop: 0
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!1 &1182971371
 GameObject:
   m_ObjectHideFlags: 0
@@ -3535,6 +3633,7 @@ MonoBehaviour:
   - {fileID: 2386380312486380078, guid: 9acd83d81dd1c584a967a5a17a4ddf8f, type: 3}
   speed: 5
   musicSource: {fileID: 341864671}
+  jsonFileName: notes_song1.json
 --- !u!4 &1207630124
 Transform:
   m_ObjectHideFlags: 0

@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -19,6 +20,9 @@ public class FullAttack : MonoBehaviour
     private int CurrentColor = 0;
 
     private bool Attack = false;
+
+    //攻撃時の威力
+    private string Power = "MinimumAttack";
 
     //攻撃時の威力の判定
     private int MinimumAttack = 0;
@@ -214,48 +218,69 @@ public class FullAttack : MonoBehaviour
         {
             Attack = true;
 
-            switch (CheckNotes.FullAttack + 50)
+            if(CheckNotes.FullAttack >= OverAttack)
             {
-                case int n when n >= OverAttack:
-                    CreateEffect(new Color(1f, 0f, 1f));
-                    CreateEffect(Color.yellow);
-                    CreateEffect(Color.red);
-                    CreateEffect(Color.blue);
-                    CreateEffect(Color.green);
-                    CreateEffect(Color.gray);
-                    Attack = true;
-                    break;
-                case int n when n >= MaxAttack:
-                    CreateEffect(Color.yellow);
-                    CreateEffect(Color.red);
-                    CreateEffect(Color.blue);
-                    CreateEffect(Color.green);
-                    CreateEffect(Color.gray);
-                    Attack = true;
-                    break;
-                case int n when n >= BigAttack:
-                    CreateEffect(Color.red);
-                    CreateEffect(Color.blue);
-                    CreateEffect(Color.green);
-                    CreateEffect(Color.gray);
-                    Attack = false;
-                    break;
-                case int n when n >= MediumAttack:
-                    CreateEffect(Color.blue);
-                    CreateEffect(Color.green);
-                    CreateEffect(Color.gray);
-                    Attack = true;
-                    break;
-                case int n when n >= SmallAttack:
-                    CreateEffect(Color.green);
-                    CreateEffect(Color.gray);
-                    Attack = true;
-                    break;
-                default:
-                    CreateEffect(Color.gray);
-                    Attack = true;
-                    break;
+                Power = "OverAttack";
             }
+            else if(CheckNotes.FullAttack >= MaxAttack)
+            {
+                Power = "MaxAttack";
+            }
+            else if (CheckNotes.FullAttack >= MaxAttack)
+            {
+                Power = "BigAttack";
+            }
+            else if (CheckNotes.FullAttack >= MaxAttack)
+            {
+                Power = "MediumAttack";
+            }
+            else if (CheckNotes.FullAttack >= MaxAttack)
+            {
+                Power = "SmallAttack";
+            }
+
+            switch (Power)
+                {
+                    case "OverAttack":
+                        CreateEffect(new Color(1f, 0f, 1f));
+                        CreateEffect(Color.yellow);
+                        CreateEffect(Color.red);
+                        CreateEffect(Color.blue);
+                        CreateEffect(Color.green);
+                        CreateEffect(Color.gray);
+                        Attack = true;
+                        break;
+                    case "MaxAttack":
+                        CreateEffect(Color.yellow);
+                        CreateEffect(Color.red);
+                        CreateEffect(Color.blue);
+                        CreateEffect(Color.green);
+                        CreateEffect(Color.gray);
+                        Attack = true;
+                        break;
+                    case "BigAttack":
+                        CreateEffect(Color.red);
+                        CreateEffect(Color.blue);
+                        CreateEffect(Color.green);
+                        CreateEffect(Color.gray);
+                        Attack = false;
+                        break;
+                    case "MediumAttack":
+                        CreateEffect(Color.blue);
+                        CreateEffect(Color.green);
+                        CreateEffect(Color.gray);
+                        Attack = true;
+                        break;
+                    case "SmallAttack":
+                        CreateEffect(Color.green);
+                        CreateEffect(Color.gray);
+                        Attack = true;
+                        break;
+                    default:
+                        CreateEffect(Color.gray);
+                        Attack = true;
+                        break;
+                }
 
             //Instantiate(AttackEffect);
             EnemyDamage(CheckNotes.FullAttack);
@@ -266,6 +291,8 @@ public class FullAttack : MonoBehaviour
     void EnemyDamage(int Damage)
     {
         enemyHP.TakeDamage(Damage);
+
+
     }
 
     //攻撃時の威力によって色が変わるエフェクト

@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 using System.IO;
+using UnityEngine.SceneManagement;
 
 public class Notes_Create : MonoBehaviour
 {
@@ -28,6 +29,9 @@ public class Notes_Create : MonoBehaviour
     public float speed = 5f;
     public AudioSource musicSource;
 
+    // 例：ここに「notes_song3.json」や「notes_song4.json」と打ち込めるように
+    [SerializeField] private string jsonFileName = "notes_song3.json";
+
     private List<NoteInput> notes = new List<NoteInput>();
     private int spawnIndex = 0;
 
@@ -35,11 +39,20 @@ public class Notes_Create : MonoBehaviour
 
     void Start()
     {
-        // デスクトップから読み込み
-        string desktop = System.Environment.GetFolderPath(System.Environment.SpecialFolder.Desktop);
-        path = Path.Combine(desktop, "notes_song1.json");
+        if (SaveDataManager.SaveDataInstance.MusicName != null && SceneManager.GetActiveScene().name == "MyMusicCreateNote")
+        {
+            jsonFileName = SaveDataManager.SaveDataInstance.MusicName;
+        }
+        else if(SceneManager.GetActiveScene().name != "MyMusicCreateNote")
+        {
+            // デスクトップから読み込み
+            string desktop = System.Environment.GetFolderPath(System.Environment.SpecialFolder.Desktop);
 
-        Load();
+            // ★修正：固定だったファイル名の部分を、変数「jsonFileName」に書き換え
+            path = Path.Combine(desktop, jsonFileName);
+
+            Load();
+        }
     }
 
     void Update()
@@ -105,7 +118,7 @@ public class Notes_Create : MonoBehaviour
         }
         else
         {
-            Debug.Log("譜面が見つからん");
+            Debug.Log("譜面が見つからん: " + path); 
         }
     }
 }

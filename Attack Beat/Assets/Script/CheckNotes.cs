@@ -49,7 +49,7 @@ public class CheckNotes : MonoBehaviour
     // 連打ペナルティ（判定ロック）のためのタイマー変数
     private float fKeyLockTimer = 0f;
     private float hKeyLockTimer = 0f;
-    private float lockDuration = 0.9f; // ロックする時間（秒）調整可能
+    private float lockDuration = 0.5f; // ロックする時間（秒）調整可能
 
     //合計で攻撃
     public static int FullAttack = 0;

@@ -33,7 +33,7 @@ public class NoteRecorder : MonoBehaviour
     void Awake()
     {
         string desktopPath = System.Environment.GetFolderPath(System.Environment.SpecialFolder.Desktop);
-        path = Path.Combine(desktopPath, "notes_song1.json");
+        path = Path.Combine(desktopPath, "notes_song2.json");
 
         Debug.Log("保存先: " + path);
 
