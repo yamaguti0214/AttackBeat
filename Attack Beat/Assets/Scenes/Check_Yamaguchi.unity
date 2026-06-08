@@ -177,30 +177,48 @@ MonoBehaviour:
   notes:
   - Notes: {fileID: 0}
     timing: 6
+    length: 0
+    lane: 0
     isHit: 0
   - Notes: {fileID: 0}
     timing: 7
+    length: 0
+    lane: 0
     isHit: 0
   - Notes: {fileID: 0}
     timing: 8
+    length: 0
+    lane: 0
     isHit: 0
   - Notes: {fileID: 0}
     timing: 9
+    length: 0
+    lane: 0
     isHit: 0
   - Notes: {fileID: 0}
     timing: 10
+    length: 0
+    lane: 0
     isHit: 0
   - Notes: {fileID: 0}
     timing: 11
+    length: 0
+    lane: 0
     isHit: 0
   - Notes: {fileID: 0}
     timing: 12
+    length: 0
+    lane: 0
     isHit: 0
   - Notes: {fileID: 0}
     timing: 13
+    length: 0
+    lane: 0
     isHit: 0
   - Notes: {fileID: 0}
     timing: 14
+    length: 0
+    lane: 0
     isHit: 0
   resultText: {fileID: 1698260880}
   perfectRange: 0.05
@@ -3631,9 +3649,10 @@ MonoBehaviour:
   notePrefabs:
   - {fileID: 143884267765546492, guid: 0279042820ca5b842a3f8bf449ee7bd0, type: 3}
   - {fileID: 2386380312486380078, guid: 9acd83d81dd1c584a967a5a17a4ddf8f, type: 3}
+  - {fileID: 6969292680188438259, guid: 654ca11e9fc88ab41a24cf984e85bbcc, type: 3}
   speed: 5
   musicSource: {fileID: 341864671}
-  jsonFileName: notes_song1.json
+  jsonFileName: notes_song10.json
 --- !u!4 &1207630124
 Transform:
   m_ObjectHideFlags: 0
@@ -3664,6 +3683,7 @@ MonoBehaviour:
   mode: 1
   musicSource: {fileID: 341864671}
   notes: []
+  jsonFileName: notes_song10.json
 --- !u!1 &1282038532
 GameObject:
   m_ObjectHideFlags: 0

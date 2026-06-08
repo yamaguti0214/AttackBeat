@@ -178,30 +178,57 @@ MonoBehaviour:
   - Notes: {fileID: 0}
     timing: 6
     isHit: 0
+    duration: 0
+    isRoll: 0
+    rollEndTime: 0
   - Notes: {fileID: 0}
     timing: 7
     isHit: 0
+    duration: 0
+    isRoll: 0
+    rollEndTime: 0
   - Notes: {fileID: 0}
     timing: 8
     isHit: 0
+    duration: 0
+    isRoll: 0
+    rollEndTime: 0
   - Notes: {fileID: 0}
     timing: 9
     isHit: 0
+    duration: 0
+    isRoll: 0
+    rollEndTime: 0
   - Notes: {fileID: 0}
     timing: 10
     isHit: 0
+    duration: 0
+    isRoll: 0
+    rollEndTime: 0
   - Notes: {fileID: 0}
     timing: 11
     isHit: 0
+    duration: 0
+    isRoll: 0
+    rollEndTime: 0
   - Notes: {fileID: 0}
     timing: 12
     isHit: 0
+    duration: 0
+    isRoll: 0
+    rollEndTime: 0
   - Notes: {fileID: 0}
     timing: 13
     isHit: 0
+    duration: 0
+    isRoll: 0
+    rollEndTime: 0
   - Notes: {fileID: 0}
     timing: 14
     isHit: 0
+    duration: 0
+    isRoll: 0
+    rollEndTime: 0
   resultText: {fileID: 1698260880}
   perfectRange: 0.05
   greatRange: 0.1
@@ -3893,7 +3920,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 3
+  m_SortingOrder: 4
   m_Sprite: {fileID: 21300000, guid: 4faa6a26a46682142b7cc5a6125e9daf, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
