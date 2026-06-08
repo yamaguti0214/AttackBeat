@@ -39,7 +39,9 @@ public class Notes_Create : MonoBehaviour
 
     void Start()
     {
-        if (SaveDataManager.SaveDataInstance.MusicName != null && SceneManager.GetActiveScene().name == "MyMusicCreateNote")
+        if (SaveDataManager.SaveDataInstance != null &&
+    SaveDataManager.SaveDataInstance.MusicName != null &&
+    SceneManager.GetActiveScene().name == "MyMusicCreateNote")
         {
             jsonFileName = SaveDataManager.SaveDataInstance.MusicName;
         }
