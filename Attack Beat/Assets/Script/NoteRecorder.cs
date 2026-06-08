@@ -16,8 +16,9 @@ public class NoteRecorder : MonoBehaviour
     [System.Serializable]
     public class NoteInput
     {
-        public float timing;
+        public float timing; // 始点の時間
         public int lane;
+        public float length; // 連打ノーツの長さ（単押しは0）
     }
 
     [System.Serializable]
@@ -28,75 +29,93 @@ public class NoteRecorder : MonoBehaviour
 
     public List<NoteInput> notes = new List<NoteInput>();
 
+    [SerializeField] private string jsonFileName = "notes_song2.json";
+
     string path;
+
+    // 長押し（スペースキー）記録用のワーク変数
+    private float holdStartTime = 0f;
+    private bool isHoldingSpace = false;
 
     void Awake()
     {
         string desktopPath = System.Environment.GetFolderPath(System.Environment.SpecialFolder.Desktop);
-        path = Path.Combine(desktopPath, "notes_song2.json");
-
+        path = Path.Combine(desktopPath, jsonFileName);
         Debug.Log("保存先: " + path);
-
         Load();
     }
 
     void Update()
     {
-        //Rキーでモードの切り替え
+        // Rキーでモード切り替え
         if (Input.GetKeyDown(KeyCode.R))
         {
-            if (mode == Mode.Record)
-            {
-                mode = Mode.Play;
-            }
-            else if (mode == Mode.Play)
-            {
-                mode = Mode.Record;
-            }
-;
+            mode = (mode == Mode.Record) ? Mode.Play : Mode.Record;
         }
 
         if (mode == Mode.Record)
         {
-            // スペースキーの代わりにFキーで「0（青）」、Hキーで「1（緑）」を記録するように変更
+            // --- Fキー：青ノーツ（単押し） ---
             if (Input.GetKeyDown(KeyCode.F))
             {
-                AddNote(0); // 0 = 青ノーツ
+                AddNote(0, 0f, musicSource.time);
             }
-            else if (Input.GetKeyDown(KeyCode.H))
+
+            // --- Hキー：緑ノーツ（単押し） ---
+            if (Input.GetKeyDown(KeyCode.H))
             {
-                AddNote(1); // 1 = 緑ノーツ
+                AddNote(1, 0f, musicSource.time);
+            }
+
+            // --- スペースキー：連打ノーツ（長押し） ---
+            if (Input.GetKeyDown(KeyCode.Space))
+            {
+                holdStartTime = musicSource.time;
+                isHoldingSpace = true;
+            }
+
+            if (Input.GetKeyUp(KeyCode.Space) && isHoldingSpace)
+            {
+                isHoldingSpace = false;
+                float duration = musicSource.time - holdStartTime;
+
+                // 0.2秒以上押していたら連打ノーツ(2)として記録
+                if (duration >= 0.2f)
+                {
+                    AddNote(2, duration, holdStartTime);
+                }
+                else
+                {
+                    // 押し時間が短すぎた場合は、普通の青ノーツ(0)として現在の時間で記録
+                    AddNote(0, 0f, musicSource.time);
+                }
             }
         }
 
-        // 手動保存（例：Sキー）
+        // 手動保存（Sキー）
         if (Input.GetKeyDown(KeyCode.S))
         {
             Save();
         }
     }
 
-    void AddNote(int lane)
+    void AddNote(int lane, float length, float startTime)
     {
-        float time = musicSource.time;
-
         notes.Add(new NoteInput
         {
-            timing = time,
-            lane = lane
+            timing = startTime,
+            lane = lane,
+            length = length
         });
 
-        Debug.Log("記録: " + time + " (Lane: " + lane + ")");
+        Debug.Log($"記録: {startTime:F2}秒 (Lane: {lane}, Length: {length:F2}秒)");
     }
 
     public void Save()
     {
-        SaveData data = new SaveData();
-        data.notes = notes;
-
+        SaveData data = new SaveData { notes = notes };
         string json = JsonUtility.ToJson(data, true);
         File.WriteAllText(path, json);
-
         Debug.Log("保存したで: " + path);
     }
 
@@ -106,9 +125,7 @@ public class NoteRecorder : MonoBehaviour
         {
             string json = File.ReadAllText(path);
             SaveData data = JsonUtility.FromJson<SaveData>(json);
-
             notes = data.notes;
-
             Debug.Log("読み込み完了: " + notes.Count + "個");
         }
         else
