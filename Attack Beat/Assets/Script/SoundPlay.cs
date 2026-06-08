@@ -4,6 +4,7 @@ using System.Timers;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Audio;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class SoundPlay : MonoBehaviour
@@ -20,13 +21,31 @@ public class SoundPlay : MonoBehaviour
     private float CurrentTimer;
 
     public static bool SoundEnd = false;
+
+
+    public static int MyEnemyNum = 1;
     // Start is called before the first frame update
     void Start()
     {
         ESCButton.Pause = true;
 
-        BGMSound_public = BGMSound;
-        SESound_public = SESound;
+        if (SceneManager.GetActiveScene().name != "MyMusicCreateNote")
+        {
+            BGMSound_public = BGMSound;
+            SESound_public = SESound;
+        }
+        else if (SceneManager.GetActiveScene().name == "MyMusicCreateNote")
+        {
+            Debug.Log("MusicLoader = " + MusicLoader.Instance);
+            Debug.Log("LoadedBGM = " + MusicLoader.Instance?.LoadedBGM);
+            Debug.Log("BGMSound = " + BGMSound);
+
+            BGMSound.clip = MusicLoader.Instance.LoadedBGM;
+            SESound.clip = MusicLoader.Instance.LoadedSE;
+
+            BGMSound_public = BGMSound;
+            SESound_public = SESound;
+        }
 
         Time.timeScale = 0;
     }
