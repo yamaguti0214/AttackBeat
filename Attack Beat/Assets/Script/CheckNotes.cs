@@ -162,8 +162,8 @@ public class CheckNotes : MonoBehaviour
         {
             closestNote.isHit = true;
             Perfect++;
-            ShowResult("Perfect");
-            NotesEffect("Perfect");
+            ShowResult("Good");
+            NotesEffect("Good");
             DestoryNotes++;
             FlyNote(closestNote.Notes);
             notes.Remove(closestNote);
