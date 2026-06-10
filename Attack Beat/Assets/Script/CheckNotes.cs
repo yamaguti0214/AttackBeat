@@ -1,6 +1,10 @@
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using UnityEngine.UIElements;
+using System.Collections;
+using static CheckNotes;
+using UnityEngine.SceneManagement;
 
 public class CheckNotes : MonoBehaviour
 {
@@ -9,16 +13,14 @@ public class CheckNotes : MonoBehaviour
     {
         public GameObject Notes;
         public float timing;
-        public float length; // 追加
-        public int lane;     // 追加
         public bool isHit;
     }
 
+    //ノーツの判定結果
     [SerializeField] public TextMeshProUGUI Perfecttxt;
     [SerializeField] public TextMeshProUGUI Greatttxt;
     [SerializeField] public TextMeshProUGUI Goodtxt;
     [SerializeField] public TextMeshProUGUI MISStxt;
-
     public static int Perfect;
     public static int Great;
     public static int Good;
@@ -26,24 +28,31 @@ public class CheckNotes : MonoBehaviour
 
     private int DestoryNotes = 0;
 
+    //Effect
     [SerializeField] public GameObject PerfectEffect;
     [SerializeField] public GameObject GreatEffect;
     [SerializeField] public GameObject GoodEffect;
+
     [SerializeField] public Transform Canvastransform;
+
     [SerializeField] public Vector2 CheckPosition;
+
     [SerializeField] private SoundPlay soundPlay;
 
     public List<Note> notes = new List<Note>();
-    public TextMeshProUGUI resultText;
+
+    public TextMeshProUGUI resultText; // ← ここにセット
 
     public float perfectRange = 0.025f;
     public float greatRange = 0.075f;
     public float goodRange = 0.108f;
 
+    // 連打ペナルティ（判定ロック）のためのタイマー変数
     private float fKeyLockTimer = 0f;
     private float hKeyLockTimer = 0f;
-    private float lockDuration = 0.5f;
+    private float lockDuration = 0.5f; // ロックする時間（秒）調整可能
 
+    //合計で攻撃
     public static int FullAttack = 0;
 
     public AudioClip PerfectSound;
@@ -58,68 +67,86 @@ public class CheckNotes : MonoBehaviour
 
     void Start()
     {
-        Perfect = 0; Great = 0; Good = 0; MISS = 0;
+        Perfect = 0;
+        Great = 0;
+        Good = 0;
+        MISS = 0;
+
         audioSource = GetComponent<AudioSource>();
     }
 
     void Update()
     {
+        if(SceneManager.GetActiveScene().name == "MyMusicCreateNote")
+        {
+            if(Input.GetKeyDown(KeyCode.F) || Input.GetKeyDown(KeyCode.H))
+            {
+                Instantiate(PerfectEffect, CheckPosition, Quaternion.identity, Canvastransform);
+                audioSource.clip = PerfectSound;
+                audioSource.Play();
+            }
+        }
+        // タイマーを進める処理
         if (fKeyLockTimer > 0) fKeyLockTimer -= Time.deltaTime;
         if (hKeyLockTimer > 0) hKeyLockTimer -= Time.deltaTime;
 
         if (!ESCButton.Pause)
         {
-            // Fキー入力
+            // Fキーが押されたら青色のノーツを判定
             if (Input.GetKeyDown(KeyCode.F))
             {
                 soundPlay.SEPlay();
-                if (fKeyLockTimer <= 0) Judge(true); // true = Fキー
+
+                // ロック中でなければ判定を行う
+                if (fKeyLockTimer <= 0)
+                {
+                    Judge(true); // true = 青ノーツを狙う
+                }
             }
-            // Hキー入力
+            // Hキーが押されたら緑色のノーツを判定
             else if (Input.GetKeyDown(KeyCode.H))
             {
                 soundPlay.SEPlay();
-                if (hKeyLockTimer <= 0) Judge(false); // false = Hキー
+
+                // ロック中でなければ判定を行う
+                if (hKeyLockTimer <= 0)
+                {
+                    Judge(false); // false = 緑ノーツを狙う
+                }
             }
 
             CheckMiss();
         }
+
+        //if(!ESCButton.Pause) Debug.Log("SoundPlay" + SoundPlay.BGMSound_public.time);
     }
 
-    void Judge(bool isFKey)
+
+    void Judge(bool isBlue)
     {
         float currentTime = SoundPlay.BGMSound_public.time;
+
         Note closestNote = null;
         float closestDiff = float.MaxValue;
+
+        Debug.Log(soundPlay);
+        Debug.Log(SoundPlay.BGMSound_public);
+
+        //Debug.Log("current:" + currentTime);
+        //Debug.Log("note:" + closestNote.timing);
+        //Debug.Log("diff:" + closestDiff);
 
         foreach (var note in notes)
         {
             if (note.isHit) continue;
 
-            // ★レーンによる判定のフィルタリング
-            if (note.lane == 0 && !isFKey) continue; // 青ノーツなのにHを押した
-            if (note.lane == 1 && isFKey) continue;  // 緑ノーツなのにFを押した
-            // note.lane == 2 (連打ノーツ) の場合は、FでもHでもスルーして下の処理へ
+            bool isNoteBlue = note.Notes.name.Contains("note2_0");
 
-            // ★連打ノーツ(lane=2)専用の判定ロジック
-            if (note.lane == 2)
-            {
-                // 現在の時間が、連打ノーツの「始点」から「終点」の間に収まっているかチェック
-                if (currentTime >= note.timing - goodRange && currentTime <= note.timing + note.length + goodRange)
-                {
-                    // 条件が合えば、その場で連打成功として加点（ノーツは消さない）
-                    Perfect++;
-                    ShowResult("Perfect");
-                    NotesEffect("Perfect");
-                    FullAttack += 2; // 連打中の1打ごとのスコア
-                    audioSource.PlayOneShot(PerfectSound);
-                    return; // 連打ノーツの処理はここで即終了（次の単押し検索に行かせない）
-                }
-                continue;
-            }
+            // 押したキーとノーツの色が一致していない場合は、一番近いノーツの候補から除外）する
+            if (isBlue != isNoteBlue) continue;
 
-            // 通常ノーツの距離計算
             float diff = Mathf.Abs(currentTime - note.timing);
+
             if (diff < closestDiff)
             {
                 closestDiff = diff;
@@ -127,17 +154,20 @@ public class CheckNotes : MonoBehaviour
             }
         }
 
+        //Debug.Log("closestDiff :"+closestDiff);
+
+        // 一致する色のノーツが画面内に一つもない場合は、Miss判定に進まず処理を抜ける（空打ちを許容する場合）
         if (closestNote == null) return;
 
-        // お仕置きタイムの判定（通常ノーツのみ）
+        // 一番近いノーツが、まだ判定ゾーン（goodRange）より手前にあるときは、
+        // ノーツを消さずに、押したキーに「判定ロック（お仕置きタイム）」を付与する
         if (closestDiff > goodRange && currentTime < closestNote.timing)
         {
-            if (isFKey) fKeyLockTimer = lockDuration;
-            else hKeyLockTimer = lockDuration;
-            return;
+            if (isBlue) fKeyLockTimer = lockDuration; // Fキーをロック
+            else hKeyLockTimer = lockDuration;        // Hキーをロック
+            return; // ノーツは消さずにここで終了
         }
 
-        // 通常ノーツの判定処理
         if (closestDiff <= perfectRange)
         {
             closestNote.isHit = true;
@@ -149,10 +179,29 @@ public class CheckNotes : MonoBehaviour
             notes.Remove(closestNote);
             FullAttack += 5;
             audioSource.PlayOneShot(PerfectSound);
+            if (Perfect <= 10)
+            {
+                if (Perfect % 5 == 0)
+                {
+                    audioSource.PlayOneShot(GSound);
+                }
+            }
+            else if (Perfect > 10 && Perfect <= 20)
+            {
+                if (Perfect % 5 == 0)
+                {
+                    audioSource.PlayOneShot(ESound);
 
-            if (Perfect <= 10 && Perfect % 5 == 0) audioSource.PlayOneShot(GSound);
-            else if (Perfect > 10 && Perfect <= 20 && Perfect % 5 == 0) audioSource.PlayOneShot(ESound);
-            else if (Perfect > 20 && Perfect % 5 == 0) audioSource.PlayOneShot(MSound);
+                }
+
+            }
+            else if (Perfect > 20)
+            {
+                if (Perfect % 5 == 0)
+                {
+                    audioSource.PlayOneShot(MSound);
+                }
+            }
         }
         else if (closestDiff <= greatRange)
         {
@@ -192,6 +241,7 @@ public class CheckNotes : MonoBehaviour
         }
     }
 
+
     void CheckMiss()
     {
         float currentTime = SoundPlay.BGMSound_public.time;
@@ -208,27 +258,9 @@ public class CheckNotes : MonoBehaviour
 
             if (note.isHit) continue;
 
-            // 連打ノーツ(lane 2)の場合、終点(timing + length)を基準にする
-            float expirationTime = (note.lane == 2) ? (note.timing + note.length) : note.timing;
-
-            // 判定ライン（基準時間）を goodRange 分だけ通り過ぎたら処理を入れる
-            if (currentTime - expirationTime > goodRange)
+            if (currentTime - note.timing > goodRange)
             {
-                // 連打ノーツ(lane 2)の場合の処理
-                if (note.lane == 2)
-                {
-                    // 連打ノーツは、通り過ぎた＝「連打地帯を無事に完走した」という意味なので、
-                    // Missにせず、スコアなどの通知も出さずに、静かにオブジェクトだけを消去します。
-                    Debug.Log("連打ノーツが正常に終了しました。");
-
-                    note.isHit = true;
-                    Destroy(note.Notes);
-                    notes.RemoveAt(i);
-                    continue; // 次のノーツのループへ
-                }
-
-                // --- 通常ノーツ(lane 0, 1)の場合は今まで通りMissにする ---
-                Debug.Log("MISSTIMING (通常ノーツの叩き逃し)");
+                Debug.Log("MISSTIMING");
 
                 MISS++;
                 note.isHit = true;
@@ -247,29 +279,55 @@ public class CheckNotes : MonoBehaviour
             resultText.text = result;
             switch (result)
             {
-                case "Perfect": resultText.color = new Color(16, 0, 0); break;
-                case "Great": resultText.color = new Color(0, 0, 16); break;
-                case "Good": resultText.color = new Color(0, 16, 0); break;
-                case "Miss": resultText.color = new Color(16, 0, 16); break;
+                case "Perfect":
+                    resultText.color = new Color(16, 0, 0);
+                    break;
+                case "Great":
+                    resultText.color = new Color(0, 0, 16);
+                    break;
+                case "Good":
+                    resultText.color = new Color(0, 16, 0);
+                    break;
+                case "Miss":
+                    resultText.color = new Color(16, 0, 16);
+                    break;
+
             }
         }
 
         switch (result)
         {
-            case "Perfect": Perfecttxt.text = "Perfect : " + Perfect; break;
-            case "Great": Greatttxt.text = "Great : " + Great; break;
-            case "Good": Goodtxt.text = "Good : " + Good; break;
-            case "Miss": MISStxt.text = "Miss : " + MISS; break;
+            case "Perfect":
+                Perfecttxt.text = "Perfect : " + Perfect;
+                break;
+            case "Great":
+                Greatttxt.text = "Great : " + Great;
+                break;
+            case "Good":
+                Goodtxt.text = "Good : " + Good;
+                break;
+            case "Miss":
+                MISStxt.text = "Miss : " + MISS;
+                Debug.Log("MISS");
+                break;
+
         }
+
     }
 
     void NotesEffect(string Note_Check)
     {
         switch (Note_Check)
         {
-            case "Perfect": Instantiate(PerfectEffect, CheckPosition, Quaternion.identity, Canvastransform); break;
-            case "Great": Instantiate(GreatEffect, CheckPosition, Quaternion.identity, Canvastransform); break;
-            case "Good": Instantiate(GoodEffect, CheckPosition, Quaternion.identity, Canvastransform); break;
+            case "Perfect":
+                Instantiate(PerfectEffect, CheckPosition, Quaternion.identity, Canvastransform);
+                break;
+            case "Great":
+                Instantiate(GreatEffect, CheckPosition, Quaternion.identity, Canvastransform);
+                break;
+            case "Good":
+                Instantiate(GoodEffect, CheckPosition, Quaternion.identity, Canvastransform);
+                break;
         }
     }
 }

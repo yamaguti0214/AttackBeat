@@ -12,17 +12,25 @@ public class NoteMove : MonoBehaviour
 
     void Update()
     {
-        // Œ»İ‚Ì‹ÈŠÔ
+        // ç¾åœ¨ã®æ›²æ™‚é–“
         float currentTime = musicSource.time;
 
-        // ”»’è‚Ü‚Åc‚è‰½•b‚©
+        // åˆ¤å®šæ™‚é–“ã¾ã§æ®‹ã‚Šä½•ç§’ã‹
         float remainTime = timing - currentTime;
 
-        // ”»’èƒ‰ƒCƒ“‚©‚ç‚Ç‚ê‚¾‚¯—£‚ê‚é‚©
+        // åˆ¤å®šãƒ©ã‚¤ãƒ³ã‹ã‚‰ã©ã‚Œã ã‘é›¢ã‚Œã‚‹ã‹
         float distance = remainTime * speed;
 
-        // À•WXV
+        // åº§æ¨™æ›´æ–°
         transform.position =
             judgePoint.position + Vector3.right * distance;
+
+        Debug.Log(
+            "note timing: " + timing +
+            " / current: " + currentTime +
+            " / remain: " + remainTime +
+            " / distance: " + distance +
+            " / pos: " + transform.position
+        );
     }
 }
