@@ -9,8 +9,7 @@ public class MusicName : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        if (SaveDataManager.SaveDataInstance != null &&
-            SaveDataManager.SaveDataInstance.MusicName != null)
+        if(SaveDataManager.SaveDataInstance.MusicName != null)
         {
             musicName.text = SaveDataManager.SaveDataInstance.MusicName;
         }

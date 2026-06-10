@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 using System.IO;
-using UnityEngine.SceneManagement;
 
 public class Notes_Create : MonoBehaviour
 {
@@ -10,6 +9,7 @@ public class Notes_Create : MonoBehaviour
     {
         public float timing;
         public int lane;
+        public float length; // 追加
     }
 
     [System.Serializable]
@@ -19,41 +19,25 @@ public class Notes_Create : MonoBehaviour
     }
 
     public Transform spawnPoint;
-
     public CheckNotes checkNotes;
-
     public Transform judgePoint;
 
-    // インスペクターの「Note Prefabs」の登録順： Element 0 に「青」、Element 1 に「緑」をセット
+    // Element 0: 青, Element 1: 緑, Element 2: 連打（共通）
     public GameObject[] notePrefabs;
     public float speed = 5f;
     public AudioSource musicSource;
 
-    // 例：ここに「notes_song3.json」や「notes_song4.json」と打ち込めるように
-    [SerializeField] private string jsonFileName = "notes_song3.json";
+    [SerializeField] private string jsonFileName = "notes_song2.json";
 
     private List<NoteInput> notes = new List<NoteInput>();
     private int spawnIndex = 0;
-
     string path;
 
     void Start()
     {
-        if (SaveDataManager.SaveDataInstance.MusicName != null &&
-             SaveDataManager.SaveDataInstance != null && SceneManager.GetActiveScene().name == "MyMusicCreateNote")
-        {
-            jsonFileName = SaveDataManager.SaveDataInstance.MusicName;
-        }
-        else if(SceneManager.GetActiveScene().name != "MyMusicCreateNote")
-        {
-            // デスクトップから読み込み
-            string desktop = System.Environment.GetFolderPath(System.Environment.SpecialFolder.Desktop);
-
-            // ★修正：固定だったファイル名の部分を、変数「jsonFileName」に書き換え
-            path = Path.Combine(desktop, jsonFileName);
-
-            Load();
-        }
+        string desktop = System.Environment.GetFolderPath(System.Environment.SpecialFolder.Desktop);
+        path = Path.Combine(desktop, jsonFileName);
+        Load();
     }
 
     void Update()
@@ -70,31 +54,54 @@ public class Notes_Create : MonoBehaviour
 
     void Spawn(NoteInput data)
     {
-        // 譜面データの「lane」の値（0 または 1）をそのままインデックスとして使用する
         int prefabIndex = Mathf.Clamp(data.lane, 0, notePrefabs.Length - 1);
         GameObject selectedPrefab = notePrefabs[prefabIndex];
 
-        // ランダムではなく、作譜データ通りのプレファブを生成
         GameObject note = Instantiate(selectedPrefab, spawnPoint.position, Quaternion.identity);
 
-        // 移動
+        // --- Notes_Create.cs の Spawn メソッド内の該当部分を以下に差し替え ---
+
+        // 連打ノーツ（length > 0）の場合の見た目引き伸ばし処理
+        if (data.length > 0f)
+        {
+            Transform bodyTransform = note.transform.Find("Body");
+            Transform tailTransform = note.transform.Find("Tail");
+
+            if (bodyTransform != null && tailTransform != null)
+            {
+                // 速度5f × 長さ2秒 = 5ユニット分（横幅）
+                float visualLength = speed * data.length;
+
+                // 【1. 胴体をX軸（横方向）に伸ばす】
+                bodyTransform.localScale = new Vector3(visualLength, bodyTransform.localScale.y, bodyTransform.localScale.z);
+
+                // 【2. 胴体の位置を調整】
+                // ノーツが「右から左」に進む場合、後ろ側（右側）に伸びてほしいので、
+                // 伸びた分の半分（+方向）にずらして始点（Head）の位置をキープします
+                bodyTransform.localPosition = new Vector3(visualLength / 2f, 0f, 0f);
+
+                // 【3. 終点（Tail）を胴体の最果て（右側）に配置する】
+                tailTransform.localPosition = new Vector3(visualLength, 0f, 0f);
+            }
+        }
+
+        // 移動スクリプトへのデータ受け渡し
         NoteMove move = note.GetComponent<NoteMove>();
         if (move != null)
         {
             move.speed = speed;
-
             move.judgePoint = judgePoint;
-
             move.musicSource = musicSource;
-
             move.timing = data.timing;
         }
 
-        //判定登録（これが本体）
+        // 判定用スクリプトに登録
         CheckNotes.Note newNote = new CheckNotes.Note
         {
             Notes = note,
             timing = data.timing,
+            length = data.length, // 追加
+            lane = data.lane,     // 追加
             isHit = false
         };
 
@@ -114,12 +121,11 @@ public class Notes_Create : MonoBehaviour
             string json = File.ReadAllText(path);
             SaveData data = JsonUtility.FromJson<SaveData>(json);
             notes = data.notes;
-
-            Debug.Log("譜面読み込み: " + notes.Count);
+            Debug.Log("譜面読み込み: " + notes.Count + " (Path: " + path + ")");
         }
         else
         {
-            Debug.Log("譜面が見つからん: " + path); 
+            Debug.Log("譜面が見つからん: " + path);
         }
     }
 }
