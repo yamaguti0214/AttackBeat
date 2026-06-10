@@ -53,60 +53,52 @@ public class Notes_Create : MonoBehaviour
     }
 
     void Spawn(NoteInput data)
+{
+    int prefabIndex = Mathf.Clamp(data.lane, 0, notePrefabs.Length - 1);
+    GameObject selectedPrefab = notePrefabs[prefabIndex];
+
+    GameObject note = Instantiate(selectedPrefab, spawnPoint.position, Quaternion.identity);
+    Debug.Log("ノーツ生成: " + note.name + " / pos: " + note.transform.position);
+    Debug.Log("spawnPoint: " + spawnPoint.position + " / judgePoint: " + judgePoint.position);
+
+    if (data.length > 0f)
     {
-        int prefabIndex = Mathf.Clamp(data.lane, 0, notePrefabs.Length - 1);
-        GameObject selectedPrefab = notePrefabs[prefabIndex];
+        Transform bodyTransform = note.transform.Find("Body");
+        Transform tailTransform = note.transform.Find("Tail");
 
-        GameObject note = Instantiate(selectedPrefab, spawnPoint.position, Quaternion.identity);
-
-        // --- Notes_Create.cs の Spawn メソッド内の該当部分を以下に差し替え ---
-
-        // 連打ノーツ（length > 0）の場合の見た目引き伸ばし処理
-        if (data.length > 0f)
+        if (bodyTransform != null && tailTransform != null)
         {
-            Transform bodyTransform = note.transform.Find("Body");
-            Transform tailTransform = note.transform.Find("Tail");
+            float visualLength = speed * data.length;
 
-            if (bodyTransform != null && tailTransform != null)
-            {
-                // 速度5f × 長さ2秒 = 5ユニット分（横幅）
-                float visualLength = speed * data.length;
-
-                // 【1. 胴体をX軸（横方向）に伸ばす】
-                bodyTransform.localScale = new Vector3(visualLength, bodyTransform.localScale.y, bodyTransform.localScale.z);
-
-                // 【2. 胴体の位置を調整】
-                // ノーツが「右から左」に進む場合、後ろ側（右側）に伸びてほしいので、
-                // 伸びた分の半分（+方向）にずらして始点（Head）の位置をキープします
-                bodyTransform.localPosition = new Vector3(visualLength / 2f, 0f, 0f);
-
-                // 【3. 終点（Tail）を胴体の最果て（右側）に配置する】
-                tailTransform.localPosition = new Vector3(visualLength, 0f, 0f);
-            }
+            bodyTransform.localScale = new Vector3(visualLength, bodyTransform.localScale.y, bodyTransform.localScale.z);
+            bodyTransform.localPosition = new Vector3(visualLength / 2f, 0f, 0f);
+            tailTransform.localPosition = new Vector3(visualLength, 0f, 0f);
         }
-
-        // 移動スクリプトへのデータ受け渡し
-        NoteMove move = note.GetComponent<NoteMove>();
-        if (move != null)
-        {
-            move.speed = speed;
-            move.judgePoint = judgePoint;
-            move.musicSource = musicSource;
-            move.timing = data.timing;
-        }
-
-        // 判定用スクリプトに登録
-        CheckNotes.Note newNote = new CheckNotes.Note
-        {
-            Notes = note,
-            timing = data.timing,
-            length = data.length, // 追加
-            lane = data.lane,     // 追加
-            isHit = false
-        };
-
-        checkNotes.notes.Add(newNote);
     }
+
+    NoteMove move = note.GetComponent<NoteMove>();
+
+    if (move == null)
+    {
+        move = note.AddComponent<NoteMove>();
+    }
+
+    move.speed = speed;
+    move.judgePoint = judgePoint;
+    move.musicSource = musicSource;
+    move.timing = data.timing;
+
+    CheckNotes.Note newNote = new CheckNotes.Note
+    {
+        Notes = note,
+        timing = data.timing,
+        length = data.length,
+        lane = data.lane,
+        isHit = false
+    };
+
+    checkNotes.notes.Add(newNote);
+}
 
     float GetSpawnOffset()
     {
