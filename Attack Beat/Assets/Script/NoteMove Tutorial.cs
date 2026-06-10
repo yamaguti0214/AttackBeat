@@ -2,6 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+<<<<<<< HEAD
+=======
+
+>>>>>>> 24241e3f33f707f191ff9305dc78bff35c231878
 public class NoteMoveTutorial : MonoBehaviour
 {
     [Header("ノーツの移動速度")]
@@ -17,7 +21,11 @@ public class NoteMoveTutorial : MonoBehaviour
     public TextMeshProUGUI promptText;
 
     [Header("成功テキスト（Good!）")]
+<<<<<<< HEAD
     public TextMeshProUGUI goodText; // ★元のGameObject形式に戻しました
+=======
+    public TextMeshProUGUI goodText;
+>>>>>>> 24241e3f33f707f191ff9305dc78bff35c231878
 
     [Header("次に動かしたいノーツ（Note2など）")]
     public NoteMoveTutorial nextNote;
@@ -50,7 +58,10 @@ public class NoteMoveTutorial : MonoBehaviour
         }
         else
         {
+<<<<<<< HEAD
             // 3. 一時停止中に正しいキーが押されたら
+=======
+>>>>>>> 24241e3f33f707f191ff9305dc78bff35c231878
             if (Input.GetKeyDown(hitKey))
             {
                 promptText.gameObject.SetActive(false);
@@ -71,6 +82,7 @@ public class NoteMoveTutorial : MonoBehaviour
                 Invoke("ClearGoodEffect", 1.0f);
             }
         }
+<<<<<<< HEAD
         // 「Good!」を消して、オブジェクトを完全に消去する
         void ClearGoodEffect()
         {
@@ -82,3 +94,18 @@ public class NoteMoveTutorial : MonoBehaviour
         }
     }
 }
+=======
+    } // ← ここでしっかり Update 関数を終わらせる！
+
+    // ★ Update の外側に引っ越ししました
+    // 「Good!」を消して、オブジェクトを完全に消去する
+    void ClearGoodEffect()
+    {
+        if (goodText != null)
+        {
+            goodText.gameObject.SetActive(false);
+        }
+        Destroy(gameObject); // ここでノーツを完全に削除
+    }
+}
+>>>>>>> 24241e3f33f707f191ff9305dc78bff35c231878
