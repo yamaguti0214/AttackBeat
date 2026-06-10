@@ -3,6 +3,7 @@ using System.IO;
 using UnityEngine;
 using UnityEngine.Networking;
 using SFB;
+using UnityEngine.UI;
 
 public class MusicLoader : MonoBehaviour
 {
@@ -23,8 +24,11 @@ public class MusicLoader : MonoBehaviour
     public static int BackGroundnum = 1;
     public static Sprite ChoiceBackGround;
 
+    [SerializeField] private Button CreateButton;
+
     private void Awake()
     {
+        CreateButton.interactable = false;
         if (Instance == null)
         {
             Instance = this;
@@ -158,6 +162,8 @@ public class MusicLoader : MonoBehaviour
                 bgmSource.clip = clip;
 
                 Debug.Log("BGMì«Ç›çûÇ›äÆóπ");
+
+                CreateButton.interactable = true;
             }
             else
             {

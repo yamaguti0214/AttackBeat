@@ -4,6 +4,7 @@ using TMPro;
 using UnityEngine.UIElements;
 using System.Collections;
 using static CheckNotes;
+using UnityEngine.SceneManagement;
 
 public class CheckNotes : MonoBehaviour
 {
@@ -76,6 +77,15 @@ public class CheckNotes : MonoBehaviour
 
     void Update()
     {
+        if(SceneManager.GetActiveScene().name == "MyMusicCreateNote")
+        {
+            if(Input.GetKeyDown(KeyCode.F) || Input.GetKeyDown(KeyCode.H))
+            {
+                Instantiate(PerfectEffect, CheckPosition, Quaternion.identity, Canvastransform);
+                audioSource.clip = PerfectSound;
+                audioSource.Play();
+            }
+        }
         // タイマーを進める処理
         if (fKeyLockTimer > 0) fKeyLockTimer -= Time.deltaTime;
         if (hKeyLockTimer > 0) hKeyLockTimer -= Time.deltaTime;
