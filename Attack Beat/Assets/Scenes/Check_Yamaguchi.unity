@@ -3652,11 +3652,7 @@ MonoBehaviour:
   - {fileID: 6969292680188438259, guid: 654ca11e9fc88ab41a24cf984e85bbcc, type: 3}
   speed: 5
   musicSource: {fileID: 341864671}
-<<<<<<< HEAD
-  jsonFileName: notes_song10.json
-=======
   jsonFileName: notes_song2.json
->>>>>>> 24241e3f33f707f191ff9305dc78bff35c231878
 --- !u!4 &1207630124
 Transform:
   m_ObjectHideFlags: 0
@@ -3687,11 +3683,7 @@ MonoBehaviour:
   mode: 1
   musicSource: {fileID: 341864671}
   notes: []
-<<<<<<< HEAD
-  jsonFileName: notes_song10.json
-=======
   jsonFileName: notes_song2.json
->>>>>>> 24241e3f33f707f191ff9305dc78bff35c231878
 --- !u!1 &1282038532
 GameObject:
   m_ObjectHideFlags: 0
