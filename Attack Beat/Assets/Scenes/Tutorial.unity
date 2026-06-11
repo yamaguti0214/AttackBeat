@@ -177,30 +177,48 @@ MonoBehaviour:
   notes:
   - Notes: {fileID: 0}
     timing: 6
+    length: 0
+    lane: 0
     isHit: 0
   - Notes: {fileID: 0}
     timing: 7
+    length: 0
+    lane: 0
     isHit: 0
   - Notes: {fileID: 0}
     timing: 8
+    length: 0
+    lane: 0
     isHit: 0
   - Notes: {fileID: 0}
     timing: 9
+    length: 0
+    lane: 0
     isHit: 0
   - Notes: {fileID: 0}
     timing: 10
+    length: 0
+    lane: 0
     isHit: 0
   - Notes: {fileID: 0}
     timing: 11
+    length: 0
+    lane: 0
     isHit: 0
   - Notes: {fileID: 0}
     timing: 12
+    length: 0
+    lane: 0
     isHit: 0
   - Notes: {fileID: 0}
     timing: 13
+    length: 0
+    lane: 0
     isHit: 0
   - Notes: {fileID: 0}
     timing: 14
+    length: 0
+    lane: 0
     isHit: 0
   resultText: {fileID: 1698260880}
   perfectRange: 0.05
@@ -3726,6 +3744,7 @@ MonoBehaviour:
   mode: 1
   musicSource: {fileID: 341864671}
   notes: []
+  jsonFileName: notes_song2.json
 --- !u!1 &1245446052 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 2386380312486380078, guid: 9acd83d81dd1c584a967a5a17a4ddf8f, type: 3}
@@ -6340,7 +6359,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 21, y: -17}
+  m_AnchoredPosition: {x: 8.97, y: -18.13}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &1982567634
