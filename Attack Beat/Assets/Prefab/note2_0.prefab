@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7081358340638530161}
   - component: {fileID: 2155601165250880714}
+  - component: {fileID: 1455542436839981301}
   m_Layer: 0
   m_Name: note2_0
   m_TagString: Untagged
@@ -86,3 +87,19 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &1455542436839981301
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 143884267765546492}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d04de96a158561c4289f32a96e448d91, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  timing: 0
+  speed: 5
+  judgePoint: {fileID: 0}
+  musicSource: {fileID: 0}
