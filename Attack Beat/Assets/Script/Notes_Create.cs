@@ -9,7 +9,7 @@ public class Notes_Create : MonoBehaviour
     {
         public float timing;
         public int lane;
-        public float length;
+        public float length; // 追加
     }
 
     [System.Serializable]
@@ -22,6 +22,7 @@ public class Notes_Create : MonoBehaviour
     public CheckNotes checkNotes;
     public Transform judgePoint;
 
+    // Element 0: 青, Element 1: 緑, Element 2: 連打（共通）
     public GameObject[] notePrefabs;
     public float speed = 5f;
     public AudioSource musicSource;
@@ -34,25 +35,13 @@ public class Notes_Create : MonoBehaviour
 
     void Start()
     {
-        if (musicSource == null)
-        {
-            Debug.LogError("MusicSource が設定されていません");
-            return;
-        }
-
-        string desktop =
-            System.Environment.GetFolderPath(
-                System.Environment.SpecialFolder.Desktop);
-
+        string desktop = System.Environment.GetFolderPath(System.Environment.SpecialFolder.Desktop);
         path = Path.Combine(desktop, jsonFileName);
-
         Load();
     }
 
     void Update()
     {
-        if (musicSource == null) return;
-
         float currentTime = musicSource.time;
 
         while (spawnIndex < notes.Count &&
@@ -65,109 +54,78 @@ public class Notes_Create : MonoBehaviour
 
     void Spawn(NoteInput data)
     {
-        int prefabIndex =
-            Mathf.Clamp(data.lane, 0, notePrefabs.Length - 1);
+        int prefabIndex = Mathf.Clamp(data.lane, 0, notePrefabs.Length - 1);
+        GameObject selectedPrefab = notePrefabs[prefabIndex];
 
-        GameObject selectedPrefab =
-            notePrefabs[prefabIndex];
+        GameObject note = Instantiate(selectedPrefab, spawnPoint.position, Quaternion.identity);
 
-        GameObject note =
-            Instantiate(selectedPrefab,
-                        spawnPoint.position,
-                        Quaternion.identity);
+        // --- Notes_Create.cs の Spawn メソッド内の該当部分を以下に差し替え ---
 
-        Debug.Log("ノーツ生成 : " + note.name);
-
+        // 連打ノーツ（length > 0）の場合の見た目引き伸ばし処理
         if (data.length > 0f)
         {
-            Transform bodyTransform =
-                note.transform.Find("Body");
+            Transform bodyTransform = note.transform.Find("Body");
+            Transform tailTransform = note.transform.Find("Tail");
 
-            Transform tailTransform =
-                note.transform.Find("Tail");
-
-            if (bodyTransform != null &&
-                tailTransform != null)
+            if (bodyTransform != null && tailTransform != null)
             {
-                float visualLength =
-                    speed * data.length;
+                // 速度5f × 長さ2秒 = 5ユニット分（横幅）
+                float visualLength = speed * data.length;
 
-                bodyTransform.localScale =
-                    new Vector3(
-                        visualLength,
-                        bodyTransform.localScale.y,
-                        bodyTransform.localScale.z);
+                // 【1. 胴体をX軸（横方向）に伸ばす】
+                bodyTransform.localScale = new Vector3(visualLength, bodyTransform.localScale.y, bodyTransform.localScale.z);
 
-                bodyTransform.localPosition =
-                    new Vector3(
-                        visualLength / 2f,
-                        0f,
-                        0f);
+                // 【2. 胴体の位置を調整】
+                // ノーツが「右から左」に進む場合、後ろ側（右側）に伸びてほしいので、
+                // 伸びた分の半分（+方向）にずらして始点（Head）の位置をキープします
+                bodyTransform.localPosition = new Vector3(visualLength / 2f, 0f, 0f);
 
-                tailTransform.localPosition =
-                    new Vector3(
-                        visualLength,
-                        0f,
-                        0f);
+                // 【3. 終点（Tail）を胴体の最果て（右側）に配置する】
+                tailTransform.localPosition = new Vector3(visualLength, 0f, 0f);
             }
         }
 
-        NoteMove move =
-            note.GetComponent<NoteMove>();
-
-        if (move == null)
+        // 移動スクリプトへのデータ受け渡し
+        NoteMove move = note.GetComponent<NoteMove>();
+        if (move != null)
         {
-            move = note.AddComponent<NoteMove>();
+            move.speed = speed;
+            move.judgePoint = judgePoint;
+            move.musicSource = musicSource;
+            move.timing = data.timing;
         }
 
-        move.speed = speed;
-        move.judgePoint = judgePoint;
-        move.musicSource = musicSource;
-        move.timing = data.timing;
-
-        CheckNotes.Note newNote =
-            new CheckNotes.Note
-            {
-                Notes = note,
-                timing = data.timing,
-                length = data.length,
-                lane = data.lane,
-                isHit = false
-            };
+        // 判定用スクリプトに登録
+        CheckNotes.Note newNote = new CheckNotes.Note
+        {
+            Notes = note,
+            timing = data.timing,
+            length = data.length, // 追加
+            lane = data.lane,     // 追加
+            isHit = false
+        };
 
         checkNotes.notes.Add(newNote);
     }
 
     float GetSpawnOffset()
     {
-        float distance =
-            Vector3.Distance(
-                spawnPoint.position,
-                judgePoint.position);
-
+        float distance = Vector3.Distance(spawnPoint.position, judgePoint.position);
         return distance / speed;
     }
 
     void Load()
-{
-    if (File.Exists(path))
     {
-        string json = File.ReadAllText(path);
-        SaveData data = JsonUtility.FromJson<SaveData>(json);
-
-        if (data == null || data.notes == null)
+        if (File.Exists(path))
         {
-            notes = new List<NoteInput>();
-            Debug.LogError("譜面データの形式がおかしい: " + path);
-            return;
+            string json = File.ReadAllText(path);
+            SaveData data = JsonUtility.FromJson<SaveData>(json);
+            notes = data.notes;
+            Debug.Log("譜面読み込み: " + notes.Count + " (Path: " + path + ")");
         }
-
-        notes = data.notes;
-        Debug.Log("譜面読み込み : " + notes.Count + " (" + path + ")");
+        else
+        {
+            Debug.Log("譜面が見つからん: " + path);
+        }
     }
-    else
-    {
-        Debug.LogError("譜面が見つからん : " + path);
-    }
-}
 }

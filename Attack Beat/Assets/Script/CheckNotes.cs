@@ -1,28 +1,24 @@
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
-using UnityEngine.UIElements;
-using System.Collections;
-using static CheckNotes;
-using UnityEngine.SceneManagement;
 
 public class CheckNotes : MonoBehaviour
 {
     [System.Serializable]
     public class Note
     {
-         public GameObject Notes;
-    public float timing;
-    public float length;
-    public int lane;
-    public bool isHit;
+        public GameObject Notes;
+        public float timing;
+        public float length; // ’Ç‰Á
+        public int lane;     // ’Ç‰Á
+        public bool isHit;
     }
 
-    //ï¿½mï¿½[ï¿½cï¿½Ì”ï¿½ï¿½èŒ‹ï¿½ï¿½
     [SerializeField] public TextMeshProUGUI Perfecttxt;
     [SerializeField] public TextMeshProUGUI Greatttxt;
     [SerializeField] public TextMeshProUGUI Goodtxt;
     [SerializeField] public TextMeshProUGUI MISStxt;
+
     public static int Perfect;
     public static int Great;
     public static int Good;
@@ -30,31 +26,24 @@ public class CheckNotes : MonoBehaviour
 
     private int DestoryNotes = 0;
 
-    //Effect
     [SerializeField] public GameObject PerfectEffect;
     [SerializeField] public GameObject GreatEffect;
     [SerializeField] public GameObject GoodEffect;
-
     [SerializeField] public Transform Canvastransform;
-
     [SerializeField] public Vector2 CheckPosition;
-
     [SerializeField] private SoundPlay soundPlay;
 
     public List<Note> notes = new List<Note>();
-
-    public TextMeshProUGUI resultText; // ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ÉƒZï¿½bï¿½g
+    public TextMeshProUGUI resultText;
 
     public float perfectRange = 0.025f;
     public float greatRange = 0.075f;
     public float goodRange = 0.108f;
 
-    // ï¿½Aï¿½Åƒyï¿½iï¿½ï¿½ï¿½eï¿½Bï¿½iï¿½ï¿½ï¿½èƒï¿½bï¿½Nï¿½jï¿½Ì‚ï¿½ï¿½ß‚Ìƒ^ï¿½Cï¿½}ï¿½[ï¿½Ïï¿½
     private float fKeyLockTimer = 0f;
     private float hKeyLockTimer = 0f;
-    private float lockDuration = 0.5f; // ï¿½ï¿½ï¿½bï¿½Nï¿½ï¿½ï¿½éï¿½Ôiï¿½bï¿½jï¿½ï¿½ï¿½ï¿½ï¿½Â”\
+    private float lockDuration = 0.5f;
 
-    //ï¿½ï¿½ï¿½vï¿½ÅUï¿½ï¿½
     public static int FullAttack = 0;
 
     public AudioClip PerfectSound;
@@ -69,86 +58,68 @@ public class CheckNotes : MonoBehaviour
 
     void Start()
     {
-        Perfect = 0;
-        Great = 0;
-        Good = 0;
-        MISS = 0;
-
+        Perfect = 0; Great = 0; Good = 0; MISS = 0;
         audioSource = GetComponent<AudioSource>();
     }
 
     void Update()
     {
-        if(SceneManager.GetActiveScene().name == "MyMusicCreateNote")
-        {
-            if(Input.GetKeyDown(KeyCode.F) || Input.GetKeyDown(KeyCode.H))
-            {
-                Instantiate(PerfectEffect, CheckPosition, Quaternion.identity, Canvastransform);
-                audioSource.clip = PerfectSound;
-                audioSource.Play();
-            }
-        }
-        // ï¿½^ï¿½Cï¿½}ï¿½[ï¿½ï¿½iï¿½ß‚éˆï¿½ï¿½
         if (fKeyLockTimer > 0) fKeyLockTimer -= Time.deltaTime;
         if (hKeyLockTimer > 0) hKeyLockTimer -= Time.deltaTime;
 
         if (!ESCButton.Pause)
         {
-            // Fï¿½Lï¿½[ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ê‚½ï¿½ï¿½ÂFï¿½Ìƒmï¿½[ï¿½cï¿½ğ”»’ï¿½
+            // FƒL[“ü—Í
             if (Input.GetKeyDown(KeyCode.F))
             {
                 soundPlay.SEPlay();
-
-                // ï¿½ï¿½ï¿½bï¿½Nï¿½ï¿½ï¿½Å‚È‚ï¿½ï¿½ï¿½Î”ï¿½ï¿½ï¿½ï¿½ï¿½sï¿½ï¿½
-                if (fKeyLockTimer <= 0)
-                {
-                    Judge(true); // true = ï¿½Âƒmï¿½[ï¿½cï¿½ï¿½_ï¿½ï¿½
-                }
+                if (fKeyLockTimer <= 0) Judge(true); // true = FƒL[
             }
-            // Hï¿½Lï¿½[ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ê‚½ï¿½ï¿½ÎFï¿½Ìƒmï¿½[ï¿½cï¿½ğ”»’ï¿½
+            // HƒL[“ü—Í
             else if (Input.GetKeyDown(KeyCode.H))
             {
                 soundPlay.SEPlay();
-
-                // ï¿½ï¿½ï¿½bï¿½Nï¿½ï¿½ï¿½Å‚È‚ï¿½ï¿½ï¿½Î”ï¿½ï¿½ï¿½ï¿½ï¿½sï¿½ï¿½
-                if (hKeyLockTimer <= 0)
-                {
-                    Judge(false); // false = ï¿½Îƒmï¿½[ï¿½cï¿½ï¿½_ï¿½ï¿½
-                }
+                if (hKeyLockTimer <= 0) Judge(false); // false = HƒL[
             }
 
             CheckMiss();
         }
-
-        //if(!ESCButton.Pause) Debug.Log("SoundPlay" + SoundPlay.BGMSound_public.time);
     }
 
-
-    void Judge(bool isBlue)
+    void Judge(bool isFKey)
     {
         float currentTime = SoundPlay.BGMSound_public.time;
-
         Note closestNote = null;
         float closestDiff = float.MaxValue;
-
-        Debug.Log(soundPlay);
-        Debug.Log(SoundPlay.BGMSound_public);
-
-        //Debug.Log("current:" + currentTime);
-        //Debug.Log("note:" + closestNote.timing);
-        //Debug.Log("diff:" + closestDiff);
 
         foreach (var note in notes)
         {
             if (note.isHit) continue;
 
-            bool isNoteBlue = note.Notes.name.Contains("note2_0");
+            // šƒŒ[ƒ“‚É‚æ‚é”»’è‚ÌƒtƒBƒ‹ƒ^ƒŠƒ“ƒO
+            if (note.lane == 0 && !isFKey) continue; // Âƒm[ƒc‚È‚Ì‚ÉH‚ğ‰Ÿ‚µ‚½
+            if (note.lane == 1 && isFKey) continue;  // —Îƒm[ƒc‚È‚Ì‚ÉF‚ğ‰Ÿ‚µ‚½
+            // note.lane == 2 (˜A‘Åƒm[ƒc) ‚Ìê‡‚ÍAF‚Å‚àH‚Å‚àƒXƒ‹[‚µ‚Ä‰º‚Ìˆ—‚Ö
 
-            // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Lï¿½[ï¿½Æƒmï¿½[ï¿½cï¿½ÌFï¿½ï¿½ï¿½ï¿½vï¿½ï¿½ï¿½Ä‚ï¿½ï¿½È‚ï¿½ï¿½ê‡ï¿½ÍAï¿½ï¿½Ô‹ß‚ï¿½ï¿½mï¿½[ï¿½cï¿½ÌŒï¿½â‚©ï¿½çœï¿½Oï¿½jï¿½ï¿½ï¿½ï¿½
-            if (isBlue != isNoteBlue) continue;
+            // š˜A‘Åƒm[ƒc(lane=2)ê—p‚Ì”»’èƒƒWƒbƒN
+            if (note.lane == 2)
+            {
+                // Œ»İ‚ÌŠÔ‚ªA˜A‘Åƒm[ƒc‚Ìun“_v‚©‚çuI“_v‚ÌŠÔ‚Éû‚Ü‚Á‚Ä‚¢‚é‚©ƒ`ƒFƒbƒN
+                if (currentTime >= note.timing - goodRange && currentTime <= note.timing + note.length + goodRange)
+                {
+                    // ğŒ‚ª‡‚¦‚ÎA‚»‚Ìê‚Å˜A‘Å¬Œ÷‚Æ‚µ‚Ä‰Á“_iƒm[ƒc‚ÍÁ‚³‚È‚¢j
+                    Perfect++;
+                    ShowResult("Perfect");
+                    NotesEffect("Perfect");
+                    FullAttack += 2; // ˜A‘Å’†‚Ì1‘Å‚²‚Æ‚ÌƒXƒRƒA
+                    audioSource.PlayOneShot(PerfectSound);
+                    return; // ˜A‘Åƒm[ƒc‚Ìˆ—‚Í‚±‚±‚Å‘¦I—¹iŸ‚Ì’P‰Ÿ‚µŒŸõ‚És‚©‚¹‚È‚¢j
+                }
+                continue;
+            }
 
+            // ’Êíƒm[ƒc‚Ì‹——£ŒvZ
             float diff = Mathf.Abs(currentTime - note.timing);
-
             if (diff < closestDiff)
             {
                 closestDiff = diff;
@@ -156,20 +127,17 @@ public class CheckNotes : MonoBehaviour
             }
         }
 
-        //Debug.Log("closestDiff :"+closestDiff);
-
-        // ï¿½ï¿½vï¿½ï¿½ï¿½ï¿½Fï¿½Ìƒmï¿½[ï¿½cï¿½ï¿½ï¿½ï¿½Ê“ï¿½ï¿½Éˆï¿½Â‚ï¿½ï¿½È‚ï¿½ï¿½ê‡ï¿½ÍAMissï¿½ï¿½ï¿½ï¿½Éiï¿½Ü‚ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ğ”²‚ï¿½ï¿½ï¿½iï¿½ï¿½Å‚ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½eï¿½ï¿½ï¿½ï¿½ê‡ï¿½j
         if (closestNote == null) return;
 
-        // ï¿½ï¿½Ô‹ß‚ï¿½ï¿½mï¿½[ï¿½cï¿½ï¿½ï¿½Aï¿½Ü‚ï¿½ï¿½ï¿½ï¿½ï¿½]ï¿½[ï¿½ï¿½ï¿½igoodRangeï¿½jï¿½ï¿½ï¿½ï¿½Oï¿½É‚ï¿½ï¿½ï¿½Æ‚ï¿½ï¿½ÍA
-        // ï¿½mï¿½[ï¿½cï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ÉAï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Lï¿½[ï¿½Éuï¿½ï¿½ï¿½èƒï¿½bï¿½Nï¿½iï¿½ï¿½ï¿½dï¿½uï¿½ï¿½ï¿½^ï¿½Cï¿½ï¿½ï¿½jï¿½vï¿½ï¿½tï¿½^ï¿½ï¿½ï¿½ï¿½
+        // ‚¨d’u‚«ƒ^ƒCƒ€‚Ì”»’èi’Êíƒm[ƒc‚Ì‚İj
         if (closestDiff > goodRange && currentTime < closestNote.timing)
         {
-            if (isBlue) fKeyLockTimer = lockDuration; // Fï¿½Lï¿½[ï¿½ï¿½ï¿½ï¿½ï¿½bï¿½N
-            else hKeyLockTimer = lockDuration;        // Hï¿½Lï¿½[ï¿½ï¿½ï¿½ï¿½ï¿½bï¿½N
-            return; // ï¿½mï¿½[ï¿½cï¿½Íï¿½ï¿½ï¿½ï¿½ï¿½ï¿½É‚ï¿½ï¿½ï¿½ï¿½ÅIï¿½ï¿½
+            if (isFKey) fKeyLockTimer = lockDuration;
+            else hKeyLockTimer = lockDuration;
+            return;
         }
 
+        // ’Êíƒm[ƒc‚Ì”»’èˆ—
         if (closestDiff <= perfectRange)
         {
             closestNote.isHit = true;
@@ -177,33 +145,14 @@ public class CheckNotes : MonoBehaviour
             ShowResult("Perfect");
             NotesEffect("Perfect");
             DestoryNotes++;
-            FlyNote(closestNote.Notes);
+            Destroy(closestNote.Notes);
             notes.Remove(closestNote);
             FullAttack += 5;
             audioSource.PlayOneShot(PerfectSound);
-            if (Perfect <= 10)
-            {
-                if (Perfect % 5 == 0)
-                {
-                    audioSource.PlayOneShot(GSound);
-                }
-            }
-            else if (Perfect > 10 && Perfect <= 20)
-            {
-                if (Perfect % 5 == 0)
-                {
-                    audioSource.PlayOneShot(ESound);
 
-                }
-
-            }
-            else if (Perfect > 20)
-            {
-                if (Perfect % 5 == 0)
-                {
-                    audioSource.PlayOneShot(MSound);
-                }
-            }
+            if (Perfect <= 10 && Perfect % 5 == 0) audioSource.PlayOneShot(GSound);
+            else if (Perfect > 10 && Perfect <= 20 && Perfect % 5 == 0) audioSource.PlayOneShot(ESound);
+            else if (Perfect > 20 && Perfect % 5 == 0) audioSource.PlayOneShot(MSound);
         }
         else if (closestDiff <= greatRange)
         {
@@ -212,7 +161,7 @@ public class CheckNotes : MonoBehaviour
             ShowResult("Great");
             NotesEffect("Great");
             DestoryNotes++;
-            FlyNote(closestNote.Notes);
+            Destroy(closestNote.Notes);
             notes.Remove(closestNote);
             FullAttack += 3;
             audioSource.PlayOneShot(GreatSound);
@@ -224,7 +173,7 @@ public class CheckNotes : MonoBehaviour
             ShowResult("Good");
             NotesEffect("Good");
             DestoryNotes++;
-            FlyNote(closestNote.Notes);
+            Destroy(closestNote.Notes);
             notes.Remove(closestNote);
             FullAttack += 1;
             audioSource.PlayOneShot(GoodSound);
@@ -243,7 +192,6 @@ public class CheckNotes : MonoBehaviour
         }
     }
 
-
     void CheckMiss()
     {
         float currentTime = SoundPlay.BGMSound_public.time;
@@ -260,9 +208,27 @@ public class CheckNotes : MonoBehaviour
 
             if (note.isHit) continue;
 
-            if (currentTime - note.timing > goodRange)
+            // ˜A‘Åƒm[ƒc(lane 2)‚Ìê‡AI“_(timing + length)‚ğŠî€‚É‚·‚é
+            float expirationTime = (note.lane == 2) ? (note.timing + note.length) : note.timing;
+
+            // ”»’èƒ‰ƒCƒ“iŠî€ŠÔj‚ğ goodRange •ª‚¾‚¯’Ê‚è‰ß‚¬‚½‚çˆ—‚ğ“ü‚ê‚é
+            if (currentTime - expirationTime > goodRange)
             {
-                Debug.Log("MISSTIMING");
+                // ˜A‘Åƒm[ƒc(lane 2)‚Ìê‡‚Ìˆ—
+                if (note.lane == 2)
+                {
+                    // ˜A‘Åƒm[ƒc‚ÍA’Ê‚è‰ß‚¬‚½u˜A‘Å’n‘Ñ‚ğ–³–‚ÉŠ®‘–‚µ‚½v‚Æ‚¢‚¤ˆÓ–¡‚È‚Ì‚ÅA
+                    // Miss‚É‚¹‚¸AƒXƒRƒA‚È‚Ç‚Ì’Ê’m‚ào‚³‚¸‚ÉAÃ‚©‚ÉƒIƒuƒWƒFƒNƒg‚¾‚¯‚ğÁ‹‚µ‚Ü‚·B
+                    Debug.Log("˜A‘Åƒm[ƒc‚ª³í‚ÉI—¹‚µ‚Ü‚µ‚½B");
+
+                    note.isHit = true;
+                    Destroy(note.Notes);
+                    notes.RemoveAt(i);
+                    continue; // Ÿ‚Ìƒm[ƒc‚Ìƒ‹[ƒv‚Ö
+                }
+
+                // --- ’Êíƒm[ƒc(lane 0, 1)‚Ìê‡‚Í¡‚Ü‚Å’Ê‚èMiss‚É‚·‚é ---
+                Debug.Log("MISSTIMING (’Êíƒm[ƒc‚Ì’@‚«“¦‚µ)");
 
                 MISS++;
                 note.isHit = true;
@@ -281,87 +247,29 @@ public class CheckNotes : MonoBehaviour
             resultText.text = result;
             switch (result)
             {
-                case "Perfect":
-                    resultText.color = new Color(16, 0, 0);
-                    break;
-                case "Great":
-                    resultText.color = new Color(0, 0, 16);
-                    break;
-                case "Good":
-                    resultText.color = new Color(0, 16, 0);
-                    break;
-                case "Miss":
-                    resultText.color = new Color(16, 0, 16);
-                    break;
-
+                case "Perfect": resultText.color = new Color(16, 0, 0); break;
+                case "Great": resultText.color = new Color(0, 0, 16); break;
+                case "Good": resultText.color = new Color(0, 16, 0); break;
+                case "Miss": resultText.color = new Color(16, 0, 16); break;
             }
         }
 
         switch (result)
         {
-            case "Perfect":
-                Perfecttxt.text = "Perfect : " + Perfect;
-                break;
-            case "Great":
-                Greatttxt.text = "Great : " + Great;
-                break;
-            case "Good":
-                Goodtxt.text = "Good : " + Good;
-                break;
-            case "Miss":
-                MISStxt.text = "Miss : " + MISS;
-                Debug.Log("MISS");
-                break;
-
+            case "Perfect": Perfecttxt.text = "Perfect : " + Perfect; break;
+            case "Great": Greatttxt.text = "Great : " + Great; break;
+            case "Good": Goodtxt.text = "Good : " + Good; break;
+            case "Miss": MISStxt.text = "Miss : " + MISS; break;
         }
-
     }
 
     void NotesEffect(string Note_Check)
     {
         switch (Note_Check)
         {
-            case "Perfect":
-                Instantiate(PerfectEffect, CheckPosition, Quaternion.identity, Canvastransform);
-                break;
-            case "Great":
-                Instantiate(GreatEffect, CheckPosition, Quaternion.identity, Canvastransform);
-                break;
-            case "Good":
-                Instantiate(GoodEffect, CheckPosition, Quaternion.identity, Canvastransform);
-                break;
+            case "Perfect": Instantiate(PerfectEffect, CheckPosition, Quaternion.identity, Canvastransform); break;
+            case "Great": Instantiate(GreatEffect, CheckPosition, Quaternion.identity, Canvastransform); break;
+            case "Good": Instantiate(GoodEffect, CheckPosition, Quaternion.identity, Canvastransform); break;
         }
     }
-    void FlyNote(GameObject noteObj)
-{
-    if (noteObj == null) return;
-
-    StartCoroutine(FlyNoteCoroutine(noteObj));
-}
-
-IEnumerator FlyNoteCoroutine(GameObject noteObj)
-{
-    float time = 0f;
-    float duration = 1.2f;
-
-    Vector3 startPos = noteObj.transform.position;
-
-    while (time < duration)
-    {
-        if (noteObj == null) yield break;
-
-        time += Time.deltaTime;
-        float t = time / duration;
-
-        float x = Mathf.Lerp(0f, 14f, t);
-        float y = (-4f * 3f * (t - 0.5f) * (t - 0.5f)) + 3f;
-
-        noteObj.transform.position = startPos + new Vector3(x, y, 0f);
-        noteObj.transform.Rotate(0f, 0f, -360f * Time.deltaTime);
-
-        yield return null;
-    }
-
-    Destroy(noteObj);
-}
 }
