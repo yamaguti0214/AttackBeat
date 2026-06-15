@@ -1,63 +1,93 @@
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class KeyChangeButton : MonoBehaviour
 {
-    public enum KeyType
-    {
-        Left,
-        Right
-    }
+    public static bool IsWaitingForKey = false;
 
-    [SerializeField] private KeyType keyType;
-    [SerializeField] private TextMeshProUGUI keyText;
+    [SerializeField] private Button leftButton;
+    [SerializeField] private Button rightButton;
 
-    private bool waitingForKey = false;
+    [SerializeField] private TextMeshProUGUI leftKeyText;
+    [SerializeField] private TextMeshProUGUI rightKeyText;
+
+    private bool waitingLeft;
+    private bool waitingRight;
 
     private void Start()
     {
-        UpdateText();
+        UpdateTexts();
     }
 
-    public void ChangeKey()
+    public void ChangeLeftKey()
     {
-        waitingForKey = true;
-        keyText.text = "キーを押してください";
+        if (IsWaitingForKey) return;
+
+        IsWaitingForKey = true;
+        waitingLeft = true;
+
+        leftKeyText.text = "...";
+
+        leftButton.interactable = false;
+        rightButton.interactable = false;
+    }
+
+    public void ChangeRightKey()
+    {
+        if (IsWaitingForKey) return;
+
+        IsWaitingForKey = true;
+        waitingRight = true;
+
+        rightKeyText.text = "...";
+
+        leftButton.interactable = false;
+        rightButton.interactable = false;
     }
 
     private void Update()
     {
-        if (!waitingForKey) return;
+        if (!waitingLeft && !waitingRight) return;
 
         foreach (KeyCode key in System.Enum.GetValues(typeof(KeyCode)))
         {
-            if (Input.GetKeyDown(key))
-            {
-                if (keyType == KeyType.Left)
-                {
-                    KeySettingManager.LeftKey = key;
-                }
-                else
-                {
-                    KeySettingManager.RightKey = key;
-                }
+            if (!Input.GetKeyDown(key))
+                continue;
 
-                waitingForKey = false;
-                UpdateText();
-                break;
+            if (waitingLeft)
+            {
+                //// 同じキー禁止
+                //if (key == KeySettingManager.RightKey)
+                //    return;
+
+                KeySettingManager.LeftKey = key;
+                waitingLeft = false;
             }
+
+            if (waitingRight)
+            {
+                //// 同じキー禁止
+                //if (key == KeySettingManager.LeftKey)
+                //    return;
+
+                KeySettingManager.RightKey = key;
+                waitingRight = false;
+            }
+
+            IsWaitingForKey = false;
+
+            leftButton.interactable = true;
+            rightButton.interactable = true;
+
+            UpdateTexts();
+            break;
         }
     }
 
-    private void UpdateText()
+    private void UpdateTexts()
     {
-        if (keyType == KeyType.Left)
-        {
-            keyText.text = "左キー : " + KeySettingManager.LeftKey;
-        }
-        else
-        {
-            keyText.text = "右キー : " + KeySettingManager.RightKey;
-        }
+        leftKeyText.text = KeySettingManager.LeftKey.ToString();
+        rightKeyText.text = KeySettingManager.RightKey.ToString();
     }
 }
