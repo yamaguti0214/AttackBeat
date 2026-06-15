@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 using System.IO;
-using UnityEngine.SceneManagement;
 
 public class Notes_Create : MonoBehaviour
 {
@@ -10,6 +9,7 @@ public class Notes_Create : MonoBehaviour
     {
         public float timing;
         public int lane;
+        public float length;
     }
 
     [System.Serializable]
@@ -19,45 +19,40 @@ public class Notes_Create : MonoBehaviour
     }
 
     public Transform spawnPoint;
-
     public CheckNotes checkNotes;
-
     public Transform judgePoint;
 
-    // インスペクターの「Note Prefabs」の登録順： Element 0 に「青」、Element 1 に「緑」をセット
     public GameObject[] notePrefabs;
     public float speed = 5f;
     public AudioSource musicSource;
 
-    // 例：ここに「notes_song3.json」や「notes_song4.json」と打ち込めるように
-    [SerializeField] private string jsonFileName = "notes_song3.json";
+    [SerializeField] private string jsonFileName = "notes_song2.json";
 
     private List<NoteInput> notes = new List<NoteInput>();
     private int spawnIndex = 0;
-
     string path;
 
     void Start()
     {
-        if (SaveDataManager.SaveDataInstance.MusicName != null &&
-             SaveDataManager.SaveDataInstance != null && SceneManager.GetActiveScene().name == "MyMusicCreateNote")
+        if (musicSource == null)
         {
-            jsonFileName = SaveDataManager.SaveDataInstance.MusicName;
+            Debug.LogError("MusicSource が設定されていません");
+            return;
         }
-        else if(SceneManager.GetActiveScene().name != "MyMusicCreateNote")
-        {
-            // デスクトップから読み込み
-            string desktop = System.Environment.GetFolderPath(System.Environment.SpecialFolder.Desktop);
 
-            // ★修正：固定だったファイル名の部分を、変数「jsonFileName」に書き換え
-            path = Path.Combine(desktop, jsonFileName);
+        string desktop =
+            System.Environment.GetFolderPath(
+                System.Environment.SpecialFolder.Desktop);
 
-            Load();
-        }
+        path = Path.Combine(desktop, jsonFileName);
+
+        Load();
     }
 
     void Update()
     {
+        if (musicSource == null) return;
+
         float currentTime = musicSource.time;
 
         while (spawnIndex < notes.Count &&
@@ -70,56 +65,109 @@ public class Notes_Create : MonoBehaviour
 
     void Spawn(NoteInput data)
     {
-        // 譜面データの「lane」の値（0 または 1）をそのままインデックスとして使用する
-        int prefabIndex = Mathf.Clamp(data.lane, 0, notePrefabs.Length - 1);
-        GameObject selectedPrefab = notePrefabs[prefabIndex];
+        int prefabIndex =
+            Mathf.Clamp(data.lane, 0, notePrefabs.Length - 1);
 
-        // ランダムではなく、作譜データ通りのプレファブを生成
-        GameObject note = Instantiate(selectedPrefab, spawnPoint.position, Quaternion.identity);
+        GameObject selectedPrefab =
+            notePrefabs[prefabIndex];
 
-        // 移動
-        NoteMove move = note.GetComponent<NoteMove>();
-        if (move != null)
+        GameObject note =
+            Instantiate(selectedPrefab,
+                        spawnPoint.position,
+                        Quaternion.identity);
+
+        Debug.Log("ノーツ生成 : " + note.name);
+
+        if (data.length > 0f)
         {
-            move.speed = speed;
+            Transform bodyTransform =
+                note.transform.Find("Body");
 
-            move.judgePoint = judgePoint;
+            Transform tailTransform =
+                note.transform.Find("Tail");
 
-            move.musicSource = musicSource;
+            if (bodyTransform != null &&
+                tailTransform != null)
+            {
+                float visualLength =
+                    speed * data.length;
 
-            move.timing = data.timing;
+                bodyTransform.localScale =
+                    new Vector3(
+                        visualLength,
+                        bodyTransform.localScale.y,
+                        bodyTransform.localScale.z);
+
+                bodyTransform.localPosition =
+                    new Vector3(
+                        visualLength / 2f,
+                        0f,
+                        0f);
+
+                tailTransform.localPosition =
+                    new Vector3(
+                        visualLength,
+                        0f,
+                        0f);
+            }
         }
 
-        //判定登録（これが本体）
-        CheckNotes.Note newNote = new CheckNotes.Note
+        NoteMove move =
+            note.GetComponent<NoteMove>();
+
+        if (move == null)
         {
-            Notes = note,
-            timing = data.timing,
-            isHit = false
-        };
+            move = note.AddComponent<NoteMove>();
+        }
+
+        move.speed = speed;
+        move.judgePoint = judgePoint;
+        move.musicSource = musicSource;
+        move.timing = data.timing;
+
+        CheckNotes.Note newNote =
+            new CheckNotes.Note
+            {
+                Notes = note,
+                timing = data.timing,
+                length = data.length,
+                lane = data.lane,
+                isHit = false
+            };
 
         checkNotes.notes.Add(newNote);
     }
 
     float GetSpawnOffset()
     {
-        float distance = Vector3.Distance(spawnPoint.position, judgePoint.position);
+        float distance =
+            Vector3.Distance(
+                spawnPoint.position,
+                judgePoint.position);
+
         return distance / speed;
     }
 
     void Load()
+{
+    if (File.Exists(path))
     {
-        if (File.Exists(path))
-        {
-            string json = File.ReadAllText(path);
-            SaveData data = JsonUtility.FromJson<SaveData>(json);
-            notes = data.notes;
+        string json = File.ReadAllText(path);
+        SaveData data = JsonUtility.FromJson<SaveData>(json);
 
-            Debug.Log("譜面読み込み: " + notes.Count);
-        }
-        else
+        if (data == null || data.notes == null)
         {
-            Debug.Log("譜面が見つからん: " + path); 
+            notes = new List<NoteInput>();
+            Debug.LogError("譜面データの形式がおかしい: " + path);
+            return;
         }
+
+        notes = data.notes;
+        Debug.Log("譜面読み込み : " + notes.Count + " (" + path + ")");
     }
+    else
+    {
+        Debug.LogError("譜面が見つからん : " + path);
+    }
+}
 }
