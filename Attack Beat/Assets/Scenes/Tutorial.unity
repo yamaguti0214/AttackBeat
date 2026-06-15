@@ -1202,11 +1202,7 @@ MonoBehaviour:
   targetTarget: {fileID: 1288742003}
   stopRange: 0.1
   promptText: {fileID: 1557364514}
-<<<<<<< HEAD
-  goodText: {fileID: 1556642854}
-=======
   goodText: {fileID: 1722760936}
->>>>>>> 24241e3f33f707f191ff9305dc78bff35c231878
   nextNote: {fileID: 0}
   hitKey: 102
 --- !u!1 &341864668
@@ -3671,10 +3667,7 @@ RectTransform:
   - {fileID: 1982567637}
   - {fileID: 1557364512}
   - {fileID: 1556642856}
-<<<<<<< HEAD
-=======
   - {fileID: 1722760938}
->>>>>>> 24241e3f33f707f191ff9305dc78bff35c231878
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -3699,11 +3692,8 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-<<<<<<< HEAD
   m_IsActive: 1
-=======
   m_IsActive: 0
->>>>>>> 24241e3f33f707f191ff9305dc78bff35c231878
 --- !u!114 &1207630123
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3724,10 +3714,7 @@ MonoBehaviour:
   - {fileID: 2386380312486380078, guid: 9acd83d81dd1c584a967a5a17a4ddf8f, type: 3}
   speed: 5
   musicSource: {fileID: 341864671}
-<<<<<<< HEAD
-=======
   jsonFileName: notes_song3.json
->>>>>>> 24241e3f33f707f191ff9305dc78bff35c231878
 --- !u!4 &1207630124
 Transform:
   m_ObjectHideFlags: 0
@@ -4371,10 +4358,7 @@ GameObject:
   - component: {fileID: 1556642856}
   - component: {fileID: 1556642855}
   - component: {fileID: 1556642854}
-<<<<<<< HEAD
-=======
   - component: {fileID: 1556642857}
->>>>>>> 24241e3f33f707f191ff9305dc78bff35c231878
   m_Layer: 5
   m_Name: Good!(Text)
   m_TagString: Untagged
@@ -4500,8 +4484,6 @@ RectTransform:
   m_AnchoredPosition: {x: -643.99945, y: -32}
   m_SizeDelta: {x: 200, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
-<<<<<<< HEAD
-=======
 --- !u!114 &1556642857
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4516,7 +4498,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   bounceHeight: 60
   duration: 0.5
->>>>>>> 24241e3f33f707f191ff9305dc78bff35c231878
 --- !u!1 &1557364511
 GameObject:
   m_ObjectHideFlags: 0
@@ -5687,8 +5668,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-<<<<<<< HEAD
-=======
 --- !u!1 &1722760935
 GameObject:
   m_ObjectHideFlags: 0
@@ -5840,7 +5819,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   bounceHeight: 60
   duration: 0.5
->>>>>>> 24241e3f33f707f191ff9305dc78bff35c231878
 --- !u!1 &1732588329
 GameObject:
   m_ObjectHideFlags: 0
