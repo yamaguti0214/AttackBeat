@@ -177,58 +177,49 @@ MonoBehaviour:
   notes:
   - Notes: {fileID: 0}
     timing: 6
+    length: 0
+    lane: 0
     isHit: 0
-    duration: 0
-    isRoll: 0
-    rollEndTime: 0
   - Notes: {fileID: 0}
     timing: 7
+    length: 0
+    lane: 0
     isHit: 0
-    duration: 0
-    isRoll: 0
-    rollEndTime: 0
   - Notes: {fileID: 0}
     timing: 8
+    length: 0
+    lane: 0
     isHit: 0
-    duration: 0
-    isRoll: 0
-    rollEndTime: 0
   - Notes: {fileID: 0}
     timing: 9
+    length: 0
+    lane: 0
     isHit: 0
-    duration: 0
-    isRoll: 0
-    rollEndTime: 0
   - Notes: {fileID: 0}
     timing: 10
+    length: 0
+    lane: 0
     isHit: 0
-    duration: 0
-    isRoll: 0
-    rollEndTime: 0
   - Notes: {fileID: 0}
     timing: 11
+    length: 0
+    lane: 0
     isHit: 0
-    duration: 0
-    isRoll: 0
-    rollEndTime: 0
   - Notes: {fileID: 0}
     timing: 12
+    length: 0
+    lane: 0
     isHit: 0
-    duration: 0
-    isRoll: 0
-    rollEndTime: 0
   - Notes: {fileID: 0}
     timing: 13
+    length: 0
+    lane: 0
     isHit: 0
-    duration: 0
-    isRoll: 0
-    rollEndTime: 0
   - Notes: {fileID: 0}
     timing: 14
+    length: 0
+    lane: 0
     isHit: 0
-    duration: 0
-    isRoll: 0
-    rollEndTime: 0
   resultText: {fileID: 1698260880}
   perfectRange: 0.05
   greatRange: 0.1
@@ -1330,8 +1321,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: 
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: e909b6346c8c46f42b311266da1aca9f, type: 2}
+  m_sharedMaterial: {fileID: -8893688833919168928, guid: e909b6346c8c46f42b311266da1aca9f, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -3739,6 +3730,7 @@ MonoBehaviour:
   mode: 1
   musicSource: {fileID: 341864671}
   notes: []
+  jsonFileName: notes_song2.json
 --- !u!1 &1282038532
 GameObject:
   m_ObjectHideFlags: 0

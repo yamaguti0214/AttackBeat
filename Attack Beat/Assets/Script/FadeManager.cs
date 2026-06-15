@@ -15,10 +15,6 @@ public class FadeManager : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.A))
-        {
-            LoadScene("CreateNotes_Yama");
-        }
     }
 
     public void LoadScene(string sceneName)
