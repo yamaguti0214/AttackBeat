@@ -11,18 +11,15 @@ public class EnemyChange : MonoBehaviour
     public void NightChangeEnemy()
     {
         EnemyImage.sprite = ChangeSprite[0];
-        SoundPlay.MyEnemyNum = 1;
     }
 
     public void GhostChangeEnemy()
     {
         EnemyImage.sprite = ChangeSprite[1];
-        SoundPlay.MyEnemyNum = 2;
     }
 
     public void AromorChangeEnemy()
     {
         EnemyImage.sprite = ChangeSprite[2];
-        SoundPlay.MyEnemyNum = 3;
     }
 }
