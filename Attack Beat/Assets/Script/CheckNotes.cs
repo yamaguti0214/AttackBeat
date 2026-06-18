@@ -69,14 +69,14 @@ public class CheckNotes : MonoBehaviour
 
         if (!ESCButton.Pause)
         {
-            // Fキー入力
-            if (Input.GetKeyDown(KeyCode.F))
+            // 左のキー入力（初期はFキー）
+            if (Input.GetKeyDown(KeySettingManager.LeftKey))
             {
                 soundPlay.SEPlay();
                 if (fKeyLockTimer <= 0) Judge(true); // true = Fキー
             }
-            // Hキー入力
-            else if (Input.GetKeyDown(KeyCode.H))
+            // 右のキー入力（初期はHキー）
+            else if (Input.GetKeyDown(KeySettingManager.RightKey))
             {
                 soundPlay.SEPlay();
                 if (hKeyLockTimer <= 0) Judge(false); // false = Hキー

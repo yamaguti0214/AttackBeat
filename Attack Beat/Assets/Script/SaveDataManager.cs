@@ -8,7 +8,7 @@ public class SaveDataManager : MonoBehaviour
     [SerializeField] private TMP_InputField musicNameInput;
 
     //çÏïàÉäÉXÉg
-    List<SongData> songList = new List<SongData>();
+    public List<SongData> songList = new List<SongData>();
 
     public class SongData
     {
@@ -38,12 +38,31 @@ public class SaveDataManager : MonoBehaviour
     {
         MusicName = musicNameInput.text;
 
-
         Debug.Log("ã»ñºÅF" + MusicName);
     }
 
     public void SetNewSongData()
     {
         SongData songData = new SongData();
+    }
+
+    public void AddSongData(
+    string musicName,
+    string musicPath,
+    string sePath,
+    string backgroundPath,
+    string enemyPath,
+    string notesPath)
+    {
+        SongData song = new SongData();
+
+        song.musicName = musicName;
+        song.musicPath = musicPath;
+        song.sePath = sePath;
+        song.backgroundPath = backgroundPath;
+        song.enemyPath = enemyPath;
+        song.notesPath = notesPath;
+
+        songList.Add(song);
     }
 }

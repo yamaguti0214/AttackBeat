@@ -35,6 +35,11 @@ public class Notes_Create : MonoBehaviour
 
     void Start()
     {
+        if(SaveDataManager.SaveDataInstance != null)
+        {
+            jsonFileName = SaveDataManager.SaveDataInstance.MusicName;
+        }
+
         string desktop = System.Environment.GetFolderPath(System.Environment.SpecialFolder.Desktop);
         path = Path.Combine(desktop, jsonFileName);
         Load();
