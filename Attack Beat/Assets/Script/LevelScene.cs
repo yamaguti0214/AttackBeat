@@ -7,7 +7,7 @@ public class LevelScene : MonoBehaviour
 {
     public void OnLevel1()
     {
-        SceneManager.LoadScene("LevelOneScene");
+        SceneManager.LoadScene("Check_Yamaguchi");
     }
     public void OnLevel2()
     {
