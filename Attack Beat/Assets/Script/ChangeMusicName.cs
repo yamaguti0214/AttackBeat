@@ -6,9 +6,6 @@ using UnityEngine;
 public class MusicName : MonoBehaviour
 {
     [SerializeField] private TextMeshProUGUI musicName;
-
-    [Header("Image")]
-    [SerializeField]private string musicNameText;
     // Start is called before the first frame update
     void Start()
     {

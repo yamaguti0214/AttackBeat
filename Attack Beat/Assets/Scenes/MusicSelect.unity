@@ -327,7 +327,6 @@ GameObject:
   - component: {fileID: 88430151}
   - component: {fileID: 88430150}
   - component: {fileID: 88430149}
-  - component: {fileID: 88430152}
   m_Layer: 5
   m_Name: Button (1)
   m_TagString: Untagged
@@ -399,9 +398,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 88430152}
-        m_TargetAssemblyTypeName: ChangeImage, Assembly-CSharp
-        m_MethodName: OnChangeSprite
+      - m_Target: {fileID: 1891760422}
+        m_TargetAssemblyTypeName: MusicLoader, Assembly-CSharp
+        m_MethodName: DungeonBackground
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -449,20 +448,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 88430147}
   m_CullTransparentMesh: 1
---- !u!114 &88430152
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 88430147}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7e0e2ea6543c3de45a1fa51206573d0f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  targetImage: {fileID: 873649550}
-  ChangeSprite: {fileID: 21300000, guid: 3b8792d62e940a44582a0a0d263ae04b, type: 3}
 --- !u!1 &102289974
 GameObject:
   m_ObjectHideFlags: 0
@@ -1165,7 +1150,6 @@ GameObject:
   - component: {fileID: 699249037}
   - component: {fileID: 699249036}
   - component: {fileID: 699249035}
-  - component: {fileID: 699249038}
   m_Layer: 5
   m_Name: Button (2)
   m_TagString: Untagged
@@ -1190,7 +1174,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 200.45203, y: 31.03499}
+  m_AnchoredPosition: {x: 673, y: 31.03499}
   m_SizeDelta: {x: 160, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &699249035
@@ -1237,9 +1221,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 699249038}
-        m_TargetAssemblyTypeName: ChangeImage, Assembly-CSharp
-        m_MethodName: OnChangeSprite
+      - m_Target: {fileID: 1891760422}
+        m_TargetAssemblyTypeName: MusicLoader, Assembly-CSharp
+        m_MethodName: RuinsBackground
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1287,20 +1271,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 699249033}
   m_CullTransparentMesh: 1
---- !u!114 &699249038
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 699249033}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7e0e2ea6543c3de45a1fa51206573d0f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  targetImage: {fileID: 873649550}
-  ChangeSprite: {fileID: -6391255303405223272, guid: 5c8ddff2d1b3e794695b2156ed7fe55f, type: 3}
 --- !u!1 &774723859
 GameObject:
   m_ObjectHideFlags: 0
@@ -1871,7 +1841,6 @@ GameObject:
   - component: {fileID: 873833821}
   - component: {fileID: 873833820}
   - component: {fileID: 873833819}
-  - component: {fileID: 873833818}
   m_Layer: 5
   m_Name: Button (11)
   m_TagString: Untagged
@@ -1899,20 +1868,6 @@ RectTransform:
   m_AnchoredPosition: {x: -731, y: -239}
   m_SizeDelta: {x: 160, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &873833818
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 873833816}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7e0e2ea6543c3de45a1fa51206573d0f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  targetImage: {fileID: 873649550}
-  ChangeSprite: {fileID: 21300000, guid: 3b8792d62e940a44582a0a0d263ae04b, type: 3}
 --- !u!114 &873833819
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1957,9 +1912,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 873833818}
-        m_TargetAssemblyTypeName: ChangeImage, Assembly-CSharp
-        m_MethodName: OnChangeSprite
+      - m_Target: {fileID: 1891760422}
+        m_TargetAssemblyTypeName: MusicLoader, Assembly-CSharp
+        m_MethodName: OpenEnemyFile
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -2291,7 +2246,6 @@ GameObject:
   - component: {fileID: 1203073402}
   - component: {fileID: 1203073401}
   - component: {fileID: 1203073400}
-  - component: {fileID: 1203073403}
   m_Layer: 5
   m_Name: Button (3)
   m_TagString: Untagged
@@ -2316,7 +2270,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 672.92004, y: 31.03499}
+  m_AnchoredPosition: {x: 197, y: 31.03499}
   m_SizeDelta: {x: 160, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1203073400
@@ -2363,9 +2317,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1203073403}
-        m_TargetAssemblyTypeName: ChangeImage, Assembly-CSharp
-        m_MethodName: OnChangeSprite
+      - m_Target: {fileID: 1891760422}
+        m_TargetAssemblyTypeName: MusicLoader, Assembly-CSharp
+        m_MethodName: CastleBackground
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -2413,20 +2367,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1203073398}
   m_CullTransparentMesh: 1
---- !u!114 &1203073403
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1203073398}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7e0e2ea6543c3de45a1fa51206573d0f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  targetImage: {fileID: 873649550}
-  ChangeSprite: {fileID: 2806523596274268140, guid: 6ea064f58e139b44ab26617ad027982c, type: 3}
 --- !u!1 &1212165979
 GameObject:
   m_ObjectHideFlags: 0
@@ -2977,7 +2917,6 @@ GameObject:
   - component: {fileID: 1446662288}
   - component: {fileID: 1446662287}
   - component: {fileID: 1446662286}
-  - component: {fileID: 1446662285}
   m_Layer: 5
   m_Name: Button (10)
   m_TagString: Untagged
@@ -3005,20 +2944,6 @@ RectTransform:
   m_AnchoredPosition: {x: -731, y: 31.03499}
   m_SizeDelta: {x: 160, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &1446662285
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1446662283}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7e0e2ea6543c3de45a1fa51206573d0f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  targetImage: {fileID: 873649550}
-  ChangeSprite: {fileID: 21300000, guid: 3b8792d62e940a44582a0a0d263ae04b, type: 3}
 --- !u!114 &1446662286
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3063,9 +2988,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1446662285}
-        m_TargetAssemblyTypeName: ChangeImage, Assembly-CSharp
-        m_MethodName: OnChangeSprite
+      - m_Target: {fileID: 1891760422}
+        m_TargetAssemblyTypeName: MusicLoader, Assembly-CSharp
+        m_MethodName: OpenBackgroundFile
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -3295,6 +3220,55 @@ MonoBehaviour:
   - {fileID: 4723107735738678597, guid: 3598d244beab34a418795e429fc968bb, type: 3}
   - {fileID: 4723107735738678597, guid: 68d94fdec5bc9bf4cbdb0edf4f5f3417, type: 3}
   - {fileID: 4723107735738678597, guid: 61aa0321f30a8c342903cb9eac62b2e5, type: 3}
+--- !u!1 &1544518136
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1544518137}
+  - component: {fileID: 1544518138}
+  m_Layer: 0
+  m_Name: BackgroundImageChange
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!4 &1544518137
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1544518136}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 1110.5824, y: 529.2192, z: -4.5464134}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1544518138
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1544518136}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7e0e2ea6543c3de45a1fa51206573d0f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  BackgroundImage: {fileID: 873649550}
+  ChangeSprite:
+  - {fileID: 21300000, guid: 3b8792d62e940a44582a0a0d263ae04b, type: 3}
+  - {fileID: 2806523596274268140, guid: 6ea064f58e139b44ab26617ad027982c, type: 3}
+  - {fileID: -6391255303405223272, guid: 5c8ddff2d1b3e794695b2156ed7fe55f, type: 3}
 --- !u!1 &1678584133
 GameObject:
   m_ObjectHideFlags: 0
@@ -4038,10 +4012,6 @@ MonoBehaviour:
   seSource: {fileID: 1891760425}
   Background: {fileID: 873649550}
   Enemy: {fileID: 804996315}
-  ChangeSprite:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
 --- !u!4 &1891760423
 Transform:
   m_ObjectHideFlags: 0
@@ -5036,3 +5006,4 @@ SceneRoots:
   - {fileID: 1891760423}
   - {fileID: 1544121960}
   - {fileID: 1678584135}
+  - {fileID: 1544518137}

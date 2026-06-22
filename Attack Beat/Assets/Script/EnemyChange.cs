@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using static SaveDataManager;
 
 public class EnemyChange : MonoBehaviour
 {
@@ -11,15 +12,21 @@ public class EnemyChange : MonoBehaviour
     public void NightChangeEnemy()
     {
         EnemyImage.sprite = ChangeSprite[0];
+        SaveDataManager.SaveDataInstance.Current_enemyType = EnemyType.Night;
+        SaveDataManager.SaveDataInstance.Current_enemyPath = "";
     }
 
     public void GhostChangeEnemy()
     {
         EnemyImage.sprite = ChangeSprite[1];
+        SaveDataManager.SaveDataInstance.Current_enemyType = EnemyType.Ghost;
+        SaveDataManager.SaveDataInstance.Current_enemyPath = "";
     }
 
-    public void AromorChangeEnemy()
+    public void ArmorChangeEnemy()
     {
         EnemyImage.sprite = ChangeSprite[2];
+        SaveDataManager.SaveDataInstance.Current_enemyType = EnemyType.Armor;
+        SaveDataManager.SaveDataInstance.Current_enemyPath = "";
     }
 }

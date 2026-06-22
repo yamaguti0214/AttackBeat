@@ -19,6 +19,8 @@ public class MusicLoader : MonoBehaviour
 
     [SerializeField] private Image Background;
     [SerializeField] private Image Enemy;
+
+    [SerializeField] private Sprite[] ChangeSprite = new Sprite[3];
     public enum AudioFileType
     {
         BGM,
@@ -139,18 +141,47 @@ public class MusicLoader : MonoBehaviour
 
         string copiedPath = Path.Combine(songFolder, fileName);
 
+
+        Directory.CreateDirectory(songFolder);
+
         File.Copy(paths[0], copiedPath, true);
 
         if (type == ImageFileType.Background)
         {
             SaveDataManager.SaveDataInstance.Current_backgroundPath = copiedPath;
+            SaveDataManager.SaveDataInstance.Current_backgroundType = BackgroundType.MY;
+
+            SetBackground();
         }
         else
         {
             SaveDataManager.SaveDataInstance.Current_enemyPath = copiedPath;
+            SaveDataManager.SaveDataInstance.Current_enemyType = EnemyType.MY;
+
+            SetEnemy();
         }
 
         Debug.Log($"{folderName}âÊëúÉRÉsÅ[äÆóπ : {copiedPath}");
+    }
+
+    public void SetEnemy()
+    {
+        if (!string.IsNullOrEmpty(SaveDataManager.SaveDataInstance.Current_enemyPath))
+        {
+            Enemy.sprite = LoadSprite(
+                        SaveDataManager.SaveDataInstance.Current_enemyPath
+                    );
+        }
+    }
+
+    public void SetBackground()
+    {
+        if (!string.IsNullOrEmpty(SaveDataManager.SaveDataInstance.Current_backgroundPath))
+        {
+            Background.sprite = LoadSprite(
+                        SaveDataManager.SaveDataInstance.Current_backgroundPath
+                    );
+        }
     }
 
     public Sprite LoadSprite(string path)
@@ -227,52 +258,6 @@ public class MusicLoader : MonoBehaviour
     public void OpenEnemyFile()
     {
         OpenImageFile(ImageFileType.Enemy);
-    }
-
-    public void Stage1Background()
-    {
-        string path = Path.Combine(
-         Application.dataPath,
-         "SongData",
-         "Background",
-         "Stage1.png"
-        );
-
-        Background.sprite = LoadSprite(path);
-    }
-    public void Stage2Background()
-    {
-        string path = Path.Combine(
-         Application.dataPath,
-         "SongData",
-         "Background",
-         "Stage2.png"
-        );
-
-        Background.sprite = LoadSprite(path);
-    }
-    public void Stage3Background()
-    {
-        string path = Path.Combine(
-         Application.dataPath,
-         "SongData",
-         "Background",
-         "Stage3.png"
-        );
-
-        Background.sprite = LoadSprite(path);
-    }
-    public void Stage1Enemy()
-    {
-
-    }
-    public void Stage2Enemy()
-    {
-
-    }
-    public void Stage3Enemy()
-    {
-
     }
 
     // BGMçƒê∂
