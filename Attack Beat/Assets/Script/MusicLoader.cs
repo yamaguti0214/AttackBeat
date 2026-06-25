@@ -82,6 +82,8 @@ public class MusicLoader : MonoBehaviour
 
         string copiedPath = Path.Combine(songFolder, fileName);
 
+        Directory.CreateDirectory(songFolder);
+
         File.Copy(paths[0], copiedPath, true);
 
         if (type == AudioFileType.BGM)
@@ -123,7 +125,7 @@ public class MusicLoader : MonoBehaviour
         string folderName =
             type == ImageFileType.Background
             ? "Background"
-            : "Enemy";
+            : "EnemyImage";
 
         string songFolder = Path.Combine(
             Application.persistentDataPath,
