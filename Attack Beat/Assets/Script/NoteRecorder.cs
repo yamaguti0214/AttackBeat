@@ -55,14 +55,13 @@ public class NoteRecorder : MonoBehaviour
 
         if (mode == Mode.Record)
         {
-            // --- Fキー：青ノーツ（単押し） ---
-            if (Input.GetKeyDown(KeyCode.F))
+            // 左のキー入力（初期はFキー）
+            if (Input.GetKeyDown(KeySettingManager.LeftKey))
             {
                 AddNote(0, 0f, musicSource.time);
             }
-
-            // --- Hキー：緑ノーツ（単押し） ---
-            if (Input.GetKeyDown(KeyCode.H))
+            // 右のキー入力（初期はHキー）
+            else if (Input.GetKeyDown(KeySettingManager.RightKey))
             {
                 AddNote(1, 0f, musicSource.time);
             }
