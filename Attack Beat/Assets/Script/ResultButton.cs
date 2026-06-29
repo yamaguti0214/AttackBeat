@@ -9,8 +9,12 @@ public class ResultButton : MonoBehaviour
     {
         if (SceneManager.GetActiveScene().name == "MyMusicCreateNote")
         {
+            MyMusicNoteRecorder.MyMusicRecorderinstance.Save();
+
             //ƒŠƒXƒg‚É•Û‘¶
             SaveDataManager.SaveDataInstance.SetNewSongData();
+
+            SceneManager.LoadScene("MyMusicList");
         }
         else
         {
