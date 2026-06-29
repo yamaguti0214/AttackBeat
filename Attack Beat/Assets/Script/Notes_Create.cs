@@ -37,7 +37,7 @@ public class Notes_Create : MonoBehaviour
     {
         if(SaveDataManager.SaveDataInstance != null)
         {
-            jsonFileName = SaveDataManager.SaveDataInstance.MusicName;
+            jsonFileName = SaveDataManager.SaveDataInstance.Current_musicName;
         }
 
         string desktop = System.Environment.GetFolderPath(System.Environment.SpecialFolder.Desktop);

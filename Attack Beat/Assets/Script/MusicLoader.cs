@@ -2,6 +2,9 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.Networking;
 using SFB;
+using System.IO;
+using UnityEngine.UI;
+using static SaveDataManager;
 
 public class MusicLoader : MonoBehaviour
 {
@@ -13,6 +16,22 @@ public class MusicLoader : MonoBehaviour
 
     public AudioClip LoadedBGM { get; private set; }
     public AudioClip LoadedSE { get; private set; }
+
+    [SerializeField] private Image Background;
+    [SerializeField] private Image Enemy;
+
+    [SerializeField] private Sprite[] ChangeSprite = new Sprite[3];
+    public enum AudioFileType
+    {
+        BGM,
+        SE
+    }
+
+    public enum ImageFileType
+    {
+        Background,
+        Enemy
+    }
 
     private void Awake()
     {
@@ -26,45 +45,168 @@ public class MusicLoader : MonoBehaviour
             Destroy(gameObject);
         }
     }
-    // BGM選択
-    public void OpenBGMFile()
+
+    public void OpenAudioFile(AudioFileType type)
     {
         var paths = StandaloneFileBrowser.OpenFilePanel(
-            "BGMを選択",
+            type == AudioFileType.BGM ? "BGMを選択" : "SEを選択",
             "",
             new ExtensionFilter[]
             {
-                new ExtensionFilter("Audio Files", "mp3", "wav", "ogg")
+            new ExtensionFilter("Audio Files", "mp3", "wav", "ogg")
             },
             false
         );
 
-        if (paths.Length > 0)
+        if (paths.Length <= 0)
+            return;
+
+        string folderName =
+            type == AudioFileType.BGM
+            ? "Music"
+            : "SE";
+
+        string songFolder = Path.Combine(
+            Application.persistentDataPath,
+            "SongData",
+            folderName,
+            SaveDataManager.SaveDataInstance.Current_musicName
+        );
+
+        string extension = Path.GetExtension(paths[0]);
+
+        string fileName =
+            type == AudioFileType.BGM
+            ? "music" + extension
+            : "se" + extension;
+
+        string copiedPath = Path.Combine(songFolder, fileName);
+
+        Directory.CreateDirectory(songFolder);
+
+        File.Copy(paths[0], copiedPath, true);
+
+        if (type == AudioFileType.BGM)
         {
-            StartCoroutine(LoadAudio(paths[0], true));
+            SaveDataManager.SaveDataInstance.Current_musicPath = copiedPath;
         }
+        else
+        {
+            SaveDataManager.SaveDataInstance.Current_sePath = copiedPath;
+        }
+
+        Debug.Log($"コピー完了 : {copiedPath}");
+
+        StartCoroutine(
+            LoadAudio(
+                copiedPath,
+                type
+            )
+        );
     }
 
-    // SE選択
-    public void OpenSEFile()
+    public void OpenImageFile(ImageFileType type)
     {
         var paths = StandaloneFileBrowser.OpenFilePanel(
-            "SEを選択",
+            type == ImageFileType.Background
+                ? "背景画像を選択"
+                : "敵画像を選択",
             "",
             new ExtensionFilter[]
             {
-                new ExtensionFilter("Audio Files", "mp3", "wav", "ogg")
+            new ExtensionFilter("Image Files", "png", "jpg", "jpeg")
             },
             false
         );
 
-        if (paths.Length > 0)
+        if (paths.Length <= 0)
+            return;
+
+        string folderName =
+            type == ImageFileType.Background
+            ? "Background"
+            : "EnemyImage";
+
+        string songFolder = Path.Combine(
+            Application.persistentDataPath,
+            "SongData",
+            folderName,
+            SaveDataManager.SaveDataInstance.Current_musicName
+        );
+
+        string extension = Path.GetExtension(paths[0]);
+
+        string fileName =
+            type == ImageFileType.Background
+            ? "background" + extension
+            : "enemy" + extension;
+
+        string copiedPath = Path.Combine(songFolder, fileName);
+
+
+        Directory.CreateDirectory(songFolder);
+
+        File.Copy(paths[0], copiedPath, true);
+
+        if (type == ImageFileType.Background)
         {
-            StartCoroutine(LoadAudio(paths[0], false));
+            SaveDataManager.SaveDataInstance.Current_backgroundPath = copiedPath;
+            SaveDataManager.SaveDataInstance.Current_backgroundType = BackgroundType.MY;
+
+            SetBackground();
+        }
+        else
+        {
+            SaveDataManager.SaveDataInstance.Current_enemyPath = copiedPath;
+            SaveDataManager.SaveDataInstance.Current_enemyType = EnemyType.MY;
+
+            SetEnemy();
+        }
+
+        Debug.Log($"{folderName}画像コピー完了 : {copiedPath}");
+    }
+
+    public void SetEnemy()
+    {
+        if (!string.IsNullOrEmpty(SaveDataManager.SaveDataInstance.Current_enemyPath))
+        {
+            Enemy.sprite = LoadSprite(
+                        SaveDataManager.SaveDataInstance.Current_enemyPath
+                    );
         }
     }
 
-    private IEnumerator LoadAudio(string path, bool isBGM)
+    public void SetBackground()
+    {
+        if (!string.IsNullOrEmpty(SaveDataManager.SaveDataInstance.Current_backgroundPath))
+        {
+            Background.sprite = LoadSprite(
+                        SaveDataManager.SaveDataInstance.Current_backgroundPath
+                    );
+        }
+    }
+
+    public Sprite LoadSprite(string path)
+    {
+        if (!File.Exists(path))
+        {
+            Debug.LogError($"ファイルが見つからん: {path}");
+            return null;
+        }
+
+        byte[] bytes = File.ReadAllBytes(path);
+
+        Texture2D texture = new Texture2D(2, 2);
+        texture.LoadImage(bytes);
+
+        return Sprite.Create(
+            texture,
+            new Rect(0, 0, texture.width, texture.height),
+            new Vector2(0.5f, 0.5f)
+        );
+    }
+
+    private IEnumerator LoadAudio(string path, AudioFileType type)
     {
         string url = "file://" + path;
 
@@ -82,7 +224,7 @@ public class MusicLoader : MonoBehaviour
                 AudioClip clip =
                     DownloadHandlerAudioClip.GetContent(www);
 
-                if (isBGM)
+                if (type == AudioFileType.BGM)
                 {
                     LoadedBGM = clip;
                     bgmSource.clip = clip;
@@ -98,6 +240,26 @@ public class MusicLoader : MonoBehaviour
                 }
             }
         }
+    }
+
+    public void OpenBGMFile()
+    {
+        OpenAudioFile(AudioFileType.BGM);
+    }
+
+    public void OpenSEFile()
+    {
+        OpenAudioFile(AudioFileType.SE);
+    }
+
+    public void OpenBackgroundFile()
+    {
+        OpenImageFile(ImageFileType.Background);
+    }
+
+    public void OpenEnemyFile()
+    {
+        OpenImageFile(ImageFileType.Enemy);
     }
 
     // BGM再生

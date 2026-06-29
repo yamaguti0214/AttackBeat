@@ -177,30 +177,48 @@ MonoBehaviour:
   notes:
   - Notes: {fileID: 0}
     timing: 6
+    length: 0
+    lane: 0
     isHit: 0
   - Notes: {fileID: 0}
     timing: 7
+    length: 0
+    lane: 0
     isHit: 0
   - Notes: {fileID: 0}
     timing: 8
+    length: 0
+    lane: 0
     isHit: 0
   - Notes: {fileID: 0}
     timing: 9
+    length: 0
+    lane: 0
     isHit: 0
   - Notes: {fileID: 0}
     timing: 10
+    length: 0
+    lane: 0
     isHit: 0
   - Notes: {fileID: 0}
     timing: 11
+    length: 0
+    lane: 0
     isHit: 0
   - Notes: {fileID: 0}
     timing: 12
+    length: 0
+    lane: 0
     isHit: 0
   - Notes: {fileID: 0}
     timing: 13
+    length: 0
+    lane: 0
     isHit: 0
   - Notes: {fileID: 0}
     timing: 14
+    length: 0
+    lane: 0
     isHit: 0
   resultText: {fileID: 1698260880}
   perfectRange: 0.05
@@ -3661,9 +3679,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: de2b19d88fc90a240b64c1d30333216a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mode: 0
+  mode: 1
   musicSource: {fileID: 341864671}
   notes: []
+  jsonFileName: notes_song2.json
 --- !u!1 &1282038532
 GameObject:
   m_ObjectHideFlags: 0
