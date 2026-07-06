@@ -1,5 +1,6 @@
 using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class SongListButton : MonoBehaviour
@@ -20,5 +21,7 @@ public class SongListButton : MonoBehaviour
         SongSelectManager.Instance.SelectSong(
             songData
         );
+
+        SceneManager.LoadScene("MyMusicGamePlay");
     }
 }

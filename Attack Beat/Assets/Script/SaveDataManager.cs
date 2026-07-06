@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.IO;
 using System.Windows.Forms.VisualStyles;
 using TMPro;
 using UnityEditorInternal.Profiling.Memory.Experimental.FileFormat;
@@ -24,10 +25,11 @@ public class SaveDataManager : MonoBehaviour
     public EnemyType Current_enemyType;
     public BackgroundType Current_backgroundType;
 
-
     [SerializeField] private Sprite[] BackgroundSprite = new Sprite[3];
     [SerializeField] private Sprite[] EnemySprite = new Sprite[3];
 
+    [SerializeField] private Transform content;
+    [SerializeField] private GameObject songButtonPrefab;
     public enum EnemyType
     {
         Armor,
@@ -74,6 +76,13 @@ public class SaveDataManager : MonoBehaviour
         {
             SetStageData();
         }
+        
+        if (scene.name == "MyMusicList")
+        {
+            content = GameObject.Find("Content").transform;
+
+            CreateSongButtons();
+        }
     }
 
     private void Awake()
@@ -89,6 +98,86 @@ public class SaveDataManager : MonoBehaviour
         }
 
         
+    }
+
+    public void SaveSongData()
+    {
+        SongData song = new SongData();
+
+        song.musicName = Current_musicName;
+        song.musicPath = Current_musicPath;
+        song.sePath = Current_sePath;
+        song.notesPath = Current_notesPath;
+
+        song.enemyType = Current_enemyType;
+        song.enemyPath = Current_enemyPath;
+
+        song.backgroundType = Current_backgroundType;
+        song.backgroundPath = Current_backgroundPath;
+
+        // 保存先
+        string saveFolder = Path.Combine(
+            Application.persistentDataPath,
+            "SongData",
+            "SaveData"
+        );
+
+        Directory.CreateDirectory(saveFolder);
+
+        string path = Path.Combine(
+            saveFolder,
+            song.musicName + ".json"
+        );
+
+        // JSONへ変換
+        string json = JsonUtility.ToJson(song, true);
+
+        // 保存
+        File.WriteAllText(path, json);
+
+        Debug.Log("保存完了 : " + path);
+    }
+    private void CreateSongButtons()
+    {
+        string saveFolder = Path.Combine(
+            Application.persistentDataPath,
+            "SongData",
+            "SaveData"
+        );
+
+        if (!Directory.Exists(saveFolder))
+            return;
+
+        // 前回作ったボタンを消す
+        foreach (Transform child in content)
+        {
+            Destroy(child.gameObject);
+        }
+
+        // json全部取得
+        string[] files =
+            Directory.GetFiles(saveFolder, "*.json");
+
+        foreach (string file in files)
+        {
+            // Json読み込み
+            string json = File.ReadAllText(file);
+
+            SongData song =
+                JsonUtility.FromJson<SongData>(json);
+
+            // ボタン生成
+            GameObject button =
+                Instantiate(songButtonPrefab, content);
+
+            // ボタン名
+            button.GetComponentInChildren<TMPro.TextMeshProUGUI>().text =
+                song.musicName;
+
+            // ボタンにデータを持たせる
+            button.GetComponent<SongListButton>()
+                .SetData(song);
+        }
     }
 
     public void SetMusicName()

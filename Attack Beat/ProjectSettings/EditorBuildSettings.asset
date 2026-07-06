@@ -38,5 +38,8 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/MyMusicCreateNote.unity
     guid: f028fc173e44e6f4fbe5cd828b465bc1
+  - enabled: 1
+    path: Assets/Scenes/MyMusicGamePlay.unity
+    guid: eefe3d411f43d8f458f498c2f1444c06
   m_configObjects: {}
   m_UseUCBPForAssetBundles: 0

@@ -12,7 +12,7 @@ public class ResultButton : MonoBehaviour
             MyMusicNoteRecorder.MyMusicRecorderinstance.Save();
 
             //ƒŠƒXƒg‚É•Û‘¶
-            SaveDataManager.SaveDataInstance.SetNewSongData();
+            SaveDataManager.SaveDataInstance.SaveSongData();
 
             SceneManager.LoadScene("MyMusicList");
         }

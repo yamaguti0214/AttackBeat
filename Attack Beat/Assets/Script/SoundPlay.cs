@@ -27,12 +27,12 @@ public class SoundPlay : MonoBehaviour
     {
         ESCButton.Pause = true;
 
-        if (SceneManager.GetActiveScene().name != "MyMusicCreateNote")
+        if (SceneManager.GetActiveScene().name != "MyMusicCreateNote" && SceneManager.GetActiveScene().name != "MyMusicGamePlay")
         {
             BGMSound_public = BGMSound;
             SESound_public = SESound;
         }
-        else if (SceneManager.GetActiveScene().name == "MyMusicCreateNote")
+        else if (SceneManager.GetActiveScene().name == "MyMusicCreateNote" || SceneManager.GetActiveScene().name == "MyMusicGamePlay")
         {
             Debug.Log("MusicLoader = " + MusicLoader.Instance);
             Debug.Log("LoadedBGM = " + MusicLoader.Instance?.LoadedBGM);

@@ -42,6 +42,11 @@ public class MyMusicNoteRecorder : MonoBehaviour
     void Awake()
     {
         mode = Mode.Record;
+
+        if (MyMusicRecorderinstance == null)
+        {
+            MyMusicRecorderinstance = this;
+        }
     }
 
     void Update()
