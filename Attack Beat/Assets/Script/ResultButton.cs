@@ -7,6 +7,18 @@ public class ResultButton : MonoBehaviour
 {
     public void ResultScene()
     {
-        SceneManager.LoadScene("GameOver");
+        if (SceneManager.GetActiveScene().name == "MyMusicCreateNote")
+        {
+            MyMusicNoteRecorder.MyMusicRecorderinstance.Save();
+
+            //ƒŠƒXƒg‚É•Û‘¶
+            SaveDataManager.SaveDataInstance.SetNewSongData();
+
+            SceneManager.LoadScene("MyMusicList");
+        }
+        else
+        {
+            SceneManager.LoadScene("GameOver");
+        }
     }
 }

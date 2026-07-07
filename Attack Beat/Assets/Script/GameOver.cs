@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameOver : MonoBehaviour
 {
@@ -24,6 +25,13 @@ public class GameOver : MonoBehaviour
             Debug.Log("Death");
             GAMEOVER.text = "GAME OVER";
             ResultButton.SetActive(true);
+
+            if(SceneManager.GetActiveScene().name == "MyMusicCreateNote")
+            {
+                Debug.Log("MyMusicCreateNote");
+                GAMEOVER.text = "FINISH";
+                ResultButton.SetActive(true);
+            }
         }
         else if(Win)
         {

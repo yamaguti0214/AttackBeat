@@ -2679,9 +2679,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'Result
-
-'
+  m_text: SAVE
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: e909b6346c8c46f42b311266da1aca9f, type: 2}
   m_sharedMaterial: {fileID: -8893688833919168928, guid: e909b6346c8c46f42b311266da1aca9f, type: 2}
@@ -3676,10 +3674,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 1207630122}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: de2b19d88fc90a240b64c1d30333216a, type: 3}
+  m_Script: {fileID: 11500000, guid: ae2fb226a88832340bf65bad646778f5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mode: 1
+  mode: 0
   musicSource: {fileID: 341864671}
   notes: []
   jsonFileName: notes_song2.json
