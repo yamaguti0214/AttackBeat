@@ -38,5 +38,8 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/MyMusicCreateNote.unity
     guid: f028fc173e44e6f4fbe5cd828b465bc1
+  - enabled: 1
+    path: Assets/Scenes/Check_Yamaguchi.unity
+    guid: 9ed283cc145da124291d29d726706208
   m_configObjects: {}
   m_UseUCBPForAssetBundles: 0
