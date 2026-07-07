@@ -1,8 +1,9 @@
-ï»¿using System.Collections.Generic;
+using System.Collections.Generic;
 using UnityEngine;
 using System.IO;
+using UnityEngine.SceneManagement;
 
-public class NoteRecorder : MonoBehaviour
+public class MyMusicNoteRecorder : MonoBehaviour
 {
     public enum Mode
     {
@@ -16,9 +17,9 @@ public class NoteRecorder : MonoBehaviour
     [System.Serializable]
     public class NoteInput
     {
-        public float timing; // å§‹ç‚¹ã®æ™‚é–“
+        public float timing; // n“_‚ÌŠÔ
         public int lane;
-        public float length; // é€£æ‰“ãƒãƒ¼ãƒ„ã®é•·ã•ï¼ˆå˜æŠ¼ã—ã¯0ï¼‰
+        public float length; // ˜A‘Åƒm[ƒc‚Ì’·‚³i’P‰Ÿ‚µ‚Í0j
     }
 
     [System.Serializable]
@@ -33,21 +34,19 @@ public class NoteRecorder : MonoBehaviour
 
     string path;
 
-    // é•·æŠ¼ã—ï¼ˆã‚¹ãƒšãƒ¼ã‚¹ã‚­ãƒ¼ï¼‰è¨˜éŒ²ç”¨ã®ãƒ¯ãƒ¼ã‚¯å¤‰æ•°
+    // ’·‰Ÿ‚µiƒXƒy[ƒXƒL[j‹L˜^—p‚Ìƒ[ƒN•Ï”
     private float holdStartTime = 0f;
     private bool isHoldingSpace = false;
 
+    public static MyMusicNoteRecorder MyMusicRecorderinstance;
     void Awake()
     {
-        string desktopPath = System.Environment.GetFolderPath(System.Environment.SpecialFolder.Desktop);
-        path = Path.Combine(desktopPath, jsonFileName);
-        Debug.Log("ä¿å­˜å…ˆ: " + path);
-        Load();
+        mode = Mode.Record;
     }
 
     void Update()
     {
-        // Rã‚­ãƒ¼ã§ãƒ¢ãƒ¼ãƒ‰åˆ‡ã‚Šæ›¿ãˆ
+        // RƒL[‚Åƒ‚[ƒhØ‚è‘Ö‚¦
         if (Input.GetKeyDown(KeyCode.R))
         {
             mode = (mode == Mode.Record) ? Mode.Play : Mode.Record;
@@ -55,18 +54,18 @@ public class NoteRecorder : MonoBehaviour
 
         if (mode == Mode.Record)
         {
-            // å·¦ã®ã‚­ãƒ¼å…¥åŠ›ï¼ˆåˆæœŸã¯Fã‚­ãƒ¼ï¼‰
+            // ¶‚ÌƒL[“ü—Íi‰Šú‚ÍFƒL[j
             if (Input.GetKeyDown(KeySettingManager.LeftKey))
             {
                 AddNote(0, 0f, musicSource.time);
             }
-            // å³ã®ã‚­ãƒ¼å…¥åŠ›ï¼ˆåˆæœŸã¯Hã‚­ãƒ¼ï¼‰
+            // ‰E‚ÌƒL[“ü—Íi‰Šú‚ÍHƒL[j
             else if (Input.GetKeyDown(KeySettingManager.RightKey))
             {
                 AddNote(1, 0f, musicSource.time);
             }
 
-            // --- ã‚¹ãƒšãƒ¼ã‚¹ã‚­ãƒ¼ï¼šé€£æ‰“ãƒãƒ¼ãƒ„ï¼ˆé•·æŠ¼ã—ï¼‰ ---
+            // --- ƒXƒy[ƒXƒL[F˜A‘Åƒm[ƒci’·‰Ÿ‚µj ---
             if (Input.GetKeyDown(KeyCode.Space))
             {
                 holdStartTime = musicSource.time;
@@ -78,23 +77,17 @@ public class NoteRecorder : MonoBehaviour
                 isHoldingSpace = false;
                 float duration = musicSource.time - holdStartTime;
 
-                // 0.2ç§’ä»¥ä¸ŠæŠ¼ã—ã¦ã„ãŸã‚‰é€£æ‰“ãƒãƒ¼ãƒ„(2)ã¨ã—ã¦è¨˜éŒ²
+                // 0.2•bˆÈã‰Ÿ‚µ‚Ä‚¢‚½‚ç˜A‘Åƒm[ƒc(2)‚Æ‚µ‚Ä‹L˜^
                 if (duration >= 0.2f)
                 {
                     AddNote(2, duration, holdStartTime);
                 }
                 else
                 {
-                    // æŠ¼ã—æ™‚é–“ãŒçŸ­ã™ããŸå ´åˆã¯ã€æ™®é€šã®é’ãƒãƒ¼ãƒ„(0)ã¨ã—ã¦ç¾åœ¨ã®æ™‚é–“ã§è¨˜éŒ²
+                    // ‰Ÿ‚µŠÔ‚ª’Z‚·‚¬‚½ê‡‚ÍA•’Ê‚ÌÂƒm[ƒc(0)‚Æ‚µ‚ÄŒ»İ‚ÌŠÔ‚Å‹L˜^
                     AddNote(0, 0f, musicSource.time);
                 }
             }
-        }
-
-        // æ‰‹å‹•ä¿å­˜ï¼ˆSã‚­ãƒ¼ï¼‰
-        if (Input.GetKeyDown(KeyCode.S))
-        {
-            Save();
         }
     }
 
@@ -107,15 +100,36 @@ public class NoteRecorder : MonoBehaviour
             length = length
         });
 
-        Debug.Log($"è¨˜éŒ²: {startTime:F2}ç§’ (Lane: {lane}, Length: {length:F2}ç§’)");
+        Debug.Log($"‹L˜^: {startTime:F2}•b (Lane: {lane}, Length: {length:F2}•b)");
     }
 
     public void Save()
     {
-        SaveData data = new SaveData { notes = notes };
+        string noteFolder = Path.Combine(
+             Application.persistentDataPath,
+            "SongData",
+            "MusicNotes",
+            SaveDataManager.SaveDataInstance.Current_musicName
+        );
+
+        Directory.CreateDirectory(noteFolder);
+
+        path = Path.Combine(
+            noteFolder,
+            SaveDataManager.SaveDataInstance.Current_musicName + ".json"
+        );
+
+        SaveData data = new SaveData
+        {
+            notes = notes
+        };
+
         string json = JsonUtility.ToJson(data, true);
+
         File.WriteAllText(path, json);
-        Debug.Log("ä¿å­˜ã—ãŸã§: " + path);
+
+        SaveDataManager.SaveDataInstance.Current_notesPath = path;
+        Debug.Log("•Û‘¶‚µ‚½‚Å: " + path);
     }
 
     public void Load()
@@ -125,11 +139,11 @@ public class NoteRecorder : MonoBehaviour
             string json = File.ReadAllText(path);
             SaveData data = JsonUtility.FromJson<SaveData>(json);
             notes = data.notes;
-            Debug.Log("èª­ã¿è¾¼ã¿å®Œäº†: " + notes.Count + "å€‹");
+            Debug.Log("“Ç‚İ‚İŠ®—¹: " + notes.Count + "ŒÂ");
         }
         else
         {
-            Debug.Log("ä¿å­˜ãƒ‡ãƒ¼ã‚¿ãªã—");
+            Debug.Log("•Û‘¶ƒf[ƒ^‚È‚µ");
         }
     }
 }

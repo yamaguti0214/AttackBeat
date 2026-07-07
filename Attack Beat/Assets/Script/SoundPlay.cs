@@ -22,8 +22,6 @@ public class SoundPlay : MonoBehaviour
 
     public static bool SoundEnd = false;
 
-
-    public static int MyEnemyNum = 1;
     // Start is called before the first frame update
     void Start()
     {
